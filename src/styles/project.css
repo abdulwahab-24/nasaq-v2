@@ -656,9 +656,15 @@
   background: var(--field);
 }
 
-.pb--logo-dark img {
+.pb--logo-dark .plogo {
   width: min(74%, 50rem);
   height: auto;
+}
+
+/* upright lockups are sized by their height */
+.pb--logo-tall .plogo {
+  width: auto;
+  max-height: min(64svh, 40rem);
 }
 
 .pb--logo-light {
@@ -666,7 +672,7 @@
   min-height: 72svh;
 }
 
-.pb--logo-light img {
+.pb--logo-light .plogo {
   width: min(58%, 36rem);
   height: auto;
 }
@@ -907,5 +913,175 @@
 
   .swatch__name {
     font-size: 0.7rem;
+  }
+}
+
+/* =================== Project signatures =================== */
+/* The hero sits on the project's own field when it has one (gradient). */
+.phero {
+  background: var(--surface-field, var(--surface, var(--c-black)));
+}
+
+.pnext {
+  background: var(--next-gradient, var(--next-field));
+}
+
+/* — seamless stage: the field is the photograph's backdrop, the object sits on the page — */
+.pb--seamless {
+  padding-block: clamp(2rem, 1rem + 4vw, 5rem);
+}
+
+.pb--seamless .pfig__frame {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 3%, #000 97%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 3%, #000 97%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
+}
+
+/* — spear (Rumh): the mark as aperture; traits set on the flag — */
+.pb--aperture {
+  margin-block: 0;
+  background: var(--field);
+  color: var(--field-ink);
+}
+
+.pb--aperture .plabel {
+  position: absolute;
+  top: var(--space-m);
+  left: var(--gutter);
+  z-index: 1;
+}
+
+.paperture__frame {
+  width: min(100%, 1440px); /* never beyond the photograph's pixels */
+  height: min(100svh, 100vw);
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.paperture__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pwords.pwords--flags {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-m) var(--space-s);
+  font-size: clamp(1.5rem, 0.7rem + 3.2vw, 3.75rem);
+  line-height: 1.2;
+}
+
+.pwords.pwords--flags li {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  aspect-ratio: var(--flag-ratio);
+  margin: 0;
+  padding: 0;
+  color: var(--c-white);
+}
+
+.pwords--flags li::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent-p);
+  -webkit-mask: var(--flag) center / 100% 100% no-repeat;
+  mask: var(--flag) center / 100% 100% no-repeat;
+}
+
+.pnext--sig-spear .pnext__frame {
+  aspect-ratio: 1;
+  clip-path: var(--next-shape);
+}
+
+/* — bloom (Louiza): the pattern page, live — */
+.pb--bloom {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.pb--bloom .plabel {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.pbloom {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* — arcade (Snack Quest): pixel-stepped frames, the slogan strip as the last word — */
+.project--sig-arcade .phero__frame,
+.project--sig-arcade .pb:not(.pb--bleed) .pfig__frame,
+.project--sig-arcade .pseq__item,
+.project--sig-arcade .swatch__chip,
+.pnext--sig-arcade .pnext__frame {
+  clip-path: var(--notch);
+}
+
+.project--sig-arcade .swatch__chip {
+  box-shadow: none;
+}
+
+.pb--ticker {
+  margin-block: 0;
+}
+
+.project--sig-arcade .pstory {
+  padding-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .pwords.pwords--flags {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l) var(--space-m);
+  }
+}
+
+/* — the logo standing where the giant name would (plate hero) — */
+.phero__giant--mark {
+  left: var(--gutter);
+  width: min(78vw, 68.4rem); /* never beyond the file's 1095 px */
+  height: auto;
+}
+
+@media (min-width: 900px) {
+  /* logo top left, the work low on the right — sized so the two never meet */
+  .phero__giant--mark {
+    width: min(44vw, calc(34svh * var(--mark-w) / var(--mark-h)), 68.4rem);
+  }
+
+  .phero--mark {
+    place-items: end end;
+  }
+
+  .phero--mark .phero__frame {
+    width: min(58vw, calc(30svh * var(--plate-w) / var(--plate-h)), calc(var(--plate-w) * 1px));
+  }
+}
+
+/* plate heroes may carry a taller crop for small screens (ResponsiveImage → mobile) */
+@media (max-width: 767.98px) {
+  .phero--plate .phero__frame {
+    width: min(86vw, calc(48svh * var(--plate-m-w) / var(--plate-m-h)), calc(var(--plate-m-w) * 1px));
+    aspect-ratio: var(--plate-m-w) / var(--plate-m-h);
+  }
+}
+
+/* four colours sit two by two on small screens rather than three and one */
+@media (max-width: 639.98px) {
+  .swatches:has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

@@ -10,7 +10,7 @@ import useMeta from '../utils/useMeta';
  */
 export default function NotFound() {
   const rootRef = useRef(null);
-  useMeta({ title: 'Page not found', description: 'This page does not exist. Return to NASAQ.' });
+  useMeta({ title: 'Page not found', description: 'This page does not exist. Return to NASAQ.', noindex: true });
   useReveals(rootRef);
 
   return (

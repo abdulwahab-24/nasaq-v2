@@ -21,11 +21,11 @@ export function img(key, alt, extra = {}) {
 // Same image, with an art-directed crop for small screens.
 export const withMobile = (media, mobile) => ({ ...media, mobile });
 
-// Logos and other single-file PNGs
-export function asset(key, alt) {
+// Logos, masks and other single files
+export function asset(key, alt, ext = 'png') {
   const entry = manifest[key];
   if (!entry) throw new Error(`Unknown asset "${key}"`);
-  return { src: `/${key}.png`, width: entry.width, height: entry.height, alt };
+  return { src: `/${key}.${ext}`, width: entry.width, height: entry.height, alt };
 }
 
 export const srcSet = ({ src, widths }) =>

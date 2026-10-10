@@ -1,35 +1,64 @@
 /*
- * Studio — one composition. Layers, back to front:
- *   construction guides · circles  →  "Studio"  →  baseline  →  portrait  →  "الاستوديو"
- * The CSS describes the resolved state; GSAP (sections/Studio.jsx) starts it
- * fragmented and brings it into alignment.
+ * Studio — one chapter (sections/Studio.jsx). The CSS is every scene's resolved
+ * state; GSAP starts each one fragmented and brings it into alignment.
+ *
+ * The opening scene is built on two axes that cross at the symbol:
+ *   --axis-y   the horizontal axis, and the baseline both scripts stand on
+ *   50%        the vertical axis, between English and Arabic
+ * The symbol sits on the crossing, so both lines run through its own gap.
  */
 
 .studio {
-  --base: clamp(3.5rem, 12svh, 8.5rem); /* the shared baseline, from the scene's bottom */
-  --mk: clamp(4.5rem, 8vw, 9.5rem); /* symbol size */
+  --axis-y: 70%;
+  --mk: clamp(3.25rem, 6.2vw, 6.5rem); /* symbol, at rest */
+  --gap: clamp(0.75rem, 1.6vw, 1.75rem); /* symbol to wordmarks */
   position: relative;
-  background: linear-gradient(to bottom, #000000 0, #000000 calc(100% - 40vh), var(--c-navy) 100%);
+  background: linear-gradient(to bottom, #000000 0, #000000 calc(100% - 70vh), var(--c-navy) 100%);
   color: var(--c-white);
   overflow: clip;
 }
 
+/* =================== I–III: the scene =================== */
 .studio__scene {
   position: relative;
   height: 100vh;
   height: 100svh;
-  min-height: 36rem;
+  min-height: 34rem;
   overflow: hidden;
   background: #000000;
   container-type: size;
 }
 
-/* ---------- symbol construction ---------- */
+.studio__axis {
+  position: absolute;
+  pointer-events: none;
+}
+
+.studio__axis--h {
+  top: var(--axis-y);
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 1px;
+  background: rgb(72 96 255 / 0.85);
+}
+
+.studio__axis--v {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: 0;
+  width: 1px;
+  background: rgb(201 212 255 / 0.24);
+  transform-origin: center var(--axis-y);
+}
+
+/* ---------- symbol + its construction ---------- */
 .studio__markbox {
   position: absolute;
-  top: calc(var(--nav-h) + var(--space-m));
-  left: var(--gutter);
-  z-index: 2;
+  top: calc(var(--axis-y) - var(--mk) / 2);
+  left: calc(50% - var(--mk) / 2);
+  z-index: 4;
   width: var(--mk);
   aspect-ratio: 1;
 }
@@ -40,64 +69,35 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  opacity: 0.32;
+  opacity: 0; /* resolved: the construction has done its work */
 }
 
 .sc circle,
 .sc__square,
 .sc__line {
   fill: none;
+  stroke: var(--c-light-blue);
+  stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
 
-.sc circle {
-  stroke: var(--c-light-blue);
-  stroke-width: 1;
-}
-
 .sc__square {
-  stroke: var(--c-light-blue);
-  stroke-width: 1;
   stroke-dasharray: 1;
   stroke-dashoffset: 0;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
-.sc__circle {
+.sc__circle,
+.sc__line {
   transform-box: fill-box;
   transform-origin: center;
 }
 
 .sc__line {
-  stroke: var(--c-light-blue);
-  stroke-width: 1;
-  opacity: 0.35;
-  transform-box: fill-box;
-  transform-origin: center;
+  opacity: 0.22;
 }
 
-.studio__mark {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.studio__caption {
-  position: absolute;
-  top: calc(var(--nav-h) + var(--space-m) + var(--mk) + var(--space-s));
-  left: var(--gutter);
-  z-index: 2;
-  display: grid;
-  gap: 0.15rem;
-  color: rgb(201 212 255 / 0.7);
-}
-
-.studio__caption [lang='ar'] {
-  font-size: 1.05em;
-}
-
-/* ---------- bilingual title on one baseline ---------- */
+/* ---------- two scripts on one baseline ---------- */
 .studio__title {
   margin: 0;
   font-weight: inherit;
@@ -110,53 +110,41 @@
 .studio__en,
 .studio__ar {
   position: absolute;
+  z-index: 3;
   white-space: nowrap;
   pointer-events: none;
 }
 
 .studio__en {
-  left: calc(var(--gutter) - 0.06em);
-  bottom: calc(var(--base) - 0.19em);
-  z-index: 1;
+  right: calc(50% + var(--mk) / 2 + var(--gap));
+  bottom: calc(100% - var(--axis-y) - 0.19em); /* Guton's baseline on the axis */
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(4.5rem, 16.5vw, 22rem);
+  font-size: clamp(3rem, 15cqw, 19rem);
   line-height: 1;
   letter-spacing: -0.065em;
-  color: var(--c-white);
 }
 
 .studio__ar {
-  right: var(--gutter);
-  bottom: calc(var(--base) - 0.42em);
-  z-index: 3;
+  left: calc(50% + var(--mk) / 2 + var(--gap));
+  bottom: calc(100% - var(--axis-y) - 0.42em); /* Favorit Arabic's baseline on the axis */
   font-family: var(--font-arabic);
   font-weight: 500;
-  font-size: clamp(2.8rem, 8.6vw, 11rem);
+  font-size: clamp(2.2rem, 10.4cqw, 13rem);
   line-height: 1.5;
   color: var(--c-blue-2);
-}
-
-.studio__baseline {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: var(--base);
-  z-index: 1;
-  height: 1px;
-  background: rgb(72 96 255 / 0.7);
-  transform-origin: left center;
 }
 
 /* ---------- portrait ---------- */
 .studio__portrait {
   position: absolute;
   bottom: 0;
-  right: 4cqw;
-  z-index: 2;
-  /* sized to the scene so the title keeps the same relationship at every width */
-  width: min(calc(94cqh * 1222 / 1267), 54cqw);
+  left: 50%;
+  z-index: 1;
+  /* sized to the scene, so the face always clears the title */
+  width: min(calc(90cqh * 1222 / 1267), 52cqw);
   aspect-ratio: 1222 / 1267;
+  translate: -50% 0;
 }
 
 .studio__portrait img {
@@ -166,73 +154,120 @@
   object-position: bottom center;
 }
 
-/* darkness the subject emerges from — shaped like the subject, so the type behind stays lit */
-.studio__shade {
-  position: absolute;
-  inset: 0;
-  background: #000000;
-  opacity: 0;
-  -webkit-mask: url('/studio/portrait-800.webp') bottom center / contain no-repeat;
-  mask: url('/studio/portrait-800.webp') bottom center / contain no-repeat;
-}
-
-/* ---------- message ---------- */
-.studio__message {
+/* =================== IV: the identity in use =================== */
+.studio__system {
+  position: relative;
   display: grid;
-  gap: var(--space-m);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: var(--col-gap);
   max-width: var(--max-w);
   margin-inline: auto;
   padding: var(--space-xl) var(--gutter) var(--space-l);
 }
 
+.studio__billboard,
+.studio__badge {
+  margin: 0;
+  overflow: hidden;
+}
+
+.studio__billboard {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  margin-inline: calc(var(--gutter) * -1);
+  aspect-ratio: 1800 / 1013;
+}
+
+.studio__billboard img,
+.studio__badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* the axis, about to open */
+.studio__slit {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: center;
+  z-index: 1;
+  height: 1px;
+  margin-inline: calc(var(--gutter) * -1);
+  background: var(--c-blue-2);
+  transform-origin: left center;
+  opacity: 0; /* resolved: it has opened */
+}
+
+.studio__badge {
+  grid-column: 4 / -1;
+  grid-row: 2;
+  z-index: 2;
+  aspect-ratio: 700 / 1080;
+  margin-top: -22%;
+  transform-origin: 50% 0; /* it hangs from its lanyard */
+}
+
+.studio__pattern {
+  grid-column: 1 / span 3;
+  grid-row: 2;
+  align-self: end;
+  height: clamp(2.25rem, 9vw, 4.5rem);
+  background: var(--c-white);
+  -webkit-mask: url('/brand/slash-pattern.png') repeat-x left center / auto 100%;
+  mask: url('/brand/slash-pattern.png') repeat-x left center / auto 100%;
+  transform-origin: left center;
+}
+
+/* =================== V: the message =================== */
+.studio__message {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-m);
+  max-width: var(--max-w);
+  margin-inline: auto;
+  /* the calm after the scenes: more air above than anywhere else in the chapter */
+  padding: calc(var(--space-xl) * 1.5) var(--gutter) var(--space-l);
+}
+
 .studio__lead {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.6rem, 0.9rem + 2.9vw, 4rem);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.7rem, 0.9rem + 3.2vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
 .studio__body {
-  max-width: 40ch;
-  color: rgb(201 212 255 / 0.75);
+  max-width: 38ch;
+  color: rgb(201 212 255 / 0.78);
   font-size: var(--fs-body);
 }
 
-/* ---------- system: colour + two identity artefacts on one line ---------- */
+/* the colours, on one line */
 .system {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0;
-  max-width: var(--max-w);
-  margin-inline: auto;
-  padding: 0 var(--gutter) calc(var(--space-xl) + 10vh);
-}
-
-.system__item {
-  position: relative;
-  height: clamp(9rem, 24vw, 22rem);
-  overflow: hidden;
+  margin-top: var(--space-l);
 }
 
 .system__chip {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0.6rem 0.5rem;
+  height: clamp(6rem, 22vw, 7rem);
+  padding: 0.5rem;
   background: var(--chip);
   font-family: var(--font-display);
   font-size: var(--fs-micro);
   color: var(--c-white);
 }
 
-.system__chip:nth-child(n + 5):nth-child(-n + 7) {
+.system__chip:nth-child(n + 5) {
   color: var(--c-navy);
 }
 
-.system__chip:nth-child(1),
-.system__chip:nth-child(2) {
+.system__chip:nth-child(-n + 2) {
   box-shadow: inset 0 0 0 1px rgb(201 212 255 / 0.18);
 }
 
@@ -243,84 +278,86 @@
 .system__hex {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
-.system__media {
-  grid-column: span 7;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  margin-top: var(--col-gap);
+/* =================== VI: resolution =================== */
+.studio__out {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-s);
+  padding-bottom: var(--space-l);
 }
 
-.system__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.studio__drop {
+  width: 1px;
+  height: clamp(6rem, 24vh, 15rem);
+  background: rgb(201 212 255 / 0.4);
+  transform-origin: center top;
 }
 
-/* ============ phones + tablet portrait: the lockup above, the portrait below ============ */
+.studio__close.mark {
+  width: clamp(2.5rem, 4vw, 3.75rem);
+}
+
+/* ============ phones + tablet portrait: the lockup above the head ============ */
 @media (max-width: 1023.98px) and (orientation: portrait) {
   .studio {
-    --mk: clamp(3rem, 11vw, 4.5rem);
-    --en-fs: clamp(4.2rem, 25vw, 12rem);
-    --en-top: calc(var(--nav-h) + var(--space-s) + var(--mk) + var(--space-m));
-    --base-y: calc(var(--en-top) + var(--en-fs) * 0.8);
-  }
-
-  .studio__scene {
-    min-height: 38rem;
-  }
-
-  .studio__markbox {
-    top: calc(var(--nav-h) + var(--space-s));
-  }
-
-  .studio__caption {
-    display: none;
+    --axis-y: 38%;
+    --mk: 11cqw;
+    --gap: 2.6cqw;
   }
 
   .studio__en {
-    top: var(--en-top);
-    bottom: auto;
-    font-size: var(--en-fs);
-    line-height: 1;
-  }
-
-  .studio__baseline {
-    top: var(--base-y);
-    bottom: auto;
+    font-size: 14.5cqw;
   }
 
   .studio__ar {
-    top: calc(var(--base-y) - 0.24em);
-    bottom: auto;
-    font-size: clamp(2.6rem, 13vw, 6rem);
+    font-size: 9.4cqw;
   }
 
   .studio__portrait {
-    --pw: min(112cqw, 52cqh);
-    right: auto;
-    left: calc(50% - var(--pw) / 2);
-    width: var(--pw);
+    width: min(118cqw, calc(57cqh * 1222 / 1267));
   }
 }
 
 /* ================= tablet + ================= */
 @media (min-width: 768px) {
-  .system {
-    grid-template-columns: repeat(7, minmax(0, 1fr)) minmax(0, 2.4fr) minmax(0, 2.4fr);
+  .studio__system {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
-  .system__media {
-    grid-column: auto;
-    aspect-ratio: auto;
-    height: clamp(9rem, 24vw, 22rem);
-    margin: 0 0 0 var(--col-gap);
+  .studio__billboard,
+  .studio__slit {
+    grid-column: 1 / span 9;
+    margin-inline: 0;
   }
 
-  .system__media + .system__media {
-    margin-left: 0;
+  .studio__badge {
+    grid-column: 9 / -1;
+    grid-row: 1;
+    align-self: end;
+    margin: 0 0 -24%;
+  }
+
+  .studio__pattern {
+    grid-column: 1 / span 6;
+    align-self: start;
+    height: clamp(2.5rem, 5vw, 4.5rem);
+    margin-top: var(--space-m);
+  }
+
+  .system__chip {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: clamp(4rem, 8vw, 6.5rem);
+    padding: 0.6rem 0.7rem;
+  }
+
+  .system__hex {
+    writing-mode: horizontal-tb;
+    transform: none;
   }
 }
 
@@ -339,35 +376,33 @@
     grid-column: 9 / -1;
   }
 
-  .system__chip {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+  .system {
+    grid-column: 1 / -1;
   }
 
   .system__name {
     display: block;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    align-self: flex-start;
   }
 }
 
-/* Short landscape phones: keep the face clear of the title */
+/* the badge lifts a little under a mouse */
+@media (hover: hover) and (pointer: fine) {
+  .studio__badge {
+    transition: translate 0.7s var(--ease-out);
+  }
+
+  .studio__badge:hover {
+    translate: 0 -0.6rem;
+  }
+}
+
+/* Short landscape phones: nothing is pinned; keep the face clear of the title */
 @media (orientation: landscape) and (max-height: 560px) {
   .studio__scene {
-    min-height: 26rem;
+    min-height: 24rem;
   }
 
-  .studio__en {
-    font-size: 18vw;
-  }
-
-  .studio__ar {
-    font-size: 7vw;
-  }
-
-  .studio__portrait {
-    right: 2cqw;
+  .studio {
+    --axis-y: 74%;
   }
 }

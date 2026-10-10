@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import 'lenis/dist/lenis.css';
 import './styles/fonts.css';
 import './styles/tokens.css';
 import './styles/base.css';
@@ -16,6 +17,7 @@ import './styles/studio.css';
 import './styles/contact.css';
 import './styles/footer.css';
 import './styles/project.css';
+import './styles/signature.css';
 import './styles/overlays.css';
 import App from './App.jsx';
 

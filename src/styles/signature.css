@@ -1,0 +1,107 @@
+/*
+ * Project signatures (components/Signature.jsx). Colours here always come from
+ * the project through custom properties — the NASAQ palette is untouched.
+ */
+
+/* ---------- bloom (Louiza) ---------- */
+.bloom {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  padding: 5%;
+  aspect-ratio: 1;
+  background: var(--bloom-field);
+}
+
+.bloom__leaf {
+  min-width: 0;
+  min-height: 0;
+  background: var(--bloom-ink);
+  -webkit-mask: var(--bloom-mark) center / auto 64% no-repeat;
+  mask: var(--bloom-mark) center / auto 64% no-repeat;
+  transform-origin: 40% 90%;
+}
+
+/* ---------- strata (Rukaz) ---------- */
+.band {
+  --cell: clamp(1.25rem, 2.6vw, 3rem);
+  height: calc(var(--cell) * var(--band-rows));
+  overflow: hidden;
+  color: var(--band-ink, currentColor);
+}
+
+.band__run {
+  display: block;
+  width: 130%;
+  height: 100%;
+  background: currentColor;
+  /* the tile holds six periods of the pattern */
+  -webkit-mask: var(--band-tile) 0 0 / calc(var(--cell) * 6) calc(var(--cell) * 6) repeat;
+  mask: var(--band-tile) 0 0 / calc(var(--cell) * 6) calc(var(--cell) * 6) repeat;
+}
+
+/* ---------- arcade (Snack Quest) ---------- */
+:root {
+  /* one "pixel" of the stepped corners */
+  --px: clamp(5px, 0.75vw, 12px);
+  --notch: polygon(
+    calc(var(--px) * 2) 0,
+    calc(100% - var(--px) * 2) 0,
+    calc(100% - var(--px) * 2) var(--px),
+    calc(100% - var(--px)) var(--px),
+    calc(100% - var(--px)) calc(var(--px) * 2),
+    100% calc(var(--px) * 2),
+    100% calc(100% - var(--px) * 2),
+    calc(100% - var(--px)) calc(100% - var(--px) * 2),
+    calc(100% - var(--px)) calc(100% - var(--px)),
+    calc(100% - var(--px) * 2) calc(100% - var(--px)),
+    calc(100% - var(--px) * 2) 100%,
+    calc(var(--px) * 2) 100%,
+    calc(var(--px) * 2) calc(100% - var(--px)),
+    var(--px) calc(100% - var(--px)),
+    var(--px) calc(100% - var(--px) * 2),
+    0 calc(100% - var(--px) * 2),
+    0 calc(var(--px) * 2),
+    var(--px) calc(var(--px) * 2),
+    var(--px) var(--px),
+    calc(var(--px) * 2) var(--px)
+  );
+}
+
+.ticker {
+  --ticker-h: clamp(3.25rem, 7vw, 6.5rem);
+  --ticker-w: calc(var(--ticker-h) * var(--ticker-ratio));
+  height: var(--ticker-h);
+  overflow: hidden;
+}
+
+.ticker__run {
+  display: block;
+  width: calc(100% + var(--ticker-w));
+  height: 100%;
+  background: var(--ticker-img) 0 0 / var(--ticker-w) 100% repeat-x;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ticker__run {
+    animation: ticker 9s steps(45) infinite;
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(calc(var(--ticker-w) * -1));
+  }
+}
+
+/* ---------- project logos (components/ProjectLogo.jsx) ---------- */
+.plogo {
+  display: block;
+  height: auto;
+}
+
+.plogo--mask {
+  background: var(--logo-ink, currentColor);
+  -webkit-mask: var(--logo) center / contain no-repeat;
+  mask: var(--logo) center / contain no-repeat;
+}

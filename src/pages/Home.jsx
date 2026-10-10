@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { allProjects, featuredProjects, getProject } from '../data/projects';
-import { ScrollTrigger } from '../motion/gsap';
+import { refreshScroll } from '../motion/lenis';
 import Anatomy from '../sections/Anatomy';
 import Contact from '../sections/Contact';
 import Opening from '../sections/Opening';
@@ -45,7 +45,7 @@ export default function Home() {
     const section = location.state?.section ?? location.hash.slice(1);
     if (!section) return undefined;
     const id = requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
+      refreshScroll();
       scrollToSection(section, { instant: true });
     });
     return () => cancelAnimationFrame(id);

@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { finishIntro, gsap, prefersReducedMotion } from '../motion/gsap';
+import { lockScroll } from '../motion/lenis';
 
 /*
  * Opening: the four pieces of the NASAQ symbol arrive scattered and lock into
@@ -42,6 +43,12 @@ export default function Intro() {
     const root = rootRef.current;
     const q = gsap.utils.selector(root);
     document.documentElement.classList.add('is-intro');
+    lockScroll(true);
+    let locked = true;
+    const unlock = () => {
+      if (locked) lockScroll(false);
+      locked = false;
+    };
 
     const scatter = [
       [-34, -22, -110],
@@ -56,6 +63,7 @@ export default function Intro() {
         delay: 0.15,
         onComplete: () => {
           document.documentElement.classList.remove('is-intro');
+          unlock();
           setDone(true);
         },
       });
@@ -89,6 +97,7 @@ export default function Intro() {
     return () => {
       ctx.revert();
       document.documentElement.classList.remove('is-intro');
+      unlock();
       window.removeEventListener('pointerdown', skip);
       window.removeEventListener('keydown', skip);
     };

@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap, prefersReducedMotion } from '../motion/gsap';
+import { scrollToY } from '../motion/lenis';
 import { scrollToSection } from '../utils/scroll';
 import { TransitionContext } from './context';
 
@@ -49,7 +50,7 @@ export default function TransitionProvider({ children }) {
 
   const land = useCallback((section) => {
     if (section) scrollToSection(section, { instant: true });
-    else window.scrollTo(0, 0);
+    else scrollToY(0, { instant: true });
   }, []);
 
   const go = useCallback(
@@ -96,7 +97,7 @@ export default function TransitionProvider({ children }) {
 
         navigate(to);
         const target = await waitFor('[data-hero-target]');
-        window.scrollTo(0, 0);
+        scrollToY(0, { instant: true });
         await nextFrame();
         await Promise.race([heroReady.current ?? Promise.resolve(), new Promise((r) => setTimeout(r, 700))]);
 

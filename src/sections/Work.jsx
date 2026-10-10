@@ -2,11 +2,13 @@ import { useLayoutEffect, useRef } from 'react';
 import Arrow from '../components/Arrow';
 import Flip from '../components/Flip';
 import ResponsiveImage from '../components/ResponsiveImage';
+import { Bloom, PatternBand, Ticker } from '../components/Signature';
 import { projectPath } from '../data/projects';
 import { gsap, MOTION_OK, ScrollTrigger } from '../motion/gsap';
 import useReveals from '../motion/useReveals';
 import TransitionLink from '../transition/TransitionLink';
 import { inkOn } from '../utils/colour';
+import { polygon, RECT, shapeIn } from '../utils/shape';
 
 /*
  * Selected Work — each featured project gets a chapter. Chapters share one
@@ -16,6 +18,11 @@ import { inkOn } from '../utils/colour';
  *
  * A project chooses its composition with `home.layout`; projects without one
  * cycle through the set, so new projects slot in without layout work.
+ *
+ * A project's `signature` then bends that composition around its own artwork:
+ * the Rumh mark is the aperture its cover opens through, Louiza's leaf pattern
+ * grows beside the bag, the Rukaz pattern travels behind the mug, Snack Quest
+ * moves in pixel steps above its slogan ticker.
  */
 const LAYOUTS = ['cinema', 'spread', 'type', 'mosaic'];
 const pad = (n) => String(n).padStart(2, '0');
@@ -74,9 +81,11 @@ function Cover({ project, className = '', sizes, labelledBy }) {
   );
 }
 
-function Detail({ media, className = '', sizes, parallax }) {
+function Detail({ media, className = '', sizes, parallax, shape }) {
+  // `shape`: the project's mark as the crop of this image
+  const style = { maxWidth: `${media.width}px`, clipPath: shape ? polygon(shape) : undefined };
   return (
-    <figure className={`chapter__detail ${className}`} data-parallax={parallax} style={{ maxWidth: `${media.width}px` }}>
+    <figure className={`chapter__detail ${className}`} data-parallax={parallax} style={style}>
       <span className="chapter__frame" data-reveal="clip">
         <ResponsiveImage media={media} sizes={sizes} />
       </span>
@@ -98,14 +107,18 @@ function Chapter({ project, index, total }) {
   const [d1, d2] = detailsOf(project);
   const id = `chapter-${project.slug}`;
   const light = inkOn(project.theme.surface) !== '#FFFFFF';
+  const { signature, sig = {}, theme } = project;
 
   return (
     <article
-      className={`chapter chapter--${layout}${light ? ' chapter--light' : ''}`}
+      className={`chapter chapter--${layout}${light ? ' chapter--light' : ''}${signature ? ` chapter--sig-${signature}` : ''}`}
       aria-labelledby={id}
-      data-surface={project.theme.surface}
-      style={{ '--chapter-bg': project.theme.surface, '--chapter-accent': project.theme.accent }}
+      data-surface={theme.surface}
+      data-motion={signature === 'arcade' ? 'steps' : undefined}
+      data-shape={theme.shape ? JSON.stringify(theme.shape) : undefined}
+      style={{ '--chapter-bg': theme.surface, '--chapter-accent': theme.accent, '--chapter-gradient': theme.gradient }}
     >
+      {theme.gradient && <span className="chapter__field" aria-hidden="true" />}
       <div className="chapter__inner">
         {layout === 'cinema' && (
           <>
@@ -123,12 +136,21 @@ function Chapter({ project, index, total }) {
               <ViewLink project={project} id={id} />
             </div>
             {d1 && <Detail media={d1} className="cinema__d1" sizes="(min-width: 1024px) 46vw, 90vw" />}
-            {d2 && <Detail media={d2} className="cinema__d2" sizes="(min-width: 1024px) 24vw, 50vw" parallax="0.12" />}
+            {d2 && (
+              <Detail
+                media={d2}
+                className="cinema__d2"
+                sizes="(min-width: 1024px) 24vw, 70vw"
+                parallax="0.12"
+                shape={theme.shape}
+              />
+            )}
           </>
         )}
 
         {layout === 'spread' && (
           <>
+            {sig.leaf && project.home?.bloom && <Bloom mark={sig.leaf} {...project.home.bloom} className="spread__bloom" />}
             <Cover project={project} className="spread__cover" sizes="(min-width: 1024px) 46vw, 100vw" labelledBy={id} />
             <div className="spread__text">
               <Meta project={project} index={index} total={total} />
@@ -138,7 +160,7 @@ function Chapter({ project, index, total }) {
               <ViewLink project={project} id={id} />
             </div>
             {d1 && <Detail media={d1} className="spread__d1" sizes="(min-width: 1024px) 36vw, 90vw" />}
-            {d2 && <Detail media={d2} className="spread__d2" sizes="(min-width: 1024px) 22vw, 50vw" parallax="0.14" />}
+            {d2 && <Detail media={d2} className="spread__d2" sizes="(min-width: 1024px) 22vw, 70vw" parallax="0.14" />}
           </>
         )}
 
@@ -150,10 +172,14 @@ function Chapter({ project, index, total }) {
                 {project.name}
               </p>
               <Cover project={project} className="type__cover" sizes="(min-width: 1024px) 34vw, 80vw" labelledBy={id} />
-              {project.nameAr && (
-                <p className="type__giant-ar" lang="ar" dir="rtl" aria-hidden="true">
-                  {project.nameAr}
-                </p>
+              {sig.pattern ? (
+                <PatternBand tile={sig.pattern} className="type__band" />
+              ) : (
+                project.nameAr && (
+                  <p className="type__giant-ar" lang="ar" dir="rtl" aria-hidden="true">
+                    {project.nameAr}
+                  </p>
+                )
               )}
             </div>
             <div className="type__foot">
@@ -182,10 +208,10 @@ function Chapter({ project, index, total }) {
             <Cover project={project} className="mosaic__cover" sizes="(min-width: 1024px) 58vw, 100vw" labelledBy={id} />
             {project.home?.flip ? (
               <figure className="chapter__detail mosaic__d1" data-parallax="0.16">
-                <Flip items={project.home.flip} sizes="(min-width: 1024px) 26vw, 48vw" className="chapter__frame" />
+                <Flip items={project.home.flip} sizes="(min-width: 1024px) 26vw, 70vw" className="chapter__frame" />
               </figure>
             ) : (
-              d1 && <Detail media={d1} className="mosaic__d1" sizes="(min-width: 1024px) 26vw, 48vw" parallax="0.16" />
+              d1 && <Detail media={d1} className="mosaic__d1" sizes="(min-width: 1024px) 26vw, 70vw" parallax="0.16" />
             )}
             {d2 && <Detail media={d2} className="mosaic__d2" sizes="(min-width: 1024px) 40vw, 90vw" />}
             <div className="mosaic__foot">
@@ -194,6 +220,7 @@ function Chapter({ project, index, total }) {
           </>
         )}
       </div>
+      {sig.ticker && <Ticker strip={sig.ticker} label={sig.ticker.alt} className="chapter__ticker" />}
     </article>
   );
 }
@@ -218,19 +245,27 @@ export default function Work({ projects }) {
           start: 'top 50%',
           end: 'bottom 50%',
           onToggle: (self) => {
+            ch.classList.toggle('is-active', self.isActive);
             if (self.isActive) {
-              gsap.to(root, { backgroundColor: ch.dataset.surface, duration: 0.9, ease: 'power2.inOut', overwrite: true });
+              const ease = ch.dataset.motion === 'steps' ? 'steps(5)' : 'power2.inOut';
+              gsap.to(root, { backgroundColor: ch.dataset.surface, duration: 0.9, ease, overwrite: true });
             }
           },
         });
       });
 
-      // cinema: the cover opens from a centred crop to the full frame
+      // cinema: the cover opens to the full frame — from a centred crop, or,
+      // when the project has a mark shape, through the mark itself
       q('.chapter--cinema').forEach((ch) => {
         const frame = ch.querySelector('.cinema__cover .chapter__frame');
+        const shape = ch.dataset.shape && JSON.parse(ch.dataset.shape);
+        const from = shape ? () => shapeIn(frame, shape, 0.7) : 'inset(0% 22% 0% 22%)';
+        const to = shape ? polygon(RECT) : 'inset(0% 0% 0% 0%)';
         gsap
-          .timeline({ scrollTrigger: { trigger: frame, start: 'top 95%', end: 'center 55%', scrub: 0.5 } })
-          .fromTo(frame, { clipPath: 'inset(0% 22% 0% 22%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none' })
+          .timeline({
+            scrollTrigger: { trigger: frame, start: 'top 95%', end: 'center 55%', scrub: 0.5, invalidateOnRefresh: true },
+          })
+          .fromTo(frame, { clipPath: from }, { clipPath: to, ease: shape ? 'power2.in' : 'none' })
           .fromTo(frame.querySelector('img'), { scale: 1.3 }, { scale: 1, ease: 'none' }, 0);
       });
 
@@ -248,16 +283,29 @@ export default function Work({ projects }) {
       });
 
       // spread + mosaic covers: cropped → revealed, once
+      // (a project that moves in steps opens in steps)
       q('.spread__cover .chapter__frame, .mosaic__cover .chapter__frame').forEach((frame) => {
+        const stepped = frame.closest('[data-motion="steps"]');
         gsap
           .timeline({ scrollTrigger: { trigger: frame, start: 'top 85%', once: true } })
-          .fromTo(frame, { clipPath: 'inset(16% 12% 16% 12%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' })
-          .fromTo(frame.querySelector('img'), { scale: 1.3 }, { scale: 1, duration: 1.7, ease: 'expo.inOut' }, 0);
+          .fromTo(
+            frame,
+            { clipPath: 'inset(16% 12% 16% 12%)' },
+            { clipPath: 'inset(0% 0% 0% 0%)', duration: stepped ? 0.9 : 1.5, ease: stepped ? 'steps(8)' : 'expo.inOut' },
+          )
+          .fromTo(
+            frame.querySelector('img'),
+            { scale: 1.3 },
+            { scale: 1, duration: stepped ? 0.9 : 1.7, ease: stepped ? 'steps(8)' : 'expo.inOut' },
+            0,
+          )
+          .set(frame, { clearProps: 'clipPath' });
       });
     });
     return () => {
       mm.revert();
       root.classList.remove('work--takeover');
+      root.querySelectorAll('.chapter.is-active').forEach((ch) => ch.classList.remove('is-active'));
       root.style.backgroundColor = '';
     };
   }, []);

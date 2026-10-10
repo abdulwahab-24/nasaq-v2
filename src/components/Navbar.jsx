@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { contact, navigation, services, site } from '../data/site';
+import { lockScroll, scrollToY } from '../motion/lenis';
 import { useTransition } from '../transition/context';
 import TransitionLink from '../transition/TransitionLink';
 import Arrow from './Arrow';
@@ -57,6 +58,7 @@ export default function Navbar() {
     const toggle = toggleRef.current;
     const panel = panelRef.current;
     document.body.classList.add('is-locked');
+    lockScroll(true);
     panel?.querySelector('a')?.focus();
 
     const onKey = (event) => {
@@ -78,6 +80,7 @@ export default function Navbar() {
 
     return () => {
       document.body.classList.remove('is-locked');
+      lockScroll(false);
       window.removeEventListener('keydown', onKey);
       const active = document.activeElement;
       if (!active || active === document.body || panel?.contains(active)) toggle?.focus();
@@ -89,7 +92,7 @@ export default function Navbar() {
   const goHome = (event) => {
     event.preventDefault();
     close();
-    if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (pathname === '/') scrollToY(0);
     else go('/');
   };
 
@@ -143,7 +146,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      <div id="site-menu" ref={panelRef} className="menu" hidden={!open}>
+      <div id="site-menu" ref={panelRef} className="menu" hidden={!open} data-lenis-prevent>
         <nav aria-label="Mobile">
           <ul className="menu__list">
             {navigation.map((item, i) => (

@@ -1,4 +1,5 @@
-import { prefersReducedMotion, ScrollTrigger } from '../motion/gsap';
+import { ScrollTrigger } from '../motion/gsap';
+import { scrollToY } from '../motion/lenis';
 
 /*
  * Scroll to a homepage section by id and move focus to it for keyboard and
@@ -14,8 +15,7 @@ export function scrollToSection(id, { instant = false } = {}) {
   if (opening) top = opening.end;
   else top = el.getBoundingClientRect().top + window.scrollY;
 
-  const behavior = instant || prefersReducedMotion() ? 'instant' : 'smooth';
-  window.scrollTo({ top, behavior });
+  scrollToY(top, { instant });
 
   const target = el.matches('[tabindex]') ? el : el.querySelector('[tabindex="-1"]');
   target?.focus({ preventScroll: true });

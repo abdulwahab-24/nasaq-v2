@@ -552,3 +552,92 @@
     font-size: clamp(2.4rem, 7vw, 10rem);
   }
 }
+
+/* ============ Project signatures ============ */
+/* A project's own field (gradient) fades in over the section colour. */
+.chapter {
+  isolation: isolate;
+}
+
+.chapter__field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--chapter-gradient);
+}
+
+.work--takeover .chapter__field {
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-in-out);
+}
+
+.work--takeover .chapter.is-active .chapter__field {
+  opacity: 1;
+}
+
+/* — bloom (Louiza): the pattern plate leans on the cover — */
+.spread__cover {
+  grid-row: 1;
+}
+
+.spread__bloom {
+  grid-column: 3 / -1;
+  grid-row: 2;
+  position: relative;
+  z-index: 1;
+  width: 78%;
+  justify-self: end;
+  margin-top: -34%;
+  margin-bottom: var(--space-s);
+}
+
+/* — strata (Rukaz): the pattern band runs behind the object — */
+.type__band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12%;
+  --band-ink: var(--chapter-accent);
+}
+
+/* — arcade (Snack Quest): pixel-stepped corners, slogan strip as the floor — */
+.chapter--sig-arcade .chapter__frame {
+  clip-path: var(--notch);
+}
+
+.chapter--sig-arcade .chapter__inner {
+  padding-bottom: var(--space-l);
+}
+
+@media (min-width: 768px) {
+  .spread__cover {
+    grid-row: 1 / span 2;
+  }
+
+  .spread__bloom {
+    grid-column: 3 / span 2;
+    grid-row: 2;
+    align-self: end;
+    width: 100%;
+    margin: 0;
+    translate: 0 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .spread__cover {
+    grid-row: 1 / span 3;
+  }
+
+  .spread__bloom {
+    grid-column: 4 / span 3;
+    grid-row: 3;
+    align-self: start;
+    margin: calc(var(--space-xl) * -1) 0 0;
+    translate: none;
+  }
+
+  .type__band {
+    bottom: 16%;
+  }
+}

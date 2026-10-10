@@ -2,6 +2,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+// The app places the scroll itself on every navigation (see App.jsx). ScrollTrigger
+// otherwise hands restoration back to the browser after each refresh, and
+// back/forward would land wherever that page was last left.
+if (typeof window !== 'undefined') ScrollTrigger.clearScrollMemory('manual');
 gsap.defaults({ ease: 'power3.out' });
 
 // Keep these in sync with the matching media queries in the stylesheets.

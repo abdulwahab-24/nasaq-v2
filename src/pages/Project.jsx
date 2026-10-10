@@ -1,7 +1,9 @@
 import { useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Arrow from '../components/Arrow';
+import ProjectLogo from '../components/ProjectLogo';
 import ResponsiveImage, { Backdrop } from '../components/ResponsiveImage';
+import { Bloom, Ticker } from '../components/Signature';
 import { allProjects, getNextProject, getProject, projectPath } from '../data/projects';
 import { DESKTOP, gsap, introDone, MOTION_OK } from '../motion/gsap';
 import useReveals from '../motion/useReveals';
@@ -9,10 +11,16 @@ import { useTransition } from '../transition/context';
 import TransitionLink from '../transition/TransitionLink';
 import { inkOn } from '../utils/colour';
 import { largestSrc } from '../utils/media';
+import { polygon, RECT, shapeIn } from '../utils/shape';
 import useMeta from '../utils/useMeta';
 import NotFound from './NotFound';
+import RukazPage from './projects/RukazPage';
 
 const pad = (n) => String(n).padStart(2, '0');
+
+// Projects with a page designed for them alone (project.page). They replace the
+// hero, facts and story; the route, meta and next-project link stay shared.
+const CUSTOM_PAGES = { rukaz: RukazPage };
 
 /* ---------- colour fields (project colours, inside project frames only) ---------- */
 
@@ -31,6 +39,13 @@ const fieldStyle = (tone, project) => {
 
 // Never display an image wider than its pixels.
 const nativeMax = (media) => ({ maxWidth: `${media.width}px` });
+
+// Rendered width of a stage image for each stage size (see .pb--s/m/l in project.css).
+const STAGE_SIZES = {
+  s: '(min-width: 480px) 448px, 100vw',
+  m: '(min-width: 900px) 832px, 100vw',
+  l: '(min-width: 1300px) 1216px, 100vw',
+};
 
 function Frame({ media, sizes, reveal = 'clip', className = '', parallax, style }) {
   return (
@@ -72,11 +87,20 @@ function Bleed({ block }) {
 }
 
 function Stage({ block, project }) {
-  const { media, size = 'm', place = 'center' } = block;
+  const { media, size = 'm', place = 'center', seamless } = block;
   return (
-    <section className={`pb pb--stage pb--${size} pb--${place}`} style={fieldStyle(block.tone, project)}>
+    <section
+      className={`pb pb--stage pb--${size} pb--${place}${seamless ? ' pb--seamless' : ''}`}
+      style={fieldStyle(block.tone, project)}
+    >
       <BlockLabel label={block.label} labelAr={block.labelAr} />
-      <Frame media={media} sizes="(min-width: 1024px) 60vw, 100vw" style={nativeMax(media)} />
+      {/* seamless: the field is the photograph's own backdrop, so there is no frame to open */}
+      <Frame
+        media={media}
+        sizes={STAGE_SIZES[size]}
+        style={nativeMax(media)}
+        reveal={seamless ? 'up' : 'clip'}
+      />
     </section>
   );
 }
@@ -160,10 +184,10 @@ function Sequence({ block }) {
         <BlockLabel label={block.label} labelAr={block.labelAr} />
         <p className="label pseq__count">{pad(block.items.length)} images</p>
       </div>
-      <div className="pseq__track" tabIndex={0} data-allow-overflow>
+      <div className="pseq__track" tabIndex={0} role="group" aria-label={`${block.label} — scrollable images`} data-allow-overflow>
         {block.items.map((m) => (
           <figure key={m.src} className="pseq__item" style={{ '--ratio': `${m.width} / ${m.height}` }}>
-            <ResponsiveImage media={m} sizes="(min-width: 1024px) 60vw, 85vw" />
+            <ResponsiveImage media={m} sizes="(min-width: 1024px) 90vw, 140vw" />
           </figure>
         ))}
       </div>
@@ -195,12 +219,13 @@ function LogoBlock({ block, project }) {
   const light = block.variant === 'light';
   const logo = light ? project.logoDark : project.logo;
   if (!logo) return null;
+  const tall = logo.height > logo.width;
   return (
     <section
-      className={`pb pb--logo pb--logo-${light ? 'light' : 'dark'}`}
-      style={light ? undefined : { '--field': project.theme.surface }}
+      className={`pb pb--logo pb--logo-${light ? 'light' : 'dark'}${tall ? ' pb--logo-tall' : ''}`}
+      style={light ? undefined : { '--field': block.tone ?? project.theme.surface }}
     >
-      <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} loading="lazy" data-reveal="up" />
+      <ProjectLogo logo={logo} ink={project.theme.ink} data-reveal="up" style={{ maxWidth: `${logo.width}px` }} />
     </section>
   );
 }
@@ -238,11 +263,19 @@ function Palette({ project }) {
   );
 }
 
-function Words({ block }) {
+function Words({ block, project }) {
+  // With the project's flag element, each word is set on a flag — as in its guidelines.
+  const flag = project.sig?.flag;
   return (
     <section className="pb pb--words" aria-label={block.label}>
       <BlockLabel label={block.label} labelAr={block.labelAr} />
-      <ul className="pwords" lang="ar" dir="rtl" data-reveal="lines">
+      <ul
+        className={`pwords${flag ? ' pwords--flags' : ''}`}
+        lang="ar"
+        dir="rtl"
+        data-reveal="lines"
+        style={flag ? { '--flag': `url(${flag.src})`, '--flag-ratio': `${flag.width} / ${flag.height}` } : undefined}
+      >
         {block.words.map((w) => (
           <li key={w} className="line">
             <span>{w}</span>
@@ -253,7 +286,70 @@ function Words({ block }) {
   );
 }
 
+/* ---------- signature blocks (built from the project's own artwork) ---------- */
+
+// spear: the mark is the aperture — it opens onto the photograph as the page scrolls
+function Aperture({ block, project }) {
+  const rootRef = useRef(null);
+  const { shape } = project.theme;
+
+  useLayoutEffect(() => {
+    if (!shape) return undefined;
+    const root = rootRef.current;
+    const mm = gsap.matchMedia(root);
+    mm.add(MOTION_OK, () => {
+      const frame = root.querySelector('.paperture__frame');
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: root, start: 'top 75%', end: 'top top', scrub: 0.5, invalidateOnRefresh: true },
+        })
+        .fromTo(frame, { clipPath: () => shapeIn(frame, shape, 0.56) }, { clipPath: polygon(RECT), ease: 'power2.in' })
+        .fromTo(frame.querySelector('img'), { scale: 1.25 }, { scale: 1, ease: 'none' }, 0);
+    });
+    return () => mm.revert();
+  }, [shape]);
+
+  return (
+    <section className="pb pb--aperture" ref={rootRef} style={{ '--field': project.theme.surface, '--field-ink': inkOn(project.theme.surface) }}>
+      <BlockLabel label={block.label} labelAr={block.labelAr} />
+      <figure className="paperture__frame">
+        <ResponsiveImage media={block.media} sizes="100vw" />
+      </figure>
+    </section>
+  );
+}
+
+// bloom: the pattern page, rebuilt live from the leaf mark
+function BloomBlock({ block, project }) {
+  const mark = project.sig?.leaf;
+  if (!mark) return null;
+  return (
+    <section className="pb pb--bloom" aria-label={block.label}>
+      <BlockLabel label={block.label} labelAr={block.labelAr} />
+      <div className="pbloom" role="img" aria-label={`${project.name} leaf pattern`}>
+        {block.plates.map((plate) => (
+          <Bloom key={plate.field} mark={mark} {...plate} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// arcade: the slogan strip
+function TickerBlock({ project }) {
+  const strip = project.sig?.ticker;
+  if (!strip) return null;
+  return (
+    <section className="pb pb--ticker">
+      <Ticker strip={strip} label={strip.alt} />
+    </section>
+  );
+}
+
 const BLOCKS = {
+  aperture: Aperture,
+  bloom: BloomBlock,
+  ticker: TickerBlock,
   bleed: Bleed,
   stage: Stage,
   detail: Detail,
@@ -294,12 +390,13 @@ function ProjectHero({ project, index }) {
       }
       // Without a page transition the work opens from a crop instead.
       if (!arriving && layout !== 'bleed') {
+        const stepped = project.signature === 'arcade';
         tl.fromTo(
           q('.phero__frame'),
           { clipPath: 'inset(18% 18% 18% 18%)' },
-          { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' },
+          { clipPath: 'inset(0% 0% 0% 0%)', duration: stepped ? 0.9 : 1.5, ease: stepped ? 'steps(8)' : 'expo.inOut' },
           0,
-        );
+        ).set(q('.phero__frame'), { clearProps: 'clipPath' });
       }
 
       const scrub = { trigger: rootRef.current, start: 'top top', end: 'bottom top', scrub: true };
@@ -315,24 +412,32 @@ function ProjectHero({ project, index }) {
       };
     });
     return () => mm.revert();
-  }, [project.slug, layout, registerHero, whenSettled, isTransitioning]);
+  }, [project.slug, project.signature, layout, registerHero, whenSettled, isTransitioning]);
 
   const style = {
     '--surface': project.theme.surface,
+    '--surface-field': project.theme.gradient,
     '--hero-ink': project.theme.ink,
     '--hero-accent': project.theme.accent,
     '--plate-ratio': `${media.width} / ${media.height}`,
     '--plate-w': media.width,
     '--plate-h': media.height,
+    '--plate-m-w': (media.mobile ?? media).width,
+    '--plate-m-h': (media.mobile ?? media).height,
+    '--mark-w': project.logo?.width,
+    '--mark-h': project.logo?.height,
   };
 
   return (
-    <header className={`phero phero--${layout}`} ref={rootRef} style={style}>
-      {layout === 'plate' && (
-        <p className="phero__giant" aria-hidden="true">
-          {project.name}
-        </p>
-      )}
+    <header className={`phero phero--${layout}${layout === 'plate' && project.hero.mark && project.logo ? ' phero--mark' : ''}`} ref={rootRef} style={style}>
+      {layout === 'plate' &&
+        (project.hero.mark && project.logo ? (
+          <ProjectLogo logo={project.logo} decorative className="phero__giant phero__giant--mark" loading="eager" />
+        ) : (
+          <p className="phero__giant" aria-hidden="true">
+            {project.name}
+          </p>
+        ))}
 
       <div className="phero__media">
         <span className="phero__frame" data-hero-target>
@@ -420,9 +525,16 @@ function NextProject({ project }) {
     '--next-field': project.theme.surface,
     '--next-ink': inkOn(project.theme.surface),
     '--next-accent': project.theme.accent,
+    '--next-gradient': project.theme.gradient,
+    // the next project is glimpsed through its own mark, when it has one
+    '--next-shape': project.theme.shape ? polygon(project.theme.shape) : undefined,
   };
   return (
-    <section className="pnext" aria-label="Next project" style={style}>
+    <section
+      className={`pnext${project.signature ? ` pnext--sig-${project.signature}` : ''}`}
+      aria-label="Next project"
+      style={style}
+    >
       <TransitionLink
         to={projectPath(project)}
         media
@@ -461,6 +573,7 @@ function ProjectPage({ project }) {
   useReveals(rootRef, [project.slug]);
 
   // Detail blocks are numbered in reading order.
+  const Custom = CUSTOM_PAGES[project.page];
   const detailIndex = project.story.reduce((acc, b, i) => {
     if (b.type === 'detail') acc[i] = Object.keys(acc).length + 1;
     return acc;
@@ -468,19 +581,26 @@ function ProjectPage({ project }) {
 
   return (
     <article
-      className={`project project--${project.theme.mode}`}
+      className={`project project--${project.theme.mode}${project.signature ? ` project--sig-${project.signature}` : ''}${Custom ? ` project--page-${project.page}` : ''}`}
+      data-motion={project.signature === 'arcade' ? 'steps' : undefined}
       ref={rootRef}
       style={{ '--accent-p': project.theme.accent, '--surface': project.theme.surface }}
     >
-      <ProjectHero project={project} index={index} />
-      <ProjectIntro project={project} />
-      <div className="pstory">
-        {project.story.map((block, i) => {
-          const Block = BLOCKS[block.type];
-          if (!Block) return null;
-          return <Block key={`${block.type}-${i}`} block={block} project={project} index={detailIndex[i]} />;
-        })}
-      </div>
+      {Custom ? (
+        <Custom project={project} index={index} total={allProjects.length} />
+      ) : (
+        <>
+          <ProjectHero project={project} index={index} />
+          <ProjectIntro project={project} />
+          <div className="pstory">
+            {project.story.map((block, i) => {
+              const Block = BLOCKS[block.type];
+              if (!Block) return null;
+              return <Block key={`${block.type}-${i}`} block={block} project={project} index={detailIndex[i]} />;
+            })}
+          </div>
+        </>
+      )}
       {next && next !== project && <NextProject project={next} />}
     </article>
   );

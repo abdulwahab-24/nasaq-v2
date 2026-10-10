@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Arrow from '../components/Arrow';
+import ProjectLogo from '../components/ProjectLogo';
 import ResponsiveImage from '../components/ResponsiveImage';
 import { projectPath } from '../data/projects';
 import { FINE_POINTER, gsap, prefersReducedMotion } from '../motion/gsap';
@@ -10,9 +11,23 @@ const pad = (n) => String(n).padStart(2, '0');
 
 /*
  * Index of every project — the part of the homepage that grows with the
- * portfolio. Rows are plain links; on fine pointers the hovered project's
- * cover follows the cursor, on touch each row carries a small thumbnail.
+ * portfolio. Rows are plain links; on fine pointers the active project's
+ * logo follows the cursor on that project's own field, on touch each row
+ * carries the same plate, small. Projects without a logo file show their cover.
  */
+function Plate({ project, sizes }) {
+  const { logo, theme } = project;
+  if (!logo) return <ResponsiveImage media={project.cover} sizes={sizes} alt="" />;
+  return (
+    <span
+      className="index__plate"
+      style={{ '--plate-field': project.logoField ?? theme.gradient ?? theme.surface }}
+    >
+      <ProjectLogo logo={logo} ink={theme.ink} decorative className="index__logo" />
+    </span>
+  );
+}
+
 export default function WorkIndex({ projects }) {
   const rootRef = useRef(null);
   const previewRef = useRef(null);
@@ -77,7 +92,7 @@ export default function WorkIndex({ projects }) {
               <span className="index__cat">{p.category}</span>
               <span className="index__year">{p.year ?? '—'}</span>
               <span className="index__thumb" aria-hidden="true">
-                <ResponsiveImage media={p.cover} sizes="96px" alt="" />
+                <Plate project={p} sizes="96px" />
               </span>
               <span className="index__arrow" aria-hidden="true">
                 <Arrow />
@@ -90,7 +105,7 @@ export default function WorkIndex({ projects }) {
       <div className="index__preview" ref={previewRef} aria-hidden="true">
         {projects.map((p) => (
           <div key={p.slug} className={`index__preview-item${active === p.slug ? ' is-active' : ''}`}>
-            <ResponsiveImage media={p.cover} sizes="26vw" alt="" />
+            <Plate project={p} sizes="26vw" />
           </div>
         ))}
       </div>
