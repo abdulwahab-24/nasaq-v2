@@ -1,0 +1,62 @@
+:root {
+  /* Official NASAQ palette — do not approximate */
+  --c-white: #ffffff;
+  --c-soft-white: #f7f7f7;
+  --c-blue: #374eff;
+  --c-blue-2: #4860ff;
+  --c-navy: #000628;
+  --c-light-blue: #c9d4ff;
+  --c-black: #000000;
+
+  /* Roles (dark default) */
+  --bg: var(--c-navy);
+  --fg: var(--c-white);
+  --fg-muted: rgb(201 212 255 / 0.7); /* Light Blue tint, per identity tint scale */
+  --line: rgb(201 212 255 / 0.2);
+  --accent: var(--c-blue-2);
+
+  /* Type families */
+  --font-display: 'Guton', 'Helvetica Neue', Arial, sans-serif;
+  --font-text: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-arabic: 'ABC Favorit Arabic', 'Segoe UI', Tahoma, sans-serif;
+
+  /* Fluid type scale */
+  --fs-micro: 0.75rem;
+  --fs-small: clamp(0.78rem, 0.75rem + 0.15vw, 0.9rem);
+  --fs-body: clamp(0.95rem, 0.9rem + 0.25vw, 1.0625rem);
+  --fs-lead: clamp(1.15rem, 0.95rem + 0.8vw, 1.75rem);
+  --fs-h3: clamp(1.6rem, 1.1rem + 2.2vw, 3rem);
+  --fs-h2: clamp(2.6rem, 1.4rem + 5.6vw, 7.5rem);
+  --fs-giant: clamp(4rem, 1rem + 13vw, 17rem);
+
+  /* Layout */
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --col-gap: clamp(0.75rem, 1.6vw, 1.75rem);
+  --nav-h: clamp(4rem, 3.4rem + 2vw, 5.5rem);
+  --max-w: 120rem;
+  --space-xs: clamp(0.5rem, 0.4rem + 0.4vw, 0.75rem);
+  --space-s: clamp(0.75rem, 0.6rem + 0.6vw, 1.25rem);
+  --space-m: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
+  --space-l: clamp(3rem, 2rem + 4vw, 6.5rem);
+  --space-xl: clamp(5rem, 3rem + 8vw, 11rem);
+
+  /* NASAQ frame system: size of the corner marks that frame project work */
+  --mark-corner: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
+  --dur: 0.5s;
+}
+
+/* Light surfaces flip the roles */
+.is-light,
+.chapter--light,
+.statement,
+.project--light {
+  --bg: var(--c-soft-white);
+  --fg: var(--c-navy);
+  --fg-muted: rgb(0 6 40 / 0.62);
+  --line: rgb(0 6 40 / 0.16);
+  --accent: var(--c-blue);
+}

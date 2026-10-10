@@ -1,0 +1,189 @@
+/*
+ * The opening: hero + first project frame.
+ * Default (mobile, reduced motion, no JS): hero, then the framed project, stacked.
+ * Staged (desktop with motion): both share one viewport-sized, pinned stage and
+ * the frame opens out of the hero symbol (see motion/useOpeningMotion.js).
+ */
+
+.opening {
+  position: relative;
+  /* inline edge that keeps the staged frame on the same column as the content */
+  --edge: max(var(--gutter), calc((100% - var(--max-w)) / 2 + var(--gutter)));
+  --caption-h: clamp(4.75rem, 11svh, 7rem);
+}
+
+.opening__work {
+  position: relative;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding: var(--space-l) var(--gutter) 0;
+  scroll-margin-top: var(--nav-h);
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.frame__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--c-black);
+}
+
+.frame__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* NASAQ frame system: the four symbol pieces mark the corners of the work */
+.corners {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.corners__piece {
+  position: absolute;
+  width: var(--mark-corner);
+  aspect-ratio: 1;
+  margin: calc(var(--mark-corner) / -2) 0 0 calc(var(--mark-corner) / -2);
+}
+
+.corners__piece--tl {
+  left: 0;
+  top: 0;
+}
+
+.corners__piece--tr {
+  left: 100%;
+  top: 0;
+}
+
+.corners__piece--bl {
+  left: 0;
+  top: 100%;
+}
+
+.corners__piece--br {
+  left: 100%;
+  top: 100%;
+}
+
+.corners__piece .quad {
+  display: block;
+}
+
+/* Caption */
+.frame__caption {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.25rem var(--space-s);
+  padding-top: calc(var(--space-s) + var(--mark-corner) / 2);
+}
+
+.frame__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.frame__title:focus {
+  outline: none;
+}
+
+.frame__ar {
+  font-size: calc(var(--fs-h3) * 0.9);
+  line-height: 1.2;
+  color: var(--c-light-blue);
+  text-align: end;
+}
+
+.frame__count {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 640px) {
+  .frame {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .frame {
+    aspect-ratio: 2.3 / 1;
+  }
+
+  .frame__caption {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .frame__count {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: end;
+  }
+
+  .frame__ar {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+/* ---------- Staged mode (keep in sync with STAGED in motion/gsap.js) ---------- */
+@media (min-width: 1024px) and (min-height: 560px) and (prefers-reduced-motion: no-preference) {
+  .js .opening {
+    height: 100vh;
+    height: 100svh;
+  }
+
+  .js .opening .hero {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .js .opening__work {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    max-width: none;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  .js .frame {
+    position: absolute;
+    top: var(--nav-h);
+    right: var(--edge);
+    bottom: var(--caption-h);
+    left: var(--edge);
+    aspect-ratio: auto;
+  }
+
+  /* Closed until the motion script measures where the symbol is */
+  .js .frame__media {
+    clip-path: inset(50% 50% 50% 50%);
+  }
+
+  /* The hero's own symbol becomes these marks; keep them only for measuring */
+  .js .frame__marks {
+    visibility: hidden;
+  }
+
+  .js .frame__caption {
+    position: absolute;
+    right: var(--edge);
+    bottom: 0;
+    left: var(--edge);
+    height: var(--caption-h);
+    padding: 0;
+    padding-top: calc(var(--mark-corner) / 2);
+  }
+}

@@ -1,0 +1,201 @@
+/* ---------- Opening intro ---------- */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: auto;
+  --size: clamp(6rem, 22vmin, 13rem);
+}
+
+.intro__panel {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background: var(--c-navy);
+}
+
+.intro__panel--tl {
+  top: 0;
+  left: 0;
+}
+
+.intro__panel--tr {
+  top: 0;
+  right: 0;
+}
+
+.intro__panel--bl {
+  bottom: 0;
+  left: 0;
+}
+
+.intro__panel--br {
+  bottom: 0;
+  right: 0;
+}
+
+/* each piece sits on its panel's inner corner, so the four meet at the centre */
+.intro__piece {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+}
+
+.intro__piece .quad {
+  display: block;
+}
+
+.intro__panel--tl .intro__piece {
+  right: calc(var(--size) / -2);
+  bottom: calc(var(--size) / -2);
+}
+
+.intro__panel--tr .intro__piece {
+  left: calc(var(--size) / -2);
+  bottom: calc(var(--size) / -2);
+}
+
+.intro__panel--bl .intro__piece {
+  right: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+}
+
+.intro__panel--br .intro__piece {
+  left: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+}
+
+/* ---------- Page transition layer ---------- */
+.pt {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: auto;
+}
+
+.pt__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--c-navy);
+  opacity: 0;
+}
+
+.pt__media {
+  position: fixed;
+  object-fit: cover;
+  max-width: none;
+}
+
+.pt__panel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--c-navy);
+}
+
+.pt__mark {
+  width: clamp(4rem, 12vmin, 7rem);
+  height: auto;
+}
+
+/* ---------- Cursor ---------- */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  pointer-events: none;
+}
+
+.cursor__disc {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 6.25rem;
+  height: 6.25rem;
+  margin: -3.125rem 0 0 -3.125rem;
+  border-radius: 50%;
+  background: var(--c-blue);
+  color: var(--c-white);
+  transform: scale(0);
+  transition: transform 0.45s var(--ease-out);
+}
+
+.cursor--on .cursor__disc {
+  transform: scale(1);
+}
+
+.cursor__label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+[data-cursor] {
+  cursor: none;
+}
+
+@media not all and (hover: hover) and (pointer: fine) {
+  [data-cursor] {
+    cursor: pointer;
+  }
+}
+
+/* ---------- 404 ---------- */
+.notfound {
+  display: grid;
+  align-content: center;
+  gap: var(--space-s);
+  min-height: 100svh;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding: calc(var(--nav-h) + var(--space-l)) var(--gutter) var(--space-l);
+}
+
+.notfound__mark {
+  width: clamp(5rem, 14vw, 10rem);
+  margin-bottom: var(--space-m);
+}
+
+.mark--broken [data-quadrant='tl'] {
+  transform: translate(-14%, -6%) rotate(-12deg);
+}
+
+.mark--broken [data-quadrant='tr'] {
+  transform: translate(10%, -16%);
+}
+
+.mark--broken [data-quadrant='bl'] {
+  transform: translate(-4%, 18%) rotate(8deg);
+}
+
+.mark--broken [data-quadrant='br'] {
+  transform: translate(16%, 6%);
+}
+
+.notfound__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3rem, 1rem + 10vw, 12rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.notfound__ar {
+  font-size: var(--fs-lead);
+  color: var(--c-light-blue);
+}
+
+.notfound__body {
+  color: var(--fg-muted);
+  max-width: 40ch;
+}
+
+.notfound__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  margin-top: var(--space-s);
+}

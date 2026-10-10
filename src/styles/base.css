@@ -1,0 +1,247 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body.is-locked,
+.is-intro body {
+  overflow: hidden;
+}
+
+main:focus {
+  outline: none;
+}
+
+video {
+  display: block;
+  max-width: 100%;
+}
+
+em {
+  font-style: normal;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+[lang='ar'] {
+  font-family: var(--font-arabic);
+}
+
+::selection {
+  background: var(--c-blue);
+  color: var(--c-white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus, var(--c-light-blue));
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--c-white);
+  color: var(--c-navy);
+  font-family: var(--font-display);
+  font-weight: 500;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* Masked line used for typographic reveals */
+.line {
+  display: block;
+  overflow: clip;
+  /* room for descenders / Arabic marks inside the mask */
+  padding-block: 0.06em 0.12em;
+  margin-block: -0.06em -0.12em;
+}
+
+.line > span {
+  display: block;
+}
+
+/* Shared micro label */
+.label {
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--fg-muted);
+}
+
+/* Text link with arrow — used for CTAs */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-body);
+  letter-spacing: -0.005em;
+  position: relative;
+}
+
+.text-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.55rem;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.text-link__arrow {
+  display: inline-block;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .text-link:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+  }
+
+  .text-link:hover .text-link__arrow {
+    transform: translateX(0.25em);
+  }
+
+  .text-link--external:hover .text-link__arrow {
+    transform: translate(0.15em, -0.15em);
+  }
+}
+
+.text-link--solid {
+  padding: 0 1.25rem;
+  background: var(--c-blue);
+  color: var(--c-white);
+  border-radius: 999px;
+  transition: background-color var(--dur) var(--ease-out);
+}
+
+.text-link--solid::after {
+  display: none;
+}
+
+@media (hover: hover) {
+  .text-link--solid:hover {
+    background: var(--c-blue-2);
+  }
+}
+
+@media (hover: hover) {
+  .text-link--down:hover .text-link__arrow {
+    transform: translateY(0.2em);
+  }
+}
+
+.is-light :focus-visible,
+.chapter--light :focus-visible,
+.statement :focus-visible,
+.project--light :focus-visible {
+  --focus: var(--c-blue);
+}
+
+.services :focus-visible {
+  --focus: var(--c-white);
+}
+
+/* Section rhythm helper */
+.section-pad {
+  padding: var(--space-xl) var(--gutter);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

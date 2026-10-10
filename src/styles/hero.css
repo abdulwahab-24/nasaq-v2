@@ -1,0 +1,216 @@
+/*
+ * Hero — the bilingual axis.
+ * Mobile/tablet: Arabic, the axis (horizontal, symbol on it), English.
+ * Desktop: Arabic | axis + symbol | English — both languages start at the axis.
+ */
+
+.hero {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--space-m);
+  min-height: 100vh;
+  min-height: 100svh;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding: calc(var(--nav-h) + env(safe-area-inset-top) + var(--space-s)) var(--gutter)
+    calc(var(--space-m) + env(safe-area-inset-bottom));
+}
+
+.hero__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  gap: clamp(0.75rem, 3svh, 2rem);
+}
+
+.hero__ar {
+  font-weight: 500;
+  font-size: clamp(3.4rem, min(19vw, 13svh), 7rem);
+  line-height: 1.12;
+  text-align: start; /* right, in RTL */
+}
+
+.hero__accent {
+  color: var(--accent);
+}
+
+.hero__en {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.5rem, min(13.4vw, 9.5svh), 5.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+.hero__en .line,
+.hero__ar .line {
+  white-space: nowrap;
+}
+
+.hero__axis {
+  --mark-w: clamp(3.5rem, min(16vw, 11svh), 6rem);
+  --rule: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.hero__rule {
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1px;
+  background: var(--line);
+  opacity: var(--rule);
+  transform-origin: left center;
+  /* the rule stops short of the symbol instead of running behind it */
+  -webkit-mask: linear-gradient(to right, transparent calc(var(--mark-w) + 1rem), #000 0);
+  mask: linear-gradient(to right, transparent calc(var(--mark-w) + 1rem), #000 0);
+}
+
+.hero__mark {
+  position: relative;
+  width: var(--mark-w);
+}
+
+.hero__foot {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.hero__intro {
+  max-width: 34ch;
+  color: var(--fg-muted);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+}
+
+/* Symbol */
+.mark {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.mark__piece {
+  position: absolute;
+  inset: 0;
+}
+
+.quad {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.quad--tl {
+  clip-path: inset(0 50% 50% 0);
+}
+
+.quad--tr {
+  clip-path: inset(0 0 50% 50%);
+}
+
+.quad--bl {
+  clip-path: inset(50% 50% 0 0);
+}
+
+.quad--br {
+  clip-path: inset(50% 0 0 50%);
+}
+
+/* Tablet portrait: more room, same stack */
+@media (min-width: 640px) {
+  .hero__foot {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .hero__actions {
+    justify-content: flex-end;
+  }
+
+  .hero__intro {
+    font-size: var(--fs-body);
+  }
+}
+
+/* Desktop and landscape: the axis stands up */
+@media (min-width: 1024px), (min-width: 640px) and (orientation: landscape) and (max-height: 560px) {
+  .hero__stage {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0 clamp(1rem, 2.2vw, 2.75rem);
+  }
+
+  .hero__ar {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: clamp(3rem, min(8.6vw, 17svh), 14rem);
+    line-height: 1.16;
+  }
+
+  .hero__en {
+    grid-column: 3;
+    grid-row: 1;
+    font-size: clamp(2.4rem, min(6.1vw, 12.5svh), 11rem);
+  }
+
+  .hero__axis {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .hero__axis {
+    --mark-w: clamp(4rem, min(7.5vw, 15svh), 11.5rem);
+  }
+
+  .hero__rule {
+    inset: 0 auto 0 50%;
+    width: 1px;
+    height: auto;
+    transform-origin: center top;
+    -webkit-mask: linear-gradient(
+      to bottom,
+      #000 calc(50% - var(--mark-w) / 2 - 1.25rem),
+      transparent 0 calc(50% + var(--mark-w) / 2 + 1.25rem),
+      #000 0
+    );
+    mask: linear-gradient(
+      to bottom,
+      #000 calc(50% - var(--mark-w) / 2 - 1.25rem),
+      transparent 0 calc(50% + var(--mark-w) / 2 + 1.25rem),
+      #000 0
+    );
+  }
+}
+
+/* Short landscape phones */
+@media (orientation: landscape) and (max-height: 560px) {
+  .hero {
+    padding-top: calc(var(--nav-h) + var(--space-xs));
+  }
+
+  .hero__ar {
+    font-size: clamp(2rem, 15svh, 4rem);
+  }
+
+  .hero__en {
+    font-size: clamp(1.6rem, 10svh, 3.25rem);
+  }
+
+  .hero__intro {
+    font-size: var(--fs-small);
+  }
+}

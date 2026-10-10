@@ -1,16 +1,52 @@
-# React + Vite
+# NASAQ — نسق
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website for NASAQ, a Saudi brand identity studio. React + Vite + GSAP, plain CSS.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev       # local development
+npm run lint
+npm run build     # production build → dist/
+npm run preview   # serve the build locally
+```
 
-## React Compiler
+## Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+src/
+  data/projects.js     every project (single source of truth — see header comment)
+  data/site.js         global copy, navigation, contact links
+  data/media.json      generated image manifest (do not edit by hand)
+  pages/               Home, Project (/work/:slug), NotFound
+  sections/            homepage sections
+  components/          Navbar, Footer, Intro, Cursor, media helpers
+  transition/          page transitions (image-expand and panel)
+  motion/              GSAP setup, opening motion, scroll reveals
+  styles/              tokens + one stylesheet per area
+scripts/build-media.mjs  exports responsive WebP from /brand originals
+public/                  fonts, generated media, reel video, icons
+```
 
-## Expanding the ESLint configuration
+## Adding a project
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Put the originals in `brand/work/<folder>`.
+2. Add entries to `MANIFEST` in `scripts/build-media.mjs` (optional crop per image), then
+   `npm i -D sharp` (if missing) and `node scripts/build-media.mjs work/<slug>`.
+3. Add the project to `src/data/projects.js`. The homepage chapters, index, footer,
+   project page and next-project links update automatically. `home.layout` picks one of
+   `cinema | spread | type | mosaic`; `story` composes the project page from blocks.
+
+Only facts present in the supplied material are written; unknown fields stay `null`.
+
+## Deployment
+
+Any static host. SPA fallback is included for Netlify (`public/_redirects`) and Vercel
+(`vercel.json`). For other hosts, rewrite unknown paths to `/index.html`.
+
+## Before public launch
+
+- **ABC Favorit Arabic** files are *Trial* builds — replace with licensed web fonts
+  (same family name and weights in `src/styles/fonts.css`).
+- Add the production domain to `og:url` / a sitemap once known.

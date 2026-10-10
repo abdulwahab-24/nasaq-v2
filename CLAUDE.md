@@ -1,738 +1,637 @@
-# NASAQ V2 — MASTER INSTRUCTIONS
+# NASAQ — Brand & Website Content
 
-## PROJECT
+## 1. Brand Overview
 
-You are designing and developing the official website for NASAQ.
+Arabic Name:
+نسق
 
-NASAQ is a Saudi branding and visual identity studio.
+English Name:
+NASAQ
 
-This is NOT:
-- an architecture studio
-- a SaaS company
-- an AI startup
-- a gaming brand
-- a technology demo
+Brand Type:
+Saudi branding and visual identity studio.
 
-The website must immediately communicate:
+Based In:
+Saudi Arabia
 
-BRANDING
-VISUAL IDENTITY
-STRATEGY
-ART DIRECTION
-BRAND SYSTEMS
-CREATIVE DIRECTION
+NASAQ is a Saudi branding studio focused on building clear, meaningful and distinctive brands.
+
+We work across strategy, identity, art direction and brand systems to create brands that feel coherent, relevant and built to last.
 
 ---
 
-# CORE PRINCIPLE
+## 2. Brand Meaning
 
-IDENTITY FIRST.
-WORK SECOND.
-MOTION THIRD.
-TECHNOLOGY LAST.
-
-Do not add effects simply because they are technically impressive.
-
-Every visual and animation decision must support:
-- the NASAQ identity
-- the project work
-- typography
-- alignment
-- visual systems
-- storytelling
-
----
-
-# BRAND IDEA
-
-The name NASAQ / نسق communicates ideas such as:
+The name NASAQ / نسق is connected to:
 
 - alignment
-- order
-- structure
 - coherence
 - rhythm
-- system
+- order
+- structure
+- connection
+- systems
 
-These ideas may influence:
-- layout
+These ideas are fundamental to the NASAQ brand.
+
+The website may express them through:
+
 - typography
-- grids
+- composition
+- layout
 - transitions
-- GSAP animation
-- project presentation
+- project storytelling
+- meaningful motion
 
-A useful motion principle is:
-
-scattered → aligned
-
-separate → connected
-
-cropped → revealed
-
-individual elements → visual system
-
-Do not use this concept mechanically everywhere.
+The concept should not become a repetitive visual gimmick.
 
 ---
 
-# BRAND COLORS
+## 3. Official Brand Colors
 
-NASAQ UI foundation:
+Use the official NASAQ color palette.
+
+### White
+
+HEX:
+#FFFFFF
+
+RGB:
+255 255 255
+
+CMYK:
+0 0 0 0
+
+---
+
+### Soft White
+
+HEX:
+#F7F7F7
+
+RGB:
+247 247 247
+
+CMYK:
+2 2 2 0
+
+---
+
+### Primary Blue
+
+HEX:
+#374EFF
+
+RGB:
+55 78 255
+
+CMYK:
+80 69 0 0
+
+---
+
+### Secondary Blue
+
+HEX:
+#4860FF
+
+RGB:
+72 96 255
+
+CMYK:
+76 65 0 0
+
+---
+
+### Deep Navy
+
+HEX:
+#000628
+
+RGB:
+0 6 40
+
+CMYK:
+89 82 52 71
+
+---
+
+### Light Blue
+
+HEX:
+#C9D4FF
+
+RGB:
+201 212 255
+
+CMYK:
+18 13 0 0
+
+---
+
+### Black
+
+HEX:
+#000000
+
+RGB:
+0 0 0
+
+CMYK:
+75 68 67 90
+
+---
+
+## 4. Color Usage
+
+The NASAQ website should remain grounded in the official palette.
+
+Primary interface colors should generally use:
 
 Deep Navy:
 #000628
 
 White:
-#F8FAFF
+#FFFFFF
+
+Soft White:
+#F7F7F7
 
 Primary Blue:
-#3882FF
+#374EFF
 
-Soft Blue:
-#8FB8FF
+Secondary Blue:
+#4860FF
 
-Secondary Text:
-#C7D0E0
+Light Blue:
+#C9D4FF
 
-Subtle Border:
-rgba(248, 250, 255, 0.15)
+Black:
+#000000
 
-Use navy, white and NASAQ blue as the primary website identity.
+Do not replace these colors with approximate alternatives.
 
-Other colors may appear naturally inside individual branding projects.
+Do not introduce unrelated primary interface colors.
 
-IMPORTANT:
+Colors belonging to individual NASAQ projects may appear naturally inside project imagery and case studies.
 
-Do NOT turn:
-- beige
-- sand
-- brown
-- gold
-- architectural stone colors
-
-into NASAQ's main interface palette.
-
-Saudi atmosphere should come primarily from:
-- language
-- art direction
-- photography
-- branding applications
-- local cultural context
-- contemporary Arabic typography
-
-not from making the website look like an architecture portfolio.
+The surrounding NASAQ interface should remain visually connected to the official NASAQ palette.
 
 ---
 
-# VISUAL REFERENCES
+## 5. Official Typography
 
-The main creative references are stored inside:
+Official NASAQ font files are stored in:
 
-/brand/references
+/brand/fonts
 
-PRIMARY REFERENCE:
-Ragged Edge
+Inspect the supplied font files before implementing typography.
 
-Study it for:
-- creative confidence
-- bold typography
-- strong copywriting
-- unusual but controlled composition
-- project-first storytelling
-- engaging transitions
-- personality
+Use the official NASAQ typefaces whenever technically and legally suitable for web use.
 
-SECONDARY REFERENCE:
-Gene Branding
+Do not replace official fonts with generic fonts unless necessary.
 
-Study it for:
-- premium branding presentation
-- case study structure
-- identity applications
-- regional/Saudi sensibility
-- large project imagery
-- visual storytelling
+Use only font weights that actually exist in the supplied files.
 
-You may also learn general editorial principles from other supplied references.
+Do not synthesize fake bold or italic styles.
 
-DO NOT COPY any reference website literally.
+Arabic and English typography should feel intentionally related.
 
-Extract the design thinking and reinterpret it for NASAQ.
+Typography is a major part of the NASAQ website identity.
 
-NASAQ must have its own visual language.
+Use:
+
+- strong editorial typography
+- clear hierarchy
+- large display type where appropriate
+- generous spacing
+- concise copy
+- thoughtful Arabic and English relationships
+
+Do not use Arabic merely as decoration.
 
 ---
 
-# DESIRED FEELING
+## 6. Official Identity References
 
-The site should feel:
+Official NASAQ visual identity references are stored in:
 
-- bold
-- contemporary
-- premium
-- intelligent
-- editorial
-- confident
-- creative
-- Saudi
-- refined
-- memorable
-- intentionally minimal
+/brand/identity
 
-Minimal does NOT mean boring.
+These references may contain:
 
-The website should have creative moments, but they must be controlled.
-
----
-
-# WHAT TO AVOID
-
-Do not make the site resemble:
-
-- AI startup landing pages
-- SaaS templates
-- crypto websites
-- cybersecurity websites
-- gaming sites
-- sci-fi interfaces
-- architecture studios
-- generic agency templates
-- over-designed Awwwards experiments
-
-Avoid excessive:
-
-- glow
-- particles
-- glassmorphism
-- HUD elements
-- meaningless grids
-- random plus signs
-- futuristic interface decoration
-- floating 3D objects
-- giant technical diagrams
-- scroll-jacking
-- animation on every element
-
-Do not use generic cards everywhere.
-
-Do not create a three-column SaaS feature layout unless specifically requested.
-
----
-
-# BRANDING MUST BE VISIBLE
-
-The website should visually demonstrate what NASAQ does.
-
-Prioritize imagery and content such as:
-
-- logos
-- identity systems
+- official color usage
 - typography
-- packaging
-- posters
-- printed material
-- signage
-- digital identity
-- campaigns
-- social applications
-- stationery
-- brand guidelines
-- art direction
-- photography
-- motion identity
+- composition
+- logo applications
+- graphic language
+- visual systems
+- brand applications
 
-Project work should be the hero of the website.
+Treat these files as an official visual source of truth.
+
+If a stylistic assumption conflicts with the supplied official identity, the official identity should take priority.
 
 ---
 
-# TYPOGRAPHY
+## 7. Official Logo
 
-Typography is one of the main design tools.
-
-Use:
-
-- large editorial headlines
-- strong scale contrast
-- short confident copy
-- carefully controlled spacing
-- clear information hierarchy
-- expressive but disciplined composition
-
-Arabic can be used as a major graphic element.
-
-Arabic and English should feel intentionally designed together.
-
-Do not use uppercase everywhere.
-
-Do not introduce random fonts.
-
-If brand fonts are supplied locally, use them.
-
-Never invent or substitute a brand font without reason.
-
----
-
-# LAYOUT
-
-Use a clear underlying system but do not make every section identical.
-
-Prefer:
-- large compositions
-- asymmetric editorial layouts
-- generous whitespace
-- strong image crops
-- varied project rhythm
-- controlled overlap when appropriate
-
-Projects should not look like generic cards.
-
-Each project may temporarily introduce its own colors and personality.
-
-NASAQ's navigation and overall framework should remain consistent.
-
----
-
-# SAUDI / ARABIC CHARACTER
-
-NASAQ should feel Saudi and contemporary.
-
-Do not communicate Saudi identity only through:
-- desert photos
-- traditional buildings
-- heritage motifs
-
-Those may appear when relevant to a project, but they are not the core visual language.
-
-Prefer a more contemporary expression through:
-
-- Arabic typography
-- regional brands
-- local art direction
-- Arabic/English relationships
-- photography
-- cultural details
-- packaging
-- visual identity applications
-
-NASAQ is a branding studio first.
-
----
-
-# MOTION
-
-GSAP is installed and may be used.
-
-There are GSAP skills available in Claude Code. Use them when relevant.
-
-Motion should reinforce the concept.
-
-Good uses:
-
-- text mask reveals
-- typography alignment
-- image reveals
-- project transitions
-- subtle parallax
-- controlled stagger
-- scroll-triggered composition
-- FLIP transitions
-- cursor interactions
-- layout transformations
-- brand elements assembling into systems
-
-Motion should feel:
-
-- smooth
-- deliberate
-- premium
-- responsive
-- restrained
-
-Do NOT make normal navigation difficult.
-
-Do NOT pin every section.
-
-Do NOT create unnecessary long scroll distances.
-
-The user should always feel in control.
-
----
-
-# SCROLL EXPERIENCE
-
-The website should contain memorable scroll moments.
-
-However, scroll interaction must support branding or storytelling.
-
-Examples:
-
-A word or identity system aligns as the user scrolls.
-
-A project image expands from editorial crop to full viewport.
-
-Brand elements assemble into a finished identity system.
-
-Typography transitions from scattered to aligned.
-
-Project artwork becomes the next section instead of cutting abruptly.
-
-Use these ideas selectively.
-
-Normal vertical scrolling remains the foundation.
-
----
-
-# HOMEPAGE DIRECTION
-
-The homepage should move quickly from NASAQ's statement into the work.
-
-Suggested rhythm:
-
-Navbar
-
-Hero
-
-Selected Work
-
-Studio Statement
-
-More Selected Work
-
-Capabilities / Services
-
-Studio
-
-Contact
-
-Footer
-
-This is not a rigid template.
-
-Do not create unnecessary sections.
-
----
-
-# HERO
-
-The Hero should be bold and memorable without relying on a complicated video.
-
-Prioritize:
-
-- NASAQ identity
-- strong typography
-- confident copy
-- excellent composition
-- one meaningful interactive idea
-- a clear path into the work
-
-Possible creative direction:
-
-Use the idea of alignment / نسق as a subtle interaction or scroll behavior.
-
-Do NOT turn the Hero into a technology demo.
-
-The viewer should understand within seconds that NASAQ creates brands.
-
----
-
-# SELECTED WORK
-
-Selected Work is one of the most important parts of the website.
-
-Do not use a generic portfolio grid.
-
-Prefer:
-- large imagery
-- full-width or near-full-width compositions
-- strong project titles
-- category / year information
-- varied layout
-- visual transitions between projects
-
-Each project's branding should dominate its own moment.
-
----
-
-# PROJECT / CASE STUDY PAGES
-
-Use Gene Branding as a useful structural reference.
-
-Possible structure:
-
-Project Hero
-
-Client
-Industry
-Services
-Year
-
-Overview
-
-Large identity imagery
-
-Challenge
-
-Visual system
-
-Typography / color / logo
-
-Applications
-
-Motion / digital if available
-
-Result / impact if available
-
-Next project
-
-Do not force every project into an identical visual template.
-
-The work should influence each case study's composition.
-
----
-
-# SERVICES
-
-Keep services concise and confident.
-
-Potential categories:
-
-- Brand Strategy
-- Brand Identity
-- Art Direction
-- Brand Systems
-- Digital Experience
-
-Avoid icons unless they genuinely improve the design.
-
-Do not make Services look like SaaS feature cards.
-
----
-
-# TECH STACK
-
-Use:
-
-React
-Vite
-JavaScript
-CSS
-GSAP when useful
-
-Do NOT migrate to TypeScript.
-
-Do NOT install packages unless there is a clear reason.
-
-Do NOT add Lenis, Framer Motion, Three.js or other libraries automatically.
-
-Ask yourself whether CSS or existing GSAP can solve the problem first.
-
----
-
-# CODE STRUCTURE
-
-Prefer:
-
-src/
-  components/
-  sections/
-  styles/
-  assets/
-  utils/
-
-Keep section-specific CSS organized.
-
-Avoid giant monolithic components.
-
-Avoid premature abstractions.
-
-Avoid unnecessary design-system engineering.
-
-Use semantic HTML.
-
-Maintain accessibility.
-
-Build responsive layouts intentionally.
-
----
-
-# PERFORMANCE
-
-Performance matters.
-
-Do not automatically use:
-- huge image sequences
-- giant videos
-- WebGL
-- heavy 3D
-- unnecessary JavaScript
-
-Optimize images.
-
-Lazy-load below-the-fold media where appropriate.
-
-Prefer transform and opacity for animation.
-
-Do not sacrifice usability for effects.
-
----
-
-# RESPONSIVE DESIGN
-
-Desktop should feel spacious and editorial.
-
-Mobile must be intentionally designed.
-
-Do not simply shrink desktop.
-
-Preserve:
-- hierarchy
-- project imagery
-- strong typography
-- usable navigation
-- meaningful interaction
-
-Simplify motion on smaller devices when necessary.
-
----
-
-# SOURCE OF TRUTH
-
-Before designing, inspect:
+Official NASAQ logo assets are stored in:
 
 /brand/logo
-/brand/references
+
+Use the supplied logo files.
+
+Do not:
+
+- redraw the logo
+- alter its proportions
+- stretch it
+- recreate it with another font
+- permanently modify its geometry
+- add unnecessary effects to the official mark
+
+The logo may participate in motion or transitions as long as its identity remains intact.
+
+---
+
+## 8. Brand Personality
+
+NASAQ should feel:
+
+- premium
+- bold
+- contemporary
+- confident
+- intelligent
+- creative
+- editorial
+- refined
+- systematic
+- distinctive
+- Saudi
+
+The brand should not feel:
+
+- corporate
+- generic
+- futuristic for the sake of futurism
+- architectural
+- SaaS-like
+- AI-generated
+- gaming-oriented
+- overly technical
+
+---
+
+## 9. Saudi Character
+
+NASAQ is a Saudi studio.
+
+Saudi character should be communicated through contemporary visual culture rather than stereotypes.
+
+Good expressions may include:
+
+- Arabic typography
+- bilingual composition
+- Saudi and regional project work
+- contemporary art direction
+- local cultural context
+- confident Arabic language
+- relevant photography
+
+Do not rely on:
+
+- desert imagery
+- traditional architecture
+- sand colors
+- heritage decoration
+
+unless they are genuinely relevant to a specific project.
+
+NASAQ should remain a branding studio first.
+
+---
+
+# WEBSITE CONTENT
+
+## 10. Hero
+
+### Primary Direction
+
+Arabic:
+
+نصنع علامات لها نسق.
+
+English:
+
+We build brands that belong together.
+
+### Supporting Copy
+
+NASAQ is a Saudi brand identity studio creating distinctive identities, systems and experiences for brands ready for what’s next.
+
+### Primary CTA
+
+View our work
+
+### Secondary CTA
+
+Start a project
+
+---
+
+## 11. Alternative Hero Headlines
+
+These are approved alternatives.
+
+Choose only one direction based on the strongest composition.
+
+### Option 01
+
+We bring brands into alignment.
+
+### Option 02
+
+Brands with clarity.
+Built with intention.
+
+### Option 03
+
+Identity with a point of view.
+
+### Option 04
+
+Built to make sense.
+Made to stand out.
+
+### Option 05
+
+نصنع علامات لها نسق.
+
+Do not combine multiple hero headline options simultaneously.
+
+Do not invent exaggerated brand claims.
+
+---
+
+## 12. Selected Work
+
+Selected Work should be one of the most visually important areas of the NASAQ website.
+
+Real NASAQ project assets are stored in:
+
 /brand/work
-/brand/content.md
 
-These files are the source of truth.
+Current project folders are only the beginning of the portfolio.
 
-Do not invent:
-- logos
-- project information
-- client names
-- project results
-- brand claims
+More projects will be added later.
 
-If information is unavailable, use clearly temporary copy or ask when essential.
+Do not design the website around a fixed number of projects.
 
----
+The project system must remain scalable.
 
-# TOKEN / CONTEXT EFFICIENCY
+Avoid generic card grids.
 
-Do not inspect irrelevant files repeatedly.
+Projects should feel:
 
-Normally ignore:
+- editorial
+- immersive
+- image-led
+- carefully art-directed
+- visually varied
+- connected to the identity of each project
 
-node_modules/
-.git/
-dist/
-package-lock.json
+NASAQ branding work should remain the main visual protagonist.
 
-unless technically necessary.
+Do not invent client information.
 
-Read CLAUDE.md first.
-
-Reuse decisions already defined here instead of asking the user to repeat them.
-
-Do not repeatedly explain project rules back to the user.
-
-Keep implementation discussion concise.
+If metadata is unavailable, use clearly temporary internal placeholders rather than presenting invented information as fact.
 
 ---
 
-# WORKFLOW
+## 13. Project Content Architecture
 
-CRITICAL:
-
-Do NOT build the entire website in one pass.
-
-Work section by section.
-
-For each stage:
-
-1. inspect relevant brand assets
-2. understand the requested section
-3. plan briefly
-4. implement
-5. test
-6. review responsive behavior
-7. stop
-
-Never continue into the next major section without instruction.
-# PROJECT SCALABILITY
-
-The projects currently available inside /brand/work are only the first sample projects.
-
-More NASAQ projects will be added later.
-
-Do not design Selected Work around a fixed number of projects.
-
-Build the project system so new work can be added easily without redesigning the section.
-
-Prefer a reusable data-driven structure, for example:
-
-src/data/projects.js
-
-Each project should be represented by structured data such as:
+The website should support project information such as:
 
 - slug
 - name
-- Arabic name if available
+- Arabic name
 - category
 - year
-- location if relevant
+- location
 - short description
 - cover image
 - project images
-- optional video
-- optional case study details
+- video
+- services
+- overview
+- case study details
+- featured status
 
-Do not hardcode project-specific layouts unnecessarily.
+Not every project needs every field.
 
-The homepage may show only selected projects, while additional projects can be added later.
-
-The visual system should remain flexible enough for:
-- 2 projects now
-- 5 projects later
-- 10+ projects in the future
-
-However, flexibility must not lead to generic card-based design.
-
-Maintain a strong editorial and brand-led presentation.
+The data architecture should support additional projects without requiring homepage redesign.
 
 ---
 
-# FIRST DEVELOPMENT STAGE
+## 14. Services
 
-When instructed to begin:
+Brand Strategy
 
-1. inspect /brand
-2. inspect the current Vite project
-3. understand Ragged Edge and Gene reference images supplied locally
-4. establish global visual foundations
-5. build Navbar
-6. build Hero
-7. create only the opening transition into Selected Work
+Brand Identity
 
-STOP THERE.
+Art Direction
 
-Do not build the complete Selected Work section yet.
+Brand Systems
+
+Digital Experience
+
+Keep services concise.
+
+Do not present them like SaaS feature cards.
 
 ---
 
-# DESIGN DECISION RULE
+## 15. Studio Statement
 
-Whenever uncertain, prioritize in this order:
+We believe strong brands are not built from isolated pieces.
 
-1. NASAQ brand identity
-2. quality of project presentation
-3. typography
-4. composition
-5. usability
-6. meaningful motion
-7. technical novelty
+Strategy, language, identity and experience should work as one system.
 
-Prefer fewer stronger ideas over many weak ideas.
+That is where NASAQ begins.
 
-The final site should feel expensive because it is confident and intentional — not because it contains many effects.
+---
+
+## 16. About
+
+NASAQ is a Saudi branding studio focused on building identities that are clear, relevant and distinctive.
+
+We combine strategic thinking with visual craft to create brand systems that work across physical and digital experiences.
+
+Keep this section concise.
+
+---
+
+## 17. Contact
+
+### Headline
+
+Let’s build what’s next.
+
+### Supporting Copy
+
+Have a brand, idea or challenge worth shaping?
+
+Let’s talk.
+
+### CTA
+
+Start a project
+
+---
+
+## 18. Navigation
+
+Work
+
+Studio
+
+Services
+
+Contact
+
+---
+
+## 19. Footer
+
+NASAQ
+
+Saudi Arabia
+
+Brand Strategy
+
+Brand Identity
+
+Art Direction
+
+Brand Systems
+
+Digital Experience
+
+---
+
+## 20. Language Direction
+
+English may be the primary interface language for the first website version.
+
+Arabic should appear intentionally and confidently.
+
+Arabic should not be added simply as decoration.
+
+Strong opportunities for Arabic include:
+
+- Hero
+- brand statements
+- project identities
+- editorial transitions
+- selected typographic moments
+- project storytelling
+
+Do not force Arabic into every section.
+
+---
+
+## 21. Tone of Voice
+
+NASAQ should sound:
+
+- confident
+- concise
+- intelligent
+- contemporary
+- direct
+- creative
+- clear
+
+Avoid:
+
+- corporate jargon
+- exaggerated marketing claims
+- generic agency language
+- long unnecessary paragraphs
+- empty buzzwords
+- artificial-sounding copy
+
+Prefer short statements with a clear point of view.
+
+---
+
+## 22. Visual Content Priority
+
+The website should clearly communicate that NASAQ is a branding and visual identity studio.
+
+Prioritize imagery showing:
+
+- brand identities
+- logos
+- typography
+- packaging
+- posters
+- print applications
+- digital applications
+- campaigns
+- brand systems
+- signage
+- art direction
+- motion identity
+- identity applications
+
+Architecture, landscapes or unrelated lifestyle imagery should not dominate unless relevant to an individual project.
+
+---
+
+## 23. Motion Principle
+
+Motion should reinforce the meaning of NASAQ.
+
+Useful conceptual directions include:
+
+scattered → aligned
+
+separate → connected
+
+individual elements → system
+
+cropped → revealed
+
+Do not use all concepts simultaneously.
+
+Choose strong, meaningful interactions rather than many effects.
+
+Motion should support:
+
+- typography
+- alignment
+- identity
+- project storytelling
+- transitions
+- visual systems
+
+Avoid decorative animation without purpose.
+
+---
+
+## 24. Brand Principle
+
+NASAQ should feel premium because of:
+
+- strong ideas
+- typography
+- composition
+- restraint
+- excellent project presentation
+- confident art direction
+- meaningful motion
+
+Not because of excessive visual effects.

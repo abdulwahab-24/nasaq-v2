@@ -1,0 +1,566 @@
+{
+  "work/rumh/cover": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1366
+    ],
+    "width": 1366,
+    "height": 500,
+    "blur": true
+  },
+  "work/rumh/cover-m": {
+    "widths": [
+      480,
+      620
+    ],
+    "width": 620,
+    "height": 505
+  },
+  "work/rumh/spear": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1440
+    ],
+    "width": 1440,
+    "height": 1440
+  },
+  "work/rumh/concept": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1366
+    ],
+    "width": 1366,
+    "height": 712
+  },
+  "work/rumh/traits": {
+    "widths": [
+      480,
+      800,
+      1130
+    ],
+    "width": 1130,
+    "height": 470
+  },
+  "work/rumh/elements": {
+    "widths": [
+      480
+    ],
+    "width": 480,
+    "height": 360
+  },
+  "work/rumh/pattern-strip": {
+    "widths": [
+      462
+    ],
+    "width": 462,
+    "height": 712
+  },
+  "work/rumh/colour": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1366
+    ],
+    "width": 1366,
+    "height": 712
+  },
+  "work/rumh/logo-forms": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1366
+    ],
+    "width": 1366,
+    "height": 582
+  },
+  "work/rumh/digital": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 569
+  },
+  "work/rumh/screen": {
+    "widths": [
+      480,
+      800,
+      1151
+    ],
+    "width": 1151,
+    "height": 582
+  },
+  "work/rumh/signage": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1366
+    ],
+    "width": 1366,
+    "height": 607
+  },
+  "work/rumh/signage-d": {
+    "widths": [
+      480,
+      700
+    ],
+    "width": 700,
+    "height": 430
+  },
+  "work/rumh/keyring": {
+    "widths": [
+      480,
+      720
+    ],
+    "width": 720,
+    "height": 658
+  },
+  "work/rumh/interior": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 632
+  },
+  "work/rumh/badges": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1366
+    ],
+    "width": 1366,
+    "height": 768
+  },
+  "work/rumh/badges-d": {
+    "widths": [
+      480,
+      720
+    ],
+    "width": 720,
+    "height": 520
+  },
+  "work/louiza/cover": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 830,
+    "blur": true
+  },
+  "work/louiza/cover-p": {
+    "widths": [
+      480,
+      640
+    ],
+    "width": 640,
+    "height": 845
+  },
+  "work/louiza/logo": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 672,
+    "blur": true
+  },
+  "work/louiza/construction": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 672
+  },
+  "work/louiza/mark": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 677,
+    "blur": true
+  },
+  "work/louiza/pattern": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 669
+  },
+  "work/louiza/type": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 432
+  },
+  "work/louiza/badges": {
+    "widths": [
+      480
+    ],
+    "width": 480,
+    "height": 480
+  },
+  "work/louiza/patterns": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 672
+  },
+  "work/louiza/hoodie": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 455
+  },
+  "work/louiza/label": {
+    "widths": [
+      480,
+      640
+    ],
+    "width": 640,
+    "height": 350
+  },
+  "work/louiza/tote": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 902
+  },
+  "work/louiza/tote-p": {
+    "widths": [
+      480,
+      720
+    ],
+    "width": 720,
+    "height": 950
+  },
+  "work/louiza/boxes": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 894
+  },
+  "work/louiza/app": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 790
+  },
+  "work/louiza/tags": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 895
+  },
+  "work/louiza/bags": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 898
+  },
+  "work/louiza/box": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 892
+  },
+  "work/rukaz/cover": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1396
+    ],
+    "width": 1396,
+    "height": 933,
+    "blur": true
+  },
+  "work/rukaz/cover-p": {
+    "widths": [
+      480,
+      680
+    ],
+    "width": 680,
+    "height": 933
+  },
+  "work/rukaz/lighters": {
+    "widths": [
+      480
+    ],
+    "width": 480,
+    "height": 388
+  },
+  "work/rukaz/logo": {
+    "widths": [
+      480,
+      800,
+      1010
+    ],
+    "width": 1010,
+    "height": 440,
+    "blur": true
+  },
+  "work/rukaz/type": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 410
+  },
+  "work/rukaz/type-m": {
+    "widths": [
+      480
+    ],
+    "width": 480,
+    "height": 360
+  },
+  "work/rukaz/colour": {
+    "widths": [
+      480,
+      760
+    ],
+    "width": 760,
+    "height": 470
+  },
+  "work/rukaz/tote": {
+    "widths": [
+      480
+    ],
+    "width": 480,
+    "height": 751
+  },
+  "work/rukaz/pattern": {
+    "widths": [
+      480,
+      800
+    ],
+    "width": 800,
+    "height": 308
+  },
+  "work/rukaz/applications": {
+    "widths": [
+      466
+    ],
+    "width": 466,
+    "height": 1029
+  },
+  "work/snack-quest/cover": {
+    "widths": [
+      480,
+      800,
+      1044
+    ],
+    "width": 1044,
+    "height": 694,
+    "blur": true
+  },
+  "work/snack-quest/interior": {
+    "widths": [
+      480,
+      800,
+      1048
+    ],
+    "width": 1048,
+    "height": 883,
+    "blur": true
+  },
+  "work/snack-quest/logo": {
+    "widths": [
+      480,
+      800,
+      1047
+    ],
+    "width": 1047,
+    "height": 529
+  },
+  "work/snack-quest/monogram": {
+    "widths": [
+      480,
+      770
+    ],
+    "width": 770,
+    "height": 125
+  },
+  "work/snack-quest/type": {
+    "widths": [
+      480,
+      800,
+      1049
+    ],
+    "width": 1049,
+    "height": 1100
+  },
+  "work/snack-quest/colour": {
+    "widths": [
+      480,
+      700
+    ],
+    "width": 700,
+    "height": 948
+  },
+  "work/snack-quest/palette": {
+    "widths": [
+      480,
+      697
+    ],
+    "width": 697,
+    "height": 459
+  },
+  "work/snack-quest/wall-a": {
+    "widths": [
+      480,
+      703
+    ],
+    "width": 703,
+    "height": 520
+  },
+  "work/snack-quest/wall-b": {
+    "widths": [
+      480,
+      703
+    ],
+    "width": 703,
+    "height": 519
+  },
+  "work/snack-quest/poster": {
+    "widths": [
+      480,
+      706
+    ],
+    "width": 706,
+    "height": 888
+  },
+  "work/snack-quest/fries": {
+    "widths": [
+      480,
+      693
+    ],
+    "width": 693,
+    "height": 899
+  },
+  "work/snack-quest/applications": {
+    "widths": [
+      460
+    ],
+    "width": 460,
+    "height": 767
+  },
+  "studio/app": {
+    "widths": [
+      480,
+      800,
+      960
+    ],
+    "width": 960,
+    "height": 1080
+  },
+  "studio/sign": {
+    "widths": [
+      480,
+      800,
+      960
+    ],
+    "width": 960,
+    "height": 1080
+  },
+  "studio/silhouette": {
+    "widths": [
+      480,
+      800,
+      1034
+    ],
+    "width": 1034,
+    "height": 1073
+  },
+  "studio/lockup": {
+    "widths": [
+      480,
+      800,
+      961
+    ],
+    "width": 961,
+    "height": 1081
+  },
+  "work/rumh/logo-white": {
+    "width": 1400,
+    "height": 478
+  },
+  "work/rumh/logo-navy": {
+    "width": 1400,
+    "height": 478
+  },
+  "work/rumh/mark-white": {
+    "width": 900,
+    "height": 624
+  },
+  "brand/slash-pattern": {
+    "width": 1600,
+    "height": 411
+  },
+  "studio/portrait": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 1244
+  },
+  "studio/badge": {
+    "widths": [
+      480
+    ],
+    "width": 480,
+    "height": 624
+  }
+}

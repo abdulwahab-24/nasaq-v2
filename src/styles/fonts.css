@@ -1,0 +1,64 @@
+/*
+ * Official NASAQ typefaces (source: /brand/fonts — the real files were taken
+ * from the installed copies, converted to WOFF2 without modification).
+ * Only weights that exist in the supplied files are declared.
+ *
+ * NOTE: ABC Favorit Arabic files are *Trial* builds. Replace them with the
+ * licensed web fonts before public launch (same family name, same weights).
+ */
+
+@font-face {
+  font-family: 'Guton';
+  src: url('/fonts/Guton-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Guton';
+  src: url('/fonts/Guton-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Guton';
+  src: url('/fonts/Guton-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ABC Favorit Arabic';
+  src: url('/fonts/ABCFavoritArabic-Light-Trial.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ABC Favorit Arabic';
+  src: url('/fonts/ABCFavoritArabic-Regular-Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ABC Favorit Arabic';
+  src: url('/fonts/ABCFavoritArabic-Medium-Trial.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
