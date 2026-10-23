@@ -1,0 +1,68 @@
+/*
+ * Variants of the shared project layouts, loaded after their base stylesheets:
+ * project fields, the seamless stage, the plate hero carrying the logo, and
+ * small-screen adjustments. Styles that belong to one project live in
+ * src/projects/<slug>/<slug>.css.
+ */
+
+/* The hero sits on the project's own field when it has one (gradient). */
+.phero {
+  background: var(--surface-field, var(--surface, var(--color-black)));
+}
+
+.pnext {
+  background: var(--next-gradient, var(--next-field));
+}
+
+/* — seamless stage: the field is the photograph's backdrop, the object sits on the page — */
+.pb--seamless {
+  padding-block: clamp(2rem, 1rem + 4vw, 5rem);
+}
+
+.pb--seamless .pfig__frame {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 3%, #000 97%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 3%, #000 97%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
+}
+
+/* — the logo standing where the giant name would (plate hero) — */
+.phero__giant--mark {
+  left: var(--gutter);
+  width: min(78vw, 68.4rem); /* never beyond the file's 1095 px */
+  height: auto;
+}
+
+@media (min-width: 900px) {
+  /* logo top left, the work low on the right — sized so the two never meet */
+  .phero__giant--mark {
+    width: min(44vw, calc(34svh * var(--mark-w) / var(--mark-h)), 68.4rem);
+  }
+
+  .phero--mark {
+    place-items: end end;
+  }
+
+  .phero--mark .phero__frame {
+    width: min(58vw, calc(30svh * var(--plate-w) / var(--plate-h)), calc(var(--plate-w) * 1px));
+  }
+}
+
+/* plate heroes may carry a taller crop for small screens (ResponsiveImage → mobile) */
+@media (max-width: 767.98px) {
+  .phero--plate .phero__frame {
+    width: min(86vw, calc(48svh * var(--plate-m-w) / var(--plate-m-h)), calc(var(--plate-m-w) * 1px));
+    aspect-ratio: var(--plate-m-w) / var(--plate-m-h);
+  }
+}
+
+/* four colours sit two by two on small screens rather than three and one */
+@media (max-width: 639.98px) {
+  .swatches:has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

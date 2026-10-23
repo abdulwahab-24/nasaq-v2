@@ -1,4 +1,4 @@
-/* clip-path helpers for project shapes (see components/Signature.jsx) */
+/* clip-path helpers for project shapes (e.g. Rumh's spearhead: projects/rumh/components/Aperture.jsx) */
 
 // Corner points of a clip-path polygon, in % of the frame.
 export const RECT = [

@@ -1,0 +1,79 @@
+/* Studio statement — soft white, words settle into one column */
+.statement {
+  background: var(--bg);
+  color: var(--fg);
+  overflow: clip;
+}
+
+.statement__inner {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--gutter);
+  display: grid;
+  gap: var(--space-m);
+}
+
+.statement__label {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.statement__label [lang='ar'] {
+  font-size: 1.15em;
+  color: var(--color-blue);
+}
+
+.statement__rule {
+  display: block;
+  height: 1px;
+  background: var(--fg);
+  transform-origin: left;
+}
+
+.statement__text {
+  display: grid;
+  gap: 0.35em;
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: clamp(1.9rem, 0.9rem + 4.4vw, 6.25rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.statement__p--2 {
+  color: var(--fg-muted);
+}
+
+.statement__p--3 em {
+  color: var(--color-blue);
+}
+
+.word {
+  display: inline-block;
+  white-space: pre;
+}
+
+@media (min-width: 1024px) {
+  .statement__inner {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  .statement__label,
+  .statement__rule {
+    grid-column: 1 / -1;
+  }
+
+  .statement__text {
+    grid-column: 1 / span 11;
+  }
+
+  .statement__p--2 {
+    padding-left: 16.66%;
+  }
+
+  .statement__p--3 {
+    padding-left: 33.33%;
+  }
+}

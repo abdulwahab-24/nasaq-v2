@@ -1,0 +1,42 @@
+/* ---------- Cursor ---------- */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+}
+
+.cursor__disc {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 6.25rem;
+  height: 6.25rem;
+  margin: -3.125rem 0 0 -3.125rem;
+  border-radius: 50%;
+  background: var(--color-blue);
+  color: var(--color-white);
+  transform: scale(0);
+  transition: transform 0.45s var(--ease-out);
+}
+
+.cursor--on .cursor__disc {
+  transform: scale(1);
+}
+
+.cursor__label {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: 0.9rem;
+}
+
+[data-cursor] {
+  cursor: none;
+}
+
+@media not all and (hover: hover) and (pointer: fine) {
+  [data-cursor] {
+    cursor: pointer;
+  }
+}

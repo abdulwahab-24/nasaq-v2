@@ -1,0 +1,90 @@
+/*
+ * Snack Quest — styles only Snack Quest uses (signature: arcade).
+ * Pixel-stepped frames on the homepage chapter and the project page, and the
+ * slogan ticker (components/Ticker.jsx). Stepped JS motion: `motion: 'steps'`
+ * in snack-quest.data.js. Order: homepage chapter, project page, ticker.
+ */
+
+/* — homepage chapter: pixel-stepped corners, slogan strip as the floor — */
+.chapter--sig-arcade .chapter__frame {
+  clip-path: var(--notch);
+}
+
+.chapter--sig-arcade .chapter__inner {
+  padding-bottom: var(--space-l);
+}
+
+/* — project page: pixel-stepped frames, the slogan strip as the last word — */
+.project--sig-arcade .phero__frame,
+.project--sig-arcade .pb:not(.pb--bleed) .pfig__frame,
+.project--sig-arcade .pseq__item,
+.project--sig-arcade .swatch__chip,
+.pnext--sig-arcade .pnext__frame {
+  clip-path: var(--notch);
+}
+
+.project--sig-arcade .swatch__chip {
+  box-shadow: none;
+}
+
+.pb--ticker {
+  margin-block: 0;
+}
+
+.project--sig-arcade .pstory {
+  padding-bottom: 0;
+}
+
+/* — the ticker (components/Ticker.jsx) and the stepped-corner shape used above — */
+:root {
+  /* one "pixel" of the stepped corners */
+  --px: clamp(5px, 0.75vw, 12px);
+  --notch: polygon(
+    calc(var(--px) * 2) 0,
+    calc(100% - var(--px) * 2) 0,
+    calc(100% - var(--px) * 2) var(--px),
+    calc(100% - var(--px)) var(--px),
+    calc(100% - var(--px)) calc(var(--px) * 2),
+    100% calc(var(--px) * 2),
+    100% calc(100% - var(--px) * 2),
+    calc(100% - var(--px)) calc(100% - var(--px) * 2),
+    calc(100% - var(--px)) calc(100% - var(--px)),
+    calc(100% - var(--px) * 2) calc(100% - var(--px)),
+    calc(100% - var(--px) * 2) 100%,
+    calc(var(--px) * 2) 100%,
+    calc(var(--px) * 2) calc(100% - var(--px)),
+    var(--px) calc(100% - var(--px)),
+    var(--px) calc(100% - var(--px) * 2),
+    0 calc(100% - var(--px) * 2),
+    0 calc(var(--px) * 2),
+    var(--px) calc(var(--px) * 2),
+    var(--px) var(--px),
+    calc(var(--px) * 2) var(--px)
+  );
+}
+
+.ticker {
+  --ticker-h: clamp(3.25rem, 7vw, 6.5rem);
+  --ticker-w: calc(var(--ticker-h) * var(--ticker-ratio));
+  height: var(--ticker-h);
+  overflow: hidden;
+}
+
+.ticker__run {
+  display: block;
+  width: calc(100% + var(--ticker-w));
+  height: 100%;
+  background: var(--ticker-img) 0 0 / var(--ticker-w) 100% repeat-x;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ticker__run {
+    animation: ticker 9s steps(45) infinite;
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(calc(var(--ticker-w) * -1));
+  }
+}

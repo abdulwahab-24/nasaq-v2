@@ -1,0 +1,292 @@
+.index {
+  position: relative;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--gutter);
+}
+
+.index__head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--space-xs) var(--space-m);
+  margin-bottom: var(--space-l);
+}
+
+.index__title {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h2);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.index__ar {
+  font-size: calc(var(--fs-h2) * 0.62);
+  line-height: 1.2;
+  color: var(--color-blue-light);
+}
+
+.index__count {
+  grid-column: 1 / -1;
+}
+
+.index__table {
+  border-top: var(--hairline) solid var(--line);
+}
+
+.index__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    'num name thumb'
+    'num ar thumb';
+  align-items: center;
+  column-gap: var(--space-s);
+  padding-block: var(--space-s);
+  border-bottom: var(--hairline) solid var(--line);
+  isolation: isolate;
+}
+
+.index__row--head {
+  display: none;
+}
+
+.index__row::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -0.5);
+  z-index: -1;
+  background: var(--color-blue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s var(--ease-out);
+}
+
+.index__row.is-active::before,
+.index__row:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.index__row:focus-visible {
+  outline: none;
+}
+
+.index__num {
+  grid-area: num;
+  align-self: start;
+  padding-top: 0.6em;
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  color: var(--fg-muted);
+}
+
+.index__name {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: clamp(1.9rem, 1rem + 4.4vw, 5.25rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: translate 0.55s var(--ease-out);
+}
+
+.index__name-ar {
+  grid-area: ar;
+  font-size: clamp(1.1rem, 0.8rem + 1.2vw, 1.9rem);
+  color: var(--color-blue-light);
+  text-align: left;
+}
+
+.index__cat,
+.index__year,
+.index__arrow {
+  display: none;
+}
+
+.index__thumb {
+  grid-area: thumb;
+  width: clamp(4.5rem, 20vw, 7rem);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-black);
+}
+
+.index__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.index__row.is-active .index__num,
+.index__row:focus-visible .index__num {
+  color: var(--color-white);
+}
+
+.index__preview {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .index__head {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .index__ar {
+    text-align: start;
+    padding-right: var(--space-m);
+  }
+
+  .index__count {
+    grid-column: auto;
+    padding-bottom: 0.8em;
+  }
+
+  .index__row {
+    grid-template-columns: 4rem minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) 5rem 2rem;
+    grid-template-areas: 'num name ar cat year arrow';
+    padding-block: clamp(1rem, 1.6vw, 1.75rem);
+  }
+
+  .index__row--head {
+    display: grid;
+    padding-block: 0.9rem;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    color: var(--fg-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .index__row--head::before {
+    display: none;
+  }
+
+  .index__row--head span:nth-child(3) {
+    grid-area: ar;
+  }
+
+  .index__num {
+    align-self: center;
+    padding: 0;
+  }
+
+  .index__cat,
+  .index__year,
+  .index__arrow {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+  }
+
+  .index__cat {
+    grid-area: cat;
+    color: var(--fg-muted);
+  }
+
+  .index__year {
+    grid-area: year;
+    color: var(--fg-muted);
+  }
+
+  .index__arrow {
+    grid-area: arrow;
+    justify-self: end;
+    opacity: 0;
+    transform: translateX(-0.75rem);
+    transition:
+      opacity 0.4s var(--ease-out),
+      transform 0.4s var(--ease-out);
+  }
+
+  .index__row.is-active .index__cat,
+  .index__row.is-active .index__year,
+  .index__row:focus-visible .index__cat,
+  .index__row:focus-visible .index__year {
+    color: var(--color-white);
+  }
+
+  .index__row.is-active .index__arrow,
+  .index__row:focus-visible .index__arrow {
+    opacity: 1;
+    transform: none;
+  }
+
+  .index__row.is-active .index__name,
+  .index__row:focus-visible .index__name {
+    translate: 0.12em 0;
+  }
+
+  .index__name-ar {
+    text-align: right;
+    padding-right: var(--space-m);
+  }
+
+  .index__row .index__thumb {
+    display: none;
+  }
+}
+
+/* Floating preview — fine pointers only */
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  .index__preview {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: clamp(14rem, 22vw, 24rem);
+    aspect-ratio: 4 / 3;
+    margin: calc(clamp(14rem, 22vw, 24rem) * -0.375) 0 0 2rem;
+    pointer-events: none;
+  }
+
+  .index__preview-item {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    clip-path: inset(50% 0 50% 0);
+    transition: clip-path 0.6s var(--ease-out);
+  }
+
+  .index__preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    scale: 1.15;
+    transition: scale 0.8s var(--ease-out);
+  }
+
+  .index__preview-item.is-active {
+    clip-path: inset(0 0 0 0);
+    z-index: 1;
+  }
+
+  .index__preview-item.is-active img {
+    scale: 1;
+  }
+
+}
+
+/* The preview is the project's logo on the project's own field. */
+.index__plate {
+  display: grid;
+  /* a definite cell, so upright logos are limited by its height too */
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--plate-field);
+}
+
+.index__plate .index__logo {
+  width: auto;
+  height: auto;
+  max-width: 64%;
+  max-height: 58%;
+  object-fit: contain;
+}
+
+.index__plate .index__logo.plogo--mask {
+  width: 64%;
+}

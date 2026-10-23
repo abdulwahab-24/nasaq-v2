@@ -5,7 +5,7 @@
  *   node scripts/build-media.mjs [key-prefix]
  *
  * Output: public/<key>-<width>.webp  (+ <key>-blur.webp backdrops where asked)
- *         src/data/media.json — dimensions + available widths, read by data/projects.js
+ *         src/data/media.json — dimensions + available widths, read by utils/media.js (img / asset)
  *
  * The supplied project files are mostly presentation screenshots, so each entry
  * is an art-directed derivative: crops remove slide edges and presentation

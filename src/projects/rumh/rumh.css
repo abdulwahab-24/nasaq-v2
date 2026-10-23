@@ -1,0 +1,74 @@
+/*
+ * Rumh — styles only Rumh uses (signature: spear).
+ * The spearhead mark is the aperture the art-direction photograph opens through
+ * (components/Aperture.jsx); the brand traits are set on the identity's flag
+ * (sig.flag, via the shared `words` block). Colours come from the project.
+ */
+
+/* — project page: the mark as aperture; traits set on the flag — */
+.pb--aperture {
+  margin-block: 0;
+  background: var(--field);
+  color: var(--field-ink);
+}
+
+.pb--aperture .plabel {
+  position: absolute;
+  top: var(--space-m);
+  left: var(--gutter);
+  z-index: 1;
+}
+
+.paperture__frame {
+  width: min(100%, 1440px); /* never beyond the photograph's pixels */
+  height: min(100svh, 100vw);
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.paperture__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pwords.pwords--flags {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-m) var(--space-s);
+  font-size: clamp(1.5rem, 0.7rem + 3.2vw, 3.75rem);
+  line-height: 1.2;
+}
+
+.pwords.pwords--flags li {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  aspect-ratio: var(--flag-ratio);
+  margin: 0;
+  padding: 0;
+  color: var(--color-white);
+}
+
+.pwords--flags li::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent-p);
+  -webkit-mask: var(--flag) center / 100% 100% no-repeat;
+  mask: var(--flag) center / 100% 100% no-repeat;
+}
+
+.pnext--sig-spear .pnext__frame {
+  aspect-ratio: 1;
+  clip-path: var(--next-shape);
+}
+
+@media (min-width: 768px) {
+  .pwords.pwords--flags {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l) var(--space-m);
+  }
+}

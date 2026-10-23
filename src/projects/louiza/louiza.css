@@ -1,0 +1,74 @@
+/*
+ * Louiza — styles only Louiza uses (signature: bloom; components/Bloom.jsx).
+ * Order: homepage chapter, project page, then the pattern plate itself.
+ */
+
+/* — homepage chapter: the pattern plate leans on the cover — */
+.spread__bloom {
+  grid-column: 3 / -1;
+  grid-row: 2;
+  position: relative;
+  z-index: 1;
+  width: 78%;
+  justify-self: end;
+  margin-top: -34%;
+  margin-bottom: var(--space-s);
+}
+
+@media (min-width: 768px) {
+  .spread__bloom {
+    grid-column: 3 / span 2;
+    grid-row: 2;
+    align-self: end;
+    width: 100%;
+    margin: 0;
+    translate: 0 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .spread__bloom {
+    grid-column: 4 / span 3;
+    grid-row: 3;
+    align-self: start;
+    margin: calc(var(--space-xl) * -1) 0 0;
+    translate: none;
+  }
+}
+
+/* — project page: the pattern page, live — */
+.pb--bloom {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.pb--bloom .plabel {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.pbloom {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* — the pattern plate (components/Bloom.jsx) — */
+.bloom {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  padding: 5%;
+  aspect-ratio: 1;
+  background: var(--bloom-field);
+}
+
+.bloom__leaf {
+  min-width: 0;
+  min-height: 0;
+  background: var(--bloom-ink);
+  -webkit-mask: var(--bloom-mark) center / auto 64% no-repeat;
+  mask: var(--bloom-mark) center / auto 64% no-repeat;
+  transform-origin: 40% 90%;
+}

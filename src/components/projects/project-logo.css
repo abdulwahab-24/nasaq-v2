@@ -1,0 +1,11 @@
+/* Project logos (ProjectLogo.jsx) */
+.plogo {
+  display: block;
+  height: auto;
+}
+
+.plogo--mask {
+  background: var(--logo-ink, currentColor);
+  -webkit-mask: var(--logo) center / contain no-repeat;
+  mask: var(--logo) center / contain no-repeat;
+}

@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { brandAssets } from '../data/siteConfig';
 import { gsap, prefersReducedMotion } from '../motion/gsap';
 import { scrollToY } from '../motion/lenis';
 import { scrollToSection } from '../utils/scroll';
@@ -16,7 +17,7 @@ import { TransitionContext } from './context';
  *
  * Reduced motion: plain navigation.
  */
-const SYMBOL = '/brand/nasaq-symbol-white.png';
+const SYMBOL = brandAssets.symbol.src;
 
 const nextFrame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 

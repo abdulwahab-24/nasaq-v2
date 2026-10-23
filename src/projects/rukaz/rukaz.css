@@ -1,0 +1,718 @@
+/*
+ * Rukaz — styles only Rukaz uses: the travelling pattern band (signature: strata;
+ * components/PatternBand.jsx) on the homepage and, below it, the Rukaz page
+ * (RukazPage.jsx).
+ */
+
+/* — homepage chapter: the pattern band runs behind the mug — */
+.type__band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12%;
+  --band-ink: var(--chapter-accent);
+}
+
+@media (min-width: 1024px) {
+  .type__band {
+    bottom: 16%;
+  }
+}
+
+/* — the pattern band (components/PatternBand.jsx) — */
+.band {
+  --cell: clamp(1.25rem, 2.6vw, 3rem);
+  height: calc(var(--cell) * var(--band-rows));
+  overflow: hidden;
+  color: var(--band-ink, currentColor);
+}
+
+.band__run {
+  display: block;
+  width: 130%;
+  height: 100%;
+  background: currentColor;
+  /* the tile holds six periods of the pattern */
+  -webkit-mask: var(--band-tile) 0 0 / calc(var(--cell) * 6) calc(var(--cell) * 6) repeat;
+  mask: var(--band-tile) 0 0 / calc(var(--cell) * 6) calc(var(--cell) * 6) repeat;
+}
+
+/* =================== Rukaz page =================== */
+
+/*
+ * Colour: only the identity's four colours, plus "night" — the backdrop of the
+ * mug photograph — for the darkest fields. No NASAQ blue or navy on this page.
+ * Shape: frames take the diagonal cut of the Rukaz letterforms (.rk-cut).
+ * Photographs are plain rectangles or cut frames: nothing is masked, faded or
+ * blended, and nothing is shown larger than its pixels.
+ */
+
+.project--page-rukaz,
+.rk {
+  --rk-forest: #1f3d3b; /* Mountains */
+  --rk-olive: #495b29; /* Life */
+  --rk-sea: #5c91a4; /* Sea */
+  --rk-stone: #cfcbba; /* Earth */
+  --rk-night: #0a1f1d; /* the photograph's own backdrop */
+
+  --bg: var(--rk-forest);
+  --fg: var(--rk-stone);
+  --fg-muted: rgb(207 203 186 / 0.72);
+  --line: rgb(207 203 186 / 0.24);
+  --accent: var(--rk-stone);
+  --focus: var(--rk-stone);
+}
+
+.project--page-rukaz {
+  background: var(--rk-forest);
+}
+
+.rk {
+  color: var(--rk-stone);
+  overflow: clip;
+}
+
+/* a part of a mask artwork, painted in the current colour */
+.rk-slice {
+  display: block;
+  background: currentColor;
+  -webkit-mask: var(--slice-img) var(--slice-pos) / var(--slice-size) no-repeat;
+  mask: var(--slice-img) var(--slice-pos) / var(--slice-size) no-repeat;
+}
+
+/* the diagonal cut of the letterforms, as a picture frame */
+.rk-cut {
+  --cut: clamp(1rem, 2.4vw, 2.25rem);
+  margin: 0;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--cut)) 0,
+    100% var(--cut),
+    100% 100%,
+    var(--cut) 100%,
+    0 calc(100% - var(--cut))
+  );
+}
+
+.rk-cut img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.rk-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.9rem;
+}
+
+.rk-label [lang='ar'] {
+  font-size: 1.1em;
+}
+
+/* =================== Hero =================== */
+.rk-hero {
+  display: grid;
+  background: var(--rk-forest);
+}
+
+.rk-hero__field {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-m);
+  padding: calc(var(--nav-h) + env(safe-area-inset-top) + var(--space-s)) var(--gutter) var(--space-m);
+}
+
+.rk-hero__back {
+  justify-self: start;
+  font-size: var(--fs-small);
+}
+
+.rk-hero__back .text-link__arrow {
+  order: -1;
+}
+
+.rk-hero__title {
+  margin: 0;
+  font-weight: var(--fw-regular);
+}
+
+.rk-hero__logo {
+  width: 100%;
+}
+
+.rk-hero__foot {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.rk-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+
+.rk-hero__line {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.rk-hero__line [lang='ar'] {
+  font-size: clamp(1.35rem, 1rem + 1.4vw, 2.1rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+}
+
+.rk-hero__line p:last-child {
+  max-width: 26ch;
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  line-height: 1.35;
+  color: var(--fg-muted);
+}
+
+/* the photograph: a plain frame showing the whole mug and its rock */
+.rk-hero__photo {
+  position: relative;
+  aspect-ratio: 840 / 788; /* the narrow-screen crop, shown uncropped */
+  overflow: hidden;
+  background: var(--rk-night);
+}
+
+.rk-hero__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 900px) {
+  .rk-hero {
+    grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+    /* never so tall and narrow that the frame would crop the mug */
+    height: min(100svh, 72vw);
+    min-height: 34rem;
+  }
+
+  .rk-hero__field {
+    grid-template-rows: auto 1fr auto;
+    padding-right: 0;
+  }
+
+  .rk-hero__title {
+    align-self: center;
+  }
+
+  /* the words stay on the green; only the logo crosses onto the photograph */
+  .rk-hero__foot {
+    padding-right: var(--space-m);
+  }
+
+  /* the logo is wider than its column and runs on over the photograph */
+  .rk-hero__logo {
+    width: min(46vw, 46rem);
+  }
+
+  .rk-hero__photo {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+}
+
+/* =================== Introduction =================== */
+.rk-intro {
+  --fg: var(--rk-forest);
+  --fg-muted: rgb(31 61 59 / 0.74);
+  --line: rgb(31 61 59 / 0.26);
+  --focus: var(--rk-forest);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-m);
+  padding: var(--space-xl) var(--gutter) var(--space-l);
+  background: var(--rk-stone);
+  color: var(--rk-forest);
+}
+
+.rk-intro__symbol {
+  width: clamp(2.75rem, 2rem + 3vw, 4.75rem);
+}
+
+.rk-intro__ar {
+  font-size: clamp(1.6rem, 1rem + 2.7vw, 3.75rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+}
+
+.rk-intro__en {
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.rk-intro__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-s) var(--col-gap);
+  margin-top: var(--space-m);
+  padding-top: var(--space-s);
+  border-top: var(--hairline) solid var(--line);
+}
+
+.rk-intro__facts dd {
+  font-family: var(--font-display);
+}
+
+@media (min-width: 900px) {
+  .rk-intro {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    row-gap: var(--space-m);
+  }
+
+  .rk-intro__symbol {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+  }
+
+  .rk-intro__ar {
+    grid-column: 4 / -1;
+    grid-row: 1;
+  }
+
+  .rk-intro__en {
+    grid-column: 4 / span 6;
+  }
+
+  .rk-intro__facts {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =================== Logo =================== */
+.rk-logo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-l);
+  padding: var(--space-xl) var(--gutter);
+  background: var(--rk-olive);
+  overflow: clip;
+  --fg-muted: var(--rk-stone); /* small labels need full strength on olive */
+}
+
+.rk-logo__lockup {
+  position: relative;
+  width: min(100%, 84rem);
+  margin-inline: auto;
+}
+
+.rk-logo__part {
+  position: absolute;
+}
+
+.rk-logo__part--symbol {
+  top: 0;
+  left: 0;
+  width: 34.6%;
+}
+
+.rk-logo__part--arabic {
+  top: 0;
+  left: 34.6%;
+  width: 65.4%;
+}
+
+.rk-logo__part--latin {
+  top: 50%;
+  left: 34.6%;
+  width: 65.4%;
+}
+
+.rk-logo__keys {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem var(--space-m);
+  width: min(100%, 84rem);
+  margin-inline: auto;
+  padding-top: var(--space-s);
+  border-top: var(--hairline) solid var(--line);
+  color: var(--rk-stone);
+}
+
+.rk-logo__keys span {
+  margin-right: 0.6em;
+  opacity: 0.6;
+}
+
+/* =================== Pattern =================== */
+.rk-pattern {
+  position: relative;
+  padding-top: var(--space-l);
+  background: var(--rk-forest);
+}
+
+.rk-pattern__band {
+  --band-ink: var(--rk-stone);
+}
+
+.rk-pattern__band--back {
+  --band-ink: var(--rk-olive);
+  transform: scaleX(-1);
+}
+
+.rk-pattern__body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-m);
+  padding: 0 var(--gutter) var(--space-l);
+}
+
+/* the tote lies across the band */
+.rk-pattern__photo {
+  width: min(78%, 500px);
+  margin-top: calc(var(--space-l) * -1);
+}
+
+.rk-pattern__text {
+  display: grid;
+  gap: var(--space-s);
+  align-content: start;
+}
+
+.rk-pattern__ar {
+  font-size: clamp(1.4rem, 1rem + 1.8vw, 2.6rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+}
+
+.rk-pattern__en {
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  line-height: 1.3;
+  color: var(--fg-muted);
+}
+
+@media (min-width: 900px) {
+  .rk-pattern__body {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+    align-items: end;
+    padding-bottom: var(--space-xl);
+  }
+
+  .rk-pattern__photo {
+    grid-column: 2 / span 4;
+    width: 100%;
+    margin-top: calc(var(--space-xl) * -0.9);
+  }
+
+  .rk-pattern__text {
+    grid-column: 7 / span 5;
+    padding-top: var(--space-xl);
+  }
+}
+
+/* =================== Colour: strata =================== */
+.rk-strata {
+  padding-top: var(--space-xl);
+  background: var(--rk-night);
+}
+
+.rk-strata__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-s);
+  padding: 0 var(--gutter) var(--space-l);
+}
+
+.rk-strata__lead {
+  font-size: clamp(1.7rem, 1rem + 3vw, 4rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+}
+
+.rk-strata__sub {
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  color: var(--fg-muted);
+}
+
+.rk-strata__stage {
+  position: relative;
+}
+
+.rk-strata__layer {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(6.5rem, 4rem + 9vw, 12rem);
+  padding: var(--space-s) var(--gutter);
+  color: var(--rk-stone);
+}
+
+.rk-strata__layer[data-tone='sea'] {
+  color: var(--rk-night);
+}
+
+.rk-strata__layer[data-tone='earth'] {
+  color: var(--rk-forest);
+}
+
+.rk-strata__fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--c);
+  transform-origin: left center;
+}
+
+.rk-strata__text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1.25rem;
+  width: 100%;
+}
+
+.rk-strata__name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 4.75rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.rk-strata__ar {
+  font-size: clamp(1.3rem, 1rem + 1.5vw, 2.5rem);
+}
+
+.rk-strata__hex {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+}
+
+.rk-strata__photo {
+  width: min(64%, 520px);
+  margin: 0 var(--gutter) var(--space-m) auto;
+}
+
+@media (min-width: 900px) {
+  .rk-strata__head {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--col-gap);
+  }
+
+  .rk-strata__head > * {
+    grid-column: 1 / span 8;
+  }
+
+  .rk-strata__text {
+    max-width: 60%;
+  }
+
+  /* the landscape stands across all four layers */
+  .rk-strata__photo {
+    position: absolute;
+    top: 50%;
+    right: var(--gutter);
+    z-index: 1;
+    width: min(27vw, 520px);
+    margin: 0;
+    translate: 0 -56%;
+  }
+}
+
+/* =================== Typography =================== */
+.rk-type {
+  --fg: var(--rk-forest);
+  --fg-muted: rgb(31 61 59 / 0.74);
+  --line: rgb(31 61 59 / 0.26);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-l);
+  padding: var(--space-xl) var(--gutter);
+  background: var(--rk-stone); /* continues the Earth layer above it */
+  color: var(--rk-forest);
+}
+
+.rk-type__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-s);
+  padding-bottom: var(--space-s);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.rk-type__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+}
+
+.rk-type__specimen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-l);
+}
+
+.rk-type__alphabet {
+  width: min(100%, 30rem);
+}
+
+@media (min-width: 900px) {
+  .rk-type__specimen {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: end;
+    gap: 9%;
+    width: min(100%, 96rem);
+    margin-inline: auto;
+  }
+
+  .rk-type__alphabet {
+    width: 100%;
+  }
+}
+
+/* =================== Kit =================== */
+.rk-kit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-l);
+  padding: var(--space-xl) var(--gutter);
+  background: var(--rk-forest);
+}
+
+.rk-kit__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-m);
+}
+
+.rk-kit__title {
+  margin-top: var(--space-s);
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: clamp(3.2rem, 1.5rem + 9vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+}
+
+.rk-kit__photo {
+  width: 100%;
+}
+
+.rk-kit__photo > span {
+  display: block;
+  overflow: hidden;
+}
+
+.rk-kit__list {
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.rk-kit__row {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-s);
+  min-height: 6.75rem;
+  padding-block: 0.6rem;
+  border-top: var(--hairline) solid var(--line);
+}
+
+.rk-kit__num {
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  color: var(--fg-muted);
+}
+
+.rk-kit__name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: clamp(1.25rem, 0.95rem + 1.4vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* tiles keep the rounded corners of the identity's own collage */
+.rk-kit__thumb {
+  overflow: hidden;
+  border-radius: 0.6rem;
+}
+
+.rk-kit__thumb img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 38vw;
+  max-height: 5.5rem;
+}
+
+@media (min-width: 900px) {
+  .rk-kit__head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 34%);
+    align-items: end;
+    column-gap: var(--space-l);
+  }
+
+  .rk-kit__list {
+    column-count: 2;
+    column-gap: var(--space-l);
+  }
+
+  .rk-kit__row {
+    break-inside: avoid;
+  }
+
+  .rk-kit__thumb img {
+    max-width: 16vw;
+  }
+}
+
+/* =================== Close =================== */
+.rk-close {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: var(--space-m);
+  padding-top: var(--space-xl);
+  background: var(--rk-night);
+  text-align: center;
+}
+
+.rk-close__symbol {
+  width: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+.rk-close__ar {
+  padding-inline: var(--gutter);
+  font-size: clamp(2.1rem, 1rem + 5.6vw, 7rem);
+  font-weight: var(--fw-medium);
+  line-height: 1.35;
+}
+
+.rk-close__en {
+  padding-inline: var(--gutter);
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  color: var(--fg-muted);
+}
+
+.rk-close__band {
+  width: 100%;
+  margin-top: var(--space-l);
+  --band-ink: var(--rk-olive);
+}

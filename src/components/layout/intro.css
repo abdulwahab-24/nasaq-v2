@@ -1,0 +1,66 @@
+/* ---------- Opening intro ---------- */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-intro);
+  pointer-events: auto;
+  --size: clamp(6rem, 22vmin, 13rem);
+}
+
+.intro__panel {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background: var(--color-navy);
+}
+
+.intro__panel--tl {
+  top: 0;
+  left: 0;
+}
+
+.intro__panel--tr {
+  top: 0;
+  right: 0;
+}
+
+.intro__panel--bl {
+  bottom: 0;
+  left: 0;
+}
+
+.intro__panel--br {
+  bottom: 0;
+  right: 0;
+}
+
+/* each piece sits on its panel's inner corner, so the four meet at the centre */
+.intro__piece {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+}
+
+.intro__piece .quad {
+  display: block;
+}
+
+.intro__panel--tl .intro__piece {
+  right: calc(var(--size) / -2);
+  bottom: calc(var(--size) / -2);
+}
+
+.intro__panel--tr .intro__piece {
+  left: calc(var(--size) / -2);
+  bottom: calc(var(--size) / -2);
+}
+
+.intro__panel--bl .intro__piece {
+  right: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+}
+
+.intro__panel--br .intro__piece {
+  left: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+}

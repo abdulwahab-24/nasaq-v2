@@ -13,6 +13,21 @@ import { defineConfig } from 'vite'
  * link and og:url into index.html, plus sitemap.xml (and its robots.txt line).
  * Without it the build is unchanged.
  */
+// Slugs of the projects registered in src/projects/index.js (one data module per
+// project folder). Read as text: the modules import JSX components and the media
+// manifest, which plain Node cannot load.
+function registeredSlugs() {
+  const dir = path.resolve('src/projects')
+  const index = fs.readFileSync(path.join(dir, 'index.js'), 'utf8')
+  const modules = [...index.matchAll(/^import \w+ from '\.\/([\w-]+\/[\w.-]+\.data)'/gm)].map((m) => m[1])
+  return modules.map((name) => {
+    const data = fs.readFileSync(path.join(dir, `${name}.js`), 'utf8')
+    const slug = data.match(/^\s{2}slug: '([^']+)'/m)?.[1]
+    if (!slug) throw new Error(`No slug found in src/projects/${name}.js`)
+    return slug
+  })
+}
+
 function siteUrl() {
   const base = (process.env.SITE_URL ?? '').replace(/\/+$/, '')
   let outDir = 'dist'
@@ -33,8 +48,7 @@ function siteUrl() {
     },
     closeBundle() {
       if (!base) return
-      const data = fs.readFileSync(path.resolve('src/data/projects.js'), 'utf8')
-      const slugs = [...data.matchAll(/^\s{4}slug: '([^']+)'/gm)].map((m) => m[1])
+      const slugs = registeredSlugs()
       const urls = ['/', ...slugs.map((s) => `/work/${s}`)]
       const xml =
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +

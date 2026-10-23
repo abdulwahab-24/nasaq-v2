@@ -35,5 +35,3 @@ export const defaultSrc = ({ src, widths }) =>
   `${src}-${widths.find((w) => w >= 1200) ?? widths.at(-1)}.webp`;
 
 export const largestSrc = ({ src, widths }) => `${src}-${widths.at(-1)}.webp`;
-
-export const isPortrait = (media) => media.height > media.width * 1.05;

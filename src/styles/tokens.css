@@ -1,24 +1,36 @@
+/*
+ * NASAQ design tokens — the one place for shared design values.
+ * Section stylesheets read these; values that are art-directed for a single
+ * composition stay in that section's own stylesheet.
+ */
 :root {
-  /* Official NASAQ palette — do not approximate */
-  --c-white: #ffffff;
-  --c-soft-white: #f7f7f7;
-  --c-blue: #374eff;
-  --c-blue-2: #4860ff;
-  --c-navy: #000628;
-  --c-light-blue: #c9d4ff;
-  --c-black: #000000;
+  /* Official NASAQ palette (CLAUDE.md §3) — do not approximate */
+  --color-white: #ffffff;
+  --color-off-white: #f7f7f7;
+  --color-blue: #374eff;
+  --color-blue-secondary: #4860ff;
+  --color-navy: #000628;
+  --color-blue-light: #c9d4ff;
+  --color-black: #000000;
 
   /* Roles (dark default) */
-  --bg: var(--c-navy);
-  --fg: var(--c-white);
+  --bg: var(--color-navy);
+  --fg: var(--color-white);
   --fg-muted: rgb(201 212 255 / 0.7); /* Light Blue tint, per identity tint scale */
   --line: rgb(201 212 255 / 0.2);
-  --accent: var(--c-blue-2);
+  --accent: var(--color-blue-secondary);
 
-  /* Type families */
+  /* Type families (files and @font-face: styles/typography.css) */
   --font-display: 'Guton', 'Helvetica Neue', Arial, sans-serif;
   --font-text: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --font-arabic: 'ABC Favorit Arabic', 'Segoe UI', Tahoma, sans-serif;
+
+  /* Font weights — only weights that exist in the supplied files:
+     Guton 400/500/600 · Poppins 400 · ABC Favorit Arabic 300/400/500 */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
 
   /* Fluid type scale */
   --fs-micro: 0.75rem;
@@ -34,11 +46,18 @@
   --col-gap: clamp(0.75rem, 1.6vw, 1.75rem);
   --nav-h: clamp(4rem, 3.4rem + 2vw, 5.5rem);
   --max-w: 120rem;
+
+  /* Spacing */
   --space-xs: clamp(0.5rem, 0.4rem + 0.4vw, 0.75rem);
   --space-s: clamp(0.75rem, 0.6rem + 0.6vw, 1.25rem);
   --space-m: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
   --space-l: clamp(3rem, 2rem + 4vw, 6.5rem);
   --space-xl: clamp(5rem, 3rem + 8vw, 11rem);
+
+  /* Borders. Rules are written `var(--hairline) solid var(--line)` at the use
+     site, so light surfaces (which redefine --line) still get their own colour. */
+  --hairline: 1px;
+  --radius-pill: 999px;
 
   /* NASAQ frame system: size of the corner marks that frame project work */
   --mark-corner: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
@@ -47,6 +66,24 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.83, 0, 0.17, 1);
   --dur: 0.5s;
+
+  /* Site-wide stacking layers (local stacking inside a section stays local) */
+  --z-nav: 50;
+  --z-cursor: 70;
+  --z-transition: 80;
+  --z-intro: 90;
+  --z-skip-link: 100;
+
+  /*
+   * Breakpoints. CSS cannot read custom properties inside @media, so these are
+   * the reference values used literally in the stylesheets:
+   *   640px  small landscape / large phone
+   *   768px  tablet (also the mobile <picture> crop in ResponsiveImage)
+   *   900px  two-column compositions
+   *   1024px desktop — pinned scroll scenes start here
+   * The motion breakpoints live in src/motion/gsap.js (STAGED / COMPACT / DESKTOP)
+   * and must match the stylesheets.
+   */
 }
 
 /* Light surfaces flip the roles */
@@ -54,9 +91,9 @@
 .chapter--light,
 .statement,
 .project--light {
-  --bg: var(--c-soft-white);
-  --fg: var(--c-navy);
+  --bg: var(--color-off-white);
+  --fg: var(--color-navy);
   --fg-muted: rgb(0 6 40 / 0.62);
   --line: rgb(0 6 40 / 0.16);
-  --accent: var(--c-blue);
+  --accent: var(--color-blue);
 }

@@ -1,0 +1,226 @@
+/*
+ * Project pages — one system, art-directed per project by its hero layout and
+ * story blocks. Project colours appear only as fields inside the project.
+ * Images are never shown wider than their pixels (see nativeMax in components/projects/story/fields.js).
+ */
+
+.project {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* =================== Hero =================== */
+.phero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--color-white);
+  background: var(--surface, var(--color-black));
+}
+
+.phero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.phero__frame {
+  display: block;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.phero__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.phero__back {
+  position: absolute;
+  top: calc(var(--nav-h) + env(safe-area-inset-top));
+  left: var(--gutter);
+  z-index: 3;
+  font-size: var(--fs-small);
+}
+
+.phero__back .text-link__arrow {
+  order: -1;
+}
+
+.phero__titles {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: calc(var(--space-m) + env(safe-area-inset-bottom));
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.5rem var(--space-m);
+}
+
+.phero__meta {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.phero__name {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: clamp(3.4rem, 1rem + 12vw, 16rem);
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+  margin-left: -0.05em;
+}
+
+.phero__ar {
+  font-size: clamp(2.4rem, 0.8rem + 8vw, 11rem);
+  line-height: 1.05;
+}
+
+/* — bleed: the work fills the screen — */
+.phero--bleed .phero__frame {
+  height: 100%;
+}
+
+.phero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(to top, rgb(0 6 40 / 0.78) 0%, rgb(0 6 40 / 0.25) 38%, rgb(0 6 40 / 0) 60%),
+    linear-gradient(to bottom, rgb(0 6 40 / 0.45) 0%, rgb(0 6 40 / 0) 22%);
+}
+
+/* — split: the project's own field beside a tall crop — */
+.phero--split {
+  display: grid;
+  grid-template-rows: 64svh auto;
+  color: var(--hero-ink);
+}
+
+.phero--split .phero__media {
+  position: relative;
+  grid-row: 1;
+}
+
+.phero--split .phero__frame {
+  height: 100%;
+}
+
+.phero--split .phero__titles {
+  position: relative;
+  grid-row: 2;
+  inset: auto;
+  padding: var(--space-m) var(--gutter) calc(var(--space-m) + env(safe-area-inset-bottom));
+}
+
+.phero--split .phero__back {
+  color: var(--color-white);
+}
+
+.phero--split .phero__ar {
+  color: var(--hero-accent);
+}
+
+/* — plate: the work as an object on its colour, the name behind it — */
+.phero--plate {
+  display: grid;
+  place-items: center;
+  padding: calc(var(--nav-h) + var(--space-xl)) var(--gutter) calc(var(--space-xl) + var(--space-l));
+  color: var(--hero-ink);
+}
+
+.phero--plate .phero__media {
+  position: relative;
+  inset: auto;
+  z-index: 1;
+}
+
+.phero--plate .phero__frame {
+  width: min(86vw, calc(56svh * var(--plate-w) / var(--plate-h)), calc(var(--plate-w) * 1px));
+  aspect-ratio: var(--plate-ratio);
+}
+
+.phero__giant {
+  position: absolute;
+  top: calc(var(--nav-h) + env(safe-area-inset-top) + 3rem); /* clear of the back link */
+  left: 0;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: clamp(5rem, 26vw, 30rem);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: var(--hero-accent);
+  pointer-events: none;
+  user-select: none;
+}
+
+.phero--plate .phero__name {
+  font-size: clamp(2.6rem, 1rem + 6vw, 8rem);
+}
+
+.phero--plate .phero__ar {
+  font-size: clamp(2rem, 0.8rem + 4.5vw, 6rem);
+}
+
+@media (min-width: 900px) {
+  .phero--split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  .phero--split .phero__media {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100svh;
+  }
+
+  .phero--split .phero__titles {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    grid-template-columns: 1fr;
+    padding: 0 var(--gutter) var(--space-m);
+  }
+
+  .phero--split .phero__back {
+    color: var(--hero-ink);
+  }
+
+  .phero--split .phero__ar {
+    justify-self: start;
+  }
+
+  .phero--plate {
+    place-items: center end;
+    padding-top: calc(var(--nav-h) + var(--space-l));
+    padding-bottom: var(--space-l);
+  }
+
+  .phero--plate .phero__frame {
+    width: min(58vw, calc(66svh * var(--plate-w) / var(--plate-h)), calc(var(--plate-w) * 1px));
+  }
+
+  .phero--plate .phero__titles {
+    grid-template-columns: 1fr;
+    right: auto;
+    max-width: 40vw;
+  }
+}
+
+/* Small screens: split hero keeps its meta under the image and its name low */
+@media (max-width: 899.98px) {
+  .phero--split .phero__titles {
+    align-self: stretch;
+    align-content: space-between;
+  }
+}
