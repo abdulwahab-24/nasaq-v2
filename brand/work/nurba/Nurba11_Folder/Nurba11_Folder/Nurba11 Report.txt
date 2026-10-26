@@ -1,0 +1,53 @@
+Package Report
+
+-----------------------------------------------------------------------------
+Document:
+Name: Nurba11.ai
+Color Mode: RGB color
+Color Profile: Adobe RGB (1998)
+Ruler Units: pixels
+Artboard Dimensions: 1933.5491 px x 1436.6089 px
+Show Images in Outline Mode: OFF
+Highlight Substituted Fonts: OFF
+Highlight Substituted Glyphs: OFF
+Preserve Text Editability
+Simulate Colored Paper: OFF
+
+-----------------------------------------------------------------------------
+Spot Color Objects:
+
+-----------------------------------------------------------------------------
+Missing Fonts:
+Alfabet Bold? (not installed)
+
+-----------------------------------------------------------------------------
+Protected Fonts that were not packaged:
+Snaga Arabic Text Thin (Adobe Fonts)
+Snaga Arabic Text Extralight (Adobe Fonts)
+Snaga Arabic Text Light (Adobe Fonts)
+Snaga Arabic Text Regular (Adobe Fonts)
+Snaga Arabic Text Bold (Adobe Fonts)
+
+-----------------------------------------------------------------------------
+Fonts:
+Kufam Regular (TrueType)
+Acumin Variable Concept Default (OTF)
+
+-----------------------------------------------------------------------------
+Embedded Fonts:
+NONE
+
+-----------------------------------------------------------------------------
+Missing Links:
+NONE
+
+-----------------------------------------------------------------------------
+Linked Images:
+
+/Users/nezar/Downloads/Shopping Bags Mockup (7).png
+Type: Transparent RGB
+Bits per Pixel: 32
+Channels: 4
+Size: 65097K, 5000 by 3333 pixels
+Dimensions: 1525.836 by 1017.122 points 
+Resolution: 235.936 by 235.936 pixels per inch

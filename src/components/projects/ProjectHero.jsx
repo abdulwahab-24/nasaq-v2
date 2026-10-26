@@ -2,7 +2,6 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap, introDone, MOTION_OK } from '../../motion/gsap';
 import { useTransition } from '../../transition/context';
 import TransitionLink from '../../transition/TransitionLink';
-import { pad } from '../../utils/format';
 import Arrow from '../ui/Arrow';
 import ResponsiveImage from '../ui/ResponsiveImage';
 import ProjectLogo from './ProjectLogo';
@@ -14,7 +13,7 @@ import ProjectLogo from './ProjectLogo';
  *   plate  the work as an object on its colour, the name (or logo) behind it
  * Its frame ([data-hero-target]) is where the page transition lands.
  */
-export default function ProjectHero({ project, index, total }) {
+export default function ProjectHero({ project }) {
   const { registerHero, whenSettled, isTransitioning } = useTransition();
   const rootRef = useRef(null);
   const imgRef = useRef(null);
@@ -108,9 +107,6 @@ export default function ProjectHero({ project, index, total }) {
 
       <div className="phero__titles">
         <p className="phero__meta label">
-          <span>
-            {pad(index + 1)} / {pad(total)}
-          </span>
           {facts.map((f) => (
             <span key={f}>{f}</span>
           ))}

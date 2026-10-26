@@ -623,5 +623,204 @@
     ],
     "width": 1800,
     "height": 1013
+  },
+  "work/datoura/cover": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800,
+      2000
+    ],
+    "width": 2000,
+    "height": 1125,
+    "blur": true
+  },
+  "work/datoura/cover-p": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800,
+      2000
+    ],
+    "width": 2000,
+    "height": 2571
+  },
+  "work/datoura/logo-white": {
+    "width": 1200,
+    "height": 183
+  },
+  "work/datoura/phone": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800,
+      2000
+    ],
+    "width": 2000,
+    "height": 2000
+  },
+  "work/datoura/card-print": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1500
+    ],
+    "width": 1500,
+    "height": 1075
+  },
+  "work/rumh/lockup-h": {
+    "width": 1600,
+    "height": 397
+  },
+  "work/rumh/lockup-v": {
+    "width": 1000,
+    "height": 694
+  },
+  "work/rumh/lockup-v-full": {
+    "width": 1000,
+    "height": 824
+  },
+  "work/louiza/word-spirit": {
+    "width": 1488,
+    "height": 426
+  },
+  "work/louiza/word-elegance": {
+    "width": 1410,
+    "height": 384
+  },
+  "work/louiza/word-arabic": {
+    "width": 888,
+    "height": 456
+  },
+  "work/louiza/word-detail": {
+    "width": 2256,
+    "height": 402
+  },
+  "work/snack-quest/sprite-coin": {
+    "width": 116,
+    "height": 116
+  },
+  "work/snack-quest/sprite-burger": {
+    "width": 131,
+    "height": 123
+  },
+  "work/snack-quest/flames": {
+    "width": 2084,
+    "height": 128
+  },
+  "work/rumh/sign": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1366
+    ],
+    "width": 1366,
+    "height": 600
+  },
+  "work/nurba/cover": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800
+    ],
+    "width": 1800,
+    "height": 1185,
+    "blur": true
+  },
+  "work/nurba/card": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800
+    ],
+    "width": 1800,
+    "height": 1200
+  },
+  "work/nurba/envelopes": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800
+    ],
+    "width": 1800,
+    "height": 1191
+  },
+  "work/nurba/subway": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800
+    ],
+    "width": 1800,
+    "height": 1350
+  },
+  "work/nurba/poster": {
+    "widths": [
+      480
+    ],
+    "width": 480,
+    "height": 880
+  },
+  "work/nurba/cases": {
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "width": 1200,
+    "height": 782
+  },
+  "work/nurba/gift": {
+    "widths": [
+      480,
+      800
+    ],
+    "width": 800,
+    "height": 430
+  },
+  "work/nurba/necklace": {
+    "widths": [
+      480,
+      800,
+      1080
+    ],
+    "width": 1080,
+    "height": 860
+  },
+  "work/nurba/bags": {
+    "widths": [
+      480,
+      800,
+      1200,
+      1800,
+      2000
+    ],
+    "width": 2000,
+    "height": 976
+  },
+  "work/nurba/logo-horizontal": {
+    "width": 2400,
+    "height": 266
+  },
+  "work/nurba/logo-stacked": {
+    "width": 1800,
+    "height": 531
+  },
+  "work/nurba/monogram": {
+    "width": 1200,
+    "height": 1202
+  },
+  "work/nurba/glint": {
+    "width": 240,
+    "height": 256
   }
 }

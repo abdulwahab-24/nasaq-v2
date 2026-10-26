@@ -12,7 +12,7 @@ import { TransitionContext } from './context';
  *   go(to, { from })    — `from` is the clicked project image. Its exact crop
  *                         expands to fill the screen and becomes the project
  *                         hero: the work literally opens into its page.
- *   go(to, { section }) — no image: a navy panel carrying the NASAQ symbol
+ *   go(to, { section }) — no image: a black panel carrying the NASAQ symbol
  *                         crosses the screen while the route changes.
  *
  * Reduced motion: plain navigation.

@@ -1,66 +1,40 @@
-/* ---------- Opening intro ---------- */
+/* ---------- Opening intro (components/layout/Intro.jsx) ---------- */
 .intro {
   position: fixed;
   inset: 0;
   z-index: var(--z-intro);
   pointer-events: auto;
-  --size: clamp(6rem, 22vmin, 13rem);
+  --size: clamp(5rem, 18vmin, 10rem);
 }
 
-.intro__panel {
+/* the page's own black, lifted as the symbol lands in the hero */
+.intro__veil {
   position: absolute;
-  width: 50%;
-  height: 50%;
-  background: var(--color-navy);
+  inset: 0;
+  background: var(--bg);
 }
 
-.intro__panel--tl {
-  top: 0;
-  left: 0;
-}
-
-.intro__panel--tr {
-  top: 0;
-  right: 0;
-}
-
-.intro__panel--bl {
-  bottom: 0;
-  left: 0;
-}
-
-.intro__panel--br {
-  bottom: 0;
-  right: 0;
-}
-
-/* each piece sits on its panel's inner corner, so the four meet at the centre */
-.intro__piece {
+.intro__mark {
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: var(--size);
-  height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  will-change: transform;
 }
 
-.intro__piece .quad {
-  display: block;
+/*
+ * First-paint state. index.html sets both classes before anything is painted, so these hold
+ * from frame one rather than being applied by script after a frame has already shown:
+ *   is-intro       the navigation arrives with the hero, not before it (removed at the handoff)
+ *   is-intro-mark  the hero's symbol waits for the intro's to land on it (removed at the swap),
+ *                  so only one NASAQ symbol is ever visible
+ */
+.is-intro .nav {
+  opacity: 0;
+  pointer-events: none;
 }
 
-.intro__panel--tl .intro__piece {
-  right: calc(var(--size) / -2);
-  bottom: calc(var(--size) / -2);
-}
-
-.intro__panel--tr .intro__piece {
-  left: calc(var(--size) / -2);
-  bottom: calc(var(--size) / -2);
-}
-
-.intro__panel--bl .intro__piece {
-  right: calc(var(--size) / -2);
-  top: calc(var(--size) / -2);
-}
-
-.intro__panel--br .intro__piece {
-  left: calc(var(--size) / -2);
-  top: calc(var(--size) / -2);
+.is-intro-mark [data-intro-target] {
+  visibility: hidden;
 }

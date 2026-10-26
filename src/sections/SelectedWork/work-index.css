@@ -27,10 +27,6 @@
   color: var(--color-blue-light);
 }
 
-.index__count {
-  grid-column: 1 / -1;
-}
-
 .index__table {
   border-top: var(--hairline) solid var(--line);
 }
@@ -38,10 +34,10 @@
 .index__row {
   position: relative;
   display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    'num name thumb'
-    'num ar thumb';
+    'name thumb'
+    'ar thumb';
   align-items: center;
   column-gap: var(--space-s);
   padding-block: var(--space-s);
@@ -58,7 +54,8 @@
   position: absolute;
   inset: 0 calc(var(--gutter) * -0.5);
   z-index: -1;
-  background: var(--color-blue);
+  /* the row rises into the project's own colour: a glimpse of its brand world */
+  background: var(--row-bg, var(--color-blue));
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.55s var(--ease-out);
@@ -69,17 +66,22 @@
   transform: scaleY(1);
 }
 
-.index__row:focus-visible {
-  outline: none;
+.index__row {
+  transition: color 0.45s var(--ease-out);
 }
 
-.index__num {
-  grid-area: num;
-  align-self: start;
-  padding-top: 0.6em;
-  font-family: var(--font-display);
-  font-size: var(--fs-small);
-  color: var(--fg-muted);
+.index__row.is-active,
+.index__row:focus-visible {
+  color: var(--row-ink, var(--color-white));
+}
+
+.index__row.is-active .index__name-ar,
+.index__row:focus-visible .index__name-ar {
+  color: var(--row-accent, var(--color-blue-light));
+}
+
+.index__row:focus-visible {
+  outline: none;
 }
 
 .index__name {
@@ -119,18 +121,13 @@
   object-fit: cover;
 }
 
-.index__row.is-active .index__num,
-.index__row:focus-visible .index__num {
-  color: var(--color-white);
-}
-
 .index__preview {
   display: none;
 }
 
 @media (min-width: 900px) {
   .index__head {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr;
   }
 
   .index__ar {
@@ -138,14 +135,9 @@
     padding-right: var(--space-m);
   }
 
-  .index__count {
-    grid-column: auto;
-    padding-bottom: 0.8em;
-  }
-
   .index__row {
-    grid-template-columns: 4rem minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) 5rem 2rem;
-    grid-template-areas: 'num name ar cat year arrow';
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) 5rem 2rem;
+    grid-template-areas: 'name ar cat year arrow';
     padding-block: clamp(1rem, 1.6vw, 1.75rem);
   }
 
@@ -162,13 +154,8 @@
     display: none;
   }
 
-  .index__row--head span:nth-child(3) {
+  .index__row--head span:nth-child(2) {
     grid-area: ar;
-  }
-
-  .index__num {
-    align-self: center;
-    padding: 0;
   }
 
   .index__cat,
@@ -203,7 +190,7 @@
   .index__row.is-active .index__year,
   .index__row:focus-visible .index__cat,
   .index__row:focus-visible .index__year {
-    color: var(--color-white);
+    color: inherit;
   }
 
   .index__row.is-active .index__arrow,

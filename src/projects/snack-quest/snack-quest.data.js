@@ -1,15 +1,29 @@
 /*
- * Snack Quest. Content, media and case-study composition.
- * Uses the shared project page; its `story` below is the page, top to bottom.
- * Own code: components/Ticker.jsx (slogan strip, story block, homepage slot) ·
- * styles: snack-quest.css (pixel-stepped frames, the ticker).
- * Sources: brand/work/snaok (presentation screenshots + logo/ folder).
- * Web images: public/work/snack-quest, built by scripts/build-media.mjs.
+ * Snack Quest. Content and media for its own page (SnackQuestPage.jsx + components/,
+ * styles in snack-quest.css, logo geometry, eases and the pixel cover in
+ * snack-quest.motion.js) and its Selected Work scene (snack-quest.sequence.js).
+ *
+ * Sources: brand/work/snaok — the identity presentation (screenshots) and the logo.
+ *   - Photographs and pages: public/work/snack-quest (scripts/build-media.mjs).
+ *   - Flames strip and the coin and burger sprites, cut from the presentation:
+ *     public/work/snack-quest/flames.png, sprite-*.png (scripts/project-assets.mjs).
+ *   - Type: Pixelify Sans (public/work/snack-quest/fonts, SIL Open Font Licence),
+ *     the identity's typeface.
+ *   - Logo film and parts: scripts/logo-motion/.
+ *
+ * Copy: the slogan as the identity spells it, the typeface's name and the colour
+ * values from the colour page. Client, year, location and services are not stated.
  */
-import { asset, img, withMobile } from '../../utils/media';
-import { ChapterTicker, TickerBlock } from './components/Ticker';
+import { lazy } from 'react';
+import { asset, img, logoMotion, withMobile } from '../../utils/media';
+import logoParts from './logo-parts.json';
+import sequence from './snack-quest.sequence';
+
+// its own chunk: the page's code loads only when the page is opened
+const SnackQuestPage = lazy(() => import('./SnackQuestPage'));
 
 const media = (key, alt, extra) => img(`work/snack-quest/${key}`, alt, extra);
+const sprite = (key, width, height) => ({ src: `/work/snack-quest/sprite-${key}.png`, width, height });
 
 const M = {
   cover: media('cover', 'Snack Quest packaging, bag and fried chicken on cream'),
@@ -41,7 +55,8 @@ export default {
   overview: null,
   services: [],
   featured: true,
-  order: 4,
+  order: 6,
+  page: SnackQuestPage,
   signature: 'arcade',
   motion: 'steps', // the identity moves in pixel steps: reveals and openings advance in steps
   theme: { mode: 'dark', surface: '#4D3468', accent: '#FF9C00', ink: '#F4E8C6' },
@@ -51,43 +66,41 @@ export default {
   },
   cover: M.cover,
   logo: asset('work/snack-quest/logo', 'The Snack Quest logo', 'webp'),
-  // the logo itself stands where the name would; the packaging sits below it
-  hero: { layout: 'plate', media: M.products, mark: true },
+  // the logo in motion, in pixel steps (scripts/logo-motion/scenes/snack-quest.js)
+  motionLogo: logoMotion('snack-quest', {
+    width: 1280,
+    height: 720,
+    field: '#4D3468',
+    alt: 'The Snack Quest logo in motion: the plate appears pixel by pixel and the letters are typed in',
+  }),
   video: null,
   identity: {
+    // values from the colour page; the coin and the burger stand on their colours there
     colours: [
-      { name: null, hex: '#4D3468' },
-      { name: null, hex: '#BA3F3F' },
-      { name: null, hex: '#8ACC66' },
-      { name: null, hex: '#FF9C00' },
-      { name: null, hex: '#F4E8C6' },
+      { name: null, hex: '#F4E8C6', ink: '#4D3468' },
+      { name: null, hex: '#4D3468', ink: '#F4E8C6', sprite: sprite('coin', 116, 116) },
+      { name: null, hex: '#BA2F2F', ink: '#F4E8C6' },
+      { name: null, hex: '#FF9C00', ink: '#000000' },
+      { name: null, hex: '#8ACC66', ink: '#000000', sprite: sprite('burger', 131, 123) },
     ],
     typefaces: ['Pixelify Sans'],
   },
-  home: {
-    layout: 'mosaic',
-    details: [M.poster, M.monogram],
-    flip: [M.poster, M.type, M.colour, M.fries],
-    slots: { floor: ChapterTicker },
+  media: M,
+  copy: {
+    slogan: 'SNACK ACCEPTED ✦ HUNGER DEFETED!', // spelled as in the identity
+    monogram: { label: 'Monogram', title: 'SQ, in every colour of the set.' },
+    type: { label: 'Typeface', face: 'Pixelify Sans' },
+    colour: { label: 'Colour' },
+    packaging: { label: 'Packaging', title: 'The plate, on every pack.' },
+    spaces: { label: 'Spaces' },
+    finale: { label: 'Logo in motion' },
   },
-  story: [
-    { type: 'logo', variant: 'dark' },
-    {
-      type: 'detail',
-      media: M.monogram,
-      label: 'Monogram',
-      labelAr: 'الرمز',
-      context: M.palette,
-      contextLabel: 'Colour',
-    },
-    { type: 'layered', items: [M.poster, M.fries, M.colour], tone: '#FF9C00' },
-    { type: 'type', media: M.type, family: 'Pixelify Sans', tone: '#BA3F3F' },
-    { type: 'palette' },
-    { type: 'bleed', media: M.interior },
-    { type: 'pair', items: [M.wallA, M.wallB], ratio: 'equal', offset: true },
-    { type: 'stage', media: M.applications, tone: '#F4E8C6', size: 's', place: 'start', label: 'Packaging' },
-    { type: 'ticker' },
-  ],
-  blocks: { ticker: TickerBlock },
+  // Selected Work: the logo as supplied (black plate, white letters) on the identity's purple
+  home: {
+    field: '#4D3468',
+    ink: '#F4E8C6',
+    logo: { dir: '/work/snack-quest/parts/', manifest: logoParts, paint: { default: '#FFFFFF', plate: '#000000' } },
+    sequence,
+  },
   caseStudy: null,
 };

@@ -1,4 +1,8 @@
-/* Anatomy — the parts of one identity close into a single strip */
+/*
+ * Anatomy: the parts of one identity close into a single strip.
+ * .anatomy--staged (desktop with motion, set by JS): the section is three screens
+ * tall and its stage holds the screen while the exploded parts assemble.
+ */
 .anatomy {
   background: var(--color-black);
   padding-block: var(--space-xl);
@@ -107,17 +111,13 @@
 
 .anatomy__part figcaption {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr auto;
   gap: 0.6rem;
   align-items: baseline;
   padding-top: 0.75rem;
   border-top: var(--hairline) solid var(--line);
   font-family: var(--font-display);
   font-size: var(--fs-small);
-}
-
-.anatomy__num {
-  color: var(--fg-muted);
 }
 
 .anatomy__ar {
@@ -162,5 +162,46 @@
 
   .anatomy__part figcaption {
     padding-inline: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .anatomy--staged {
+    height: 300svh;
+    padding-block: 0;
+    overflow: visible;
+  }
+
+  .anatomy--staged .anatomy__stage {
+    position: sticky;
+    top: 0;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: calc(var(--nav-h) + var(--space-s)) var(--space-m);
+    overflow: hidden;
+  }
+
+  /* the heading stays above the parts flying in */
+  .anatomy--staged .anatomy__head {
+    position: relative;
+    z-index: 2;
+    margin-bottom: var(--space-m);
+  }
+
+  .anatomy--staged .anatomy__title {
+    font-size: clamp(2.6rem, min(5.6vw, 10svh), 7.5rem);
+  }
+
+  .anatomy--staged .anatomy__frame {
+    aspect-ratio: auto;
+    height: min(46svh, 26vw);
+    will-change: transform;
+  }
+
+  /* the parts hover above the page while they are apart */
+  .anatomy--staged .anatomy__part {
+    position: relative;
   }
 }

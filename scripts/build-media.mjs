@@ -42,6 +42,9 @@ const rumhFile = (name) =>
   );
 const id = (n) => `brand/identity/nasaq [Recovered]-${String(n).padStart(2, '0')}.png`;
 const BLUR = { blur: true };
+// DATOURA: the photographs are the high-resolution mockups linked into its .ai file
+const nurba = (n) => `brand/work/nurba/Nurba11-${String(n).padStart(2, '0')}.png`;
+const datoura = (name) => `brand/work/DATOURA_Folder/DATOURA_Folder/Links/${name}`;
 
 /*
  * The Rukaz applications collage (513 × 1225 screenshot) holds fourteen separate
@@ -81,6 +84,8 @@ const MANIFEST = [
   ['work/rumh/screen', rumhSlide(30), [215, 130, 1151, 582]],
   ['work/rumh/signage', rumhSlide(31), [0, 105, 1366, 607]],
   ['work/rumh/signage-d', rumhSlide(31), [560, 260, 700, 430]],
+  // the acrylic wall sign (the page heading above and the footer below cropped away)
+  ['work/rumh/sign', rumhSlide(34), [0, 110, 1366, 600]],
   ['work/rumh/keyring', rumhSlide(32), [330, 110, 720, 658]],
   ['work/rumh/interior', rumhSlide(35), [0, 110, 1250, 658]],
   ['work/rumh/badges', rumhSlide(36)],
@@ -132,6 +137,29 @@ const MANIFEST = [
   // packaging only (the logo above it is now the real logo file)
   ['work/snack-quest/products', snaok[1], [0, 305, 1044, 398]],
   ['work/snack-quest/products-m', snaok[1], [262, 305, 520, 398]],
+
+  /* ---------------- DATOURA (artboards rendered from DATOURA.ai) ---------------- */
+  ['work/datoura/cover', datoura('STADIUM-ADVERTISING-BOARD-MOCKUP.jpg'), [0, 300, 4000, 2250], BLUR],
+  ['work/datoura/cover-p', datoura('STADIUM-ADVERTISING-BOARD-MOCKUP.jpg'), [230, 200, 2100, 2700]],
+  // the phone on its own violet gradient: the page lays the same gradient around it
+  ['work/datoura/phone', datoura('iPhone-15-Pro-Max---Hand-Mockup.jpg')],
+  // the front card only (the back carries a sample name and contact details)
+  ['work/datoura/card-print', datoura('Business-Card-Mockup.jpg'), [300, 100, 1500, 1075]],
+
+  /* ---------------- NURBA (exported boards; logos traced by scripts/nurba-extract.mjs) ---------------- */
+  // the two bangles, engraved in gold and silver: the cover
+  ['work/nurba/cover', nurba(12), null, BLUR],
+  ['work/nurba/card', nurba(11)],
+  ['work/nurba/envelopes', nurba(13)],
+  ['work/nurba/subway', nurba(10)],
+  // the poster alone, in its lightbox
+  ['work/nurba/poster', nurba(10), [660, 260, 600, 1100]],
+  // board 14, object by object (the ID badge carries a person's photograph and name, the receipt sample prices)
+  ['work/nurba/cases', nurba(14), [300, 120, 1320, 860]],
+  ['work/nurba/gift', nurba(14), [820, 1400, 800, 430]],
+  ['work/nurba/necklace', nurba(14), [420, 2200, 1080, 860]],
+  // the shopping bags, supplied as a transparent mockup (the file linked in the package)
+  ['work/nurba/bags', 'brand/work/nurba/Nurba11_Folder/Nurba11_Folder/Links/Shopping Bags Mockup (7).png', [500, 700, 4100, 2000], { alpha: true }],
 
   /* ---------------- NASAQ's own identity ---------------- */
   // Transparent cutout supplied for the Studio section (kept transparent)
@@ -313,6 +341,12 @@ await exportLogo(rumhFile('الشعار  بالاسم كامل أفقي بالك
 // Clean logo files supplied separately (transparent artboards, trimmed here)
 await exportLogo('brand/work/lew/logo/Minimalist White Arabic Leaf Logo.png', 'work/louiza/logo-white', 493, { webp: true });
 await exportLogo('brand/work/snaok/logo/Pixel Snack Quest Logo.png', 'work/snack-quest/logo', 1095, { webp: true });
+await exportLogo('brand/work/DATOURA_Folder/extracted/logo-white.png', 'work/datoura/logo-white', 1200);
+// NURBA: the traced logo pieces (white on transparent, painted by the page as masks)
+await exportLogo('brand/work/nurba/extracted/logo-horizontal.png', 'work/nurba/logo-horizontal', 2400);
+await exportLogo('brand/work/nurba/extracted/logo-stacked.png', 'work/nurba/logo-stacked', 1800);
+await exportLogo('brand/work/nurba/extracted/monogram.png', 'work/nurba/monogram', 1200);
+await exportLogo('brand/work/nurba/extracted/glint.png', 'work/nurba/glint', 240);
 await exportPattern();
 await exportSignatures();
 

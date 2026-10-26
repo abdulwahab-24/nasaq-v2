@@ -1,5 +1,5 @@
 import { LogoBlock, Palette, TypeBlock, Words } from './IdentityBlocks';
-import { Bleed, Detail, Layered, Pair, Sequence, Stage, Video } from './MediaBlocks';
+import { Bleed, Detail, Layered, MotionBlock, Pair, Sequence, Stage, Video } from './MediaBlocks';
 
 /*
  * A project page composed from its `story` blocks (projects/<slug>/<slug>.data.js).
@@ -11,6 +11,7 @@ import { Bleed, Detail, Layered, Pair, Sequence, Stage, Video } from './MediaBlo
 const BLOCKS = {
   bleed: Bleed,
   video: Video,
+  motion: MotionBlock,
   stage: Stage,
   detail: Detail,
   layered: Layered,
@@ -23,18 +24,12 @@ const BLOCKS = {
 };
 
 export default function ProjectStory({ project }) {
-  // Detail blocks are numbered in reading order.
-  const detailIndex = project.story.reduce((acc, b, i) => {
-    if (b.type === 'detail') acc[i] = Object.keys(acc).length + 1;
-    return acc;
-  }, {});
-
   return (
     <div className="pstory">
       {project.story.map((block, i) => {
         const Block = project.blocks?.[block.type] ?? BLOCKS[block.type];
         if (!Block) return null;
-        return <Block key={`${block.type}-${i}`} block={block} project={project} index={detailIndex[i]} />;
+        return <Block key={`${block.type}-${i}`} block={block} project={project} />;
       })}
     </div>
   );

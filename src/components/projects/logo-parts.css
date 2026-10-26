@@ -1,0 +1,12 @@
+/* A logo assembled from its own parts (LogoParts.jsx): each part painted through its shape. */
+.lp {
+  position: relative;
+  display: block;
+  aspect-ratio: var(--lp-ratio);
+}
+
+.lp__part {
+  position: absolute;
+  -webkit-mask: var(--lp-src) center / 100% 100% no-repeat;
+  mask: var(--lp-src) center / 100% 100% no-repeat;
+}

@@ -1,11 +1,12 @@
 import { useLayoutEffect, useRef } from 'react';
+import LogoMotion from '../../components/projects/LogoMotion';
 import Arrow from '../../components/ui/Arrow';
 import ResponsiveImage from '../../components/ui/ResponsiveImage';
 import { gsap, introDone, MOTION_OK } from '../../motion/gsap';
 import { useTransition } from '../../transition/context';
 import TransitionLink from '../../transition/TransitionLink';
-import { pad } from '../../utils/format';
 import { PatternBand } from './components/PatternBand';
+import logoParts from './logo-parts.json';
 
 /*
  * Rukaz — a page designed around the identity itself.
@@ -45,6 +46,32 @@ const SPECIMEN = {
   alphabet: { x: 0.64, y: 0, w: 0.36, h: 1 },
 };
 
+// The logo rebuilt from its supplied parts (scripts/logo-motion/), each placed exactly
+// where it sits in the logo file and painted in the current colour.
+const { width: LW, height: LH, parts: PARTS } = logoParts;
+const PIECES = ['piece-tl', 'piece-tr', 'piece-bl', 'piece-br'];
+const LATIN = ['latin-0', 'latin-1', 'latin-2', 'latin-3', 'latin-4'];
+
+function LogoParts({ className = '' }) {
+  return (
+    <span className={`rk-parts ${className}`} style={{ aspectRatio: `${LW} / ${LH}` }} aria-hidden="true">
+      {Object.entries(PARTS).map(([name, [x, y, w, h]]) => (
+        <span
+          key={name}
+          className={`rk-parts__part rk-parts__part--${name}`}
+          style={{
+            left: `${(x / LW) * 100}%`,
+            top: `${(y / LH) * 100}%`,
+            width: `${(w / LW) * 100}%`,
+            height: `${(h / LH) * 100}%`,
+            '--src': `url(/work/rukaz/parts/${name}.png)`,
+          }}
+        />
+      ))}
+    </span>
+  );
+}
+
 function SectionLabel({ en, ar }) {
   return (
     <p className="rk-label label">
@@ -57,11 +84,11 @@ function SectionLabel({ en, ar }) {
 }
 
 /* ---------- hero: the logo on forest green, beside the mug on its rock ---------- */
-function Hero({ project, index, total }) {
+function Hero({ project }) {
   const { registerHero, whenSettled, isTransitioning } = useTransition();
   const rootRef = useRef(null);
   const imgRef = useRef(null);
-  const { logo, copy, cover } = project;
+  const { copy, cover } = project;
 
   useLayoutEffect(() => {
     const image = imgRef.current;
@@ -71,15 +98,18 @@ function Hero({ project, index, total }) {
     const mm = gsap.matchMedia(rootRef);
     mm.add(MOTION_OK, () => {
       const q = gsap.utils.selector(rootRef);
-      const tl = gsap.timeline({ paused: true });
-      // the logo is drawn in from its leading edge, then the words settle
-      tl.fromTo(
-        q('.rk-hero__logo'),
-        { clipPath: 'inset(0% 100% 0% 0%)' },
-        { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' },
-      )
-        .set(q('.rk-hero__logo'), { clearProps: 'clipPath' })
-        .from(q('.rk-hero__meta, .rk-hero__back, .rk-hero__line > *'), { opacity: 0, y: 14, duration: 0.9, stagger: 0.06 }, 0.5);
+      const part = (name) => q(`.rk-parts__part--${name}`);
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out' } });
+      // the logo is assembled, heavily, with no overshoot: the four pieces of the symbol
+      // close in from apart until they lock into one element, the Arabic wordmark is set
+      // down on top, the Latin letters are stacked up beside it one by one
+      PIECES.forEach((name) => {
+        const [sx, sy] = [name.endsWith('l') ? -1 : 1, name.includes('-t') ? -1 : 1];
+        tl.from(part(name), { xPercent: sx * 55, yPercent: sy * 55, opacity: 0, duration: 1.1 }, 0.1);
+      });
+      tl.from(part('ar'), { yPercent: -60, opacity: 0, duration: 0.9 }, 0.75)
+        .from(LATIN.map((name) => part(name)[0]), { yPercent: 70, opacity: 0, duration: 0.7, stagger: 0.07 }, 0.95)
+        .from(q('.rk-hero__meta, .rk-hero__back, .rk-hero__line > *'), { opacity: 0, y: 14, duration: 0.9, stagger: 0.06 }, 1.1);
       // arriving through a page transition the photograph is already in place
       if (!arriving) tl.from(q('.rk-hero__photo img'), { scale: 1.1, duration: 2, ease: 'expo.out' }, 0);
 
@@ -111,14 +141,11 @@ function Hero({ project, index, total }) {
           <span className="visually-hidden">
             {project.name} — <span lang="ar">{project.nameAr}</span>
           </span>
-          <Slice art={logo} className="rk-hero__logo" aria-hidden="true" />
+          <LogoParts className="rk-hero__logo" />
         </h1>
 
         <div className="rk-hero__foot">
           <p className="rk-hero__meta label">
-            <span>
-              {pad(index + 1)} / {pad(total)}
-            </span>
             <span>{project.category}</span>
           </p>
           <div className="rk-hero__line">
@@ -198,16 +225,20 @@ function LogoAnatomy({ project }) {
         <Slice art={logo} {...LOGO.latin} className="rk-logo__part rk-logo__part--latin" />
       </div>
       <ol className="rk-logo__keys label">
-        <li>
-          <span>01</span> Symbol
-        </li>
-        <li>
-          <span>02</span> Arabic wordmark
-        </li>
-        <li>
-          <span>03</span> Latin wordmark
-        </li>
+        <li>Symbol</li>
+        <li>Arabic wordmark</li>
+        <li>Latin wordmark</li>
       </ol>
+    </section>
+  );
+}
+
+/* ---------- film: the same parts, laid down and locked together in motion ---------- */
+function Film({ project }) {
+  if (!project.motionLogo) return null;
+  return (
+    <section className="rk-film" aria-label="Logo in motion">
+      <LogoMotion film={project.motionLogo} className="rk-film__motion" />
     </section>
   );
 }
@@ -326,7 +357,6 @@ function Kit({ project }) {
               <span>The kit.</span>
             </span>
           </h2>
-          <p className="rk-kit__count label">({pad(media.apps.length)}) pieces</p>
         </div>
         <figure className="rk-kit__photo rk-cut" style={{ maxWidth: `${media.lighters.width}px` }}>
           <span data-reveal="clip">
@@ -336,9 +366,8 @@ function Kit({ project }) {
       </header>
 
       <ol className="rk-kit__list">
-        {media.apps.map((item, i) => (
+        {media.apps.map((item) => (
           <li key={item.src} className="rk-kit__row" data-reveal="up">
-            <span className="rk-kit__num">{pad(i + 1)}</span>
             <span className="rk-kit__name">{item.name}</span>
             <span className="rk-kit__thumb">
               <ResponsiveImage media={item} sizes={`${item.width}px`} />
@@ -369,12 +398,13 @@ function Closing({ project }) {
   );
 }
 
-export default function RukazPage({ project, index, total }) {
+export default function RukazPage({ project }) {
   return (
     <div className="rk">
-      <Hero project={project} index={index} total={total} />
+      <Hero project={project} />
       <Intro project={project} />
       <LogoAnatomy project={project} />
+      <Film project={project} />
       <Pattern project={project} />
       <Strata project={project} />
       <Type project={project} />

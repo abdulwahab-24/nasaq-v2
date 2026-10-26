@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import { DESKTOP, gsap } from '../../../motion/gsap';
-import { pad } from '../../../utils/format';
 import LoopVideo from '../../ui/LoopVideo';
+import LogoMotion from '../LogoMotion';
 import ResponsiveImage, { Backdrop } from '../../ui/ResponsiveImage';
 import { fieldStyle, nativeMax, STAGE_SIZES } from './fields';
 import { BlockLabel, Frame } from './Frame';
@@ -18,6 +18,21 @@ export function Video({ block }) {
           <LoopVideo sources={sources} poster={poster} label={label} />
         </span>
       </figure>
+    </section>
+  );
+}
+
+// The project's logo film (its `motionLogo`), on a field of the film's own colour, so it has no edge.
+export function MotionBlock({ block, project }) {
+  const film = project.motionLogo;
+  if (!film) return null;
+  return (
+    <section
+      className={`pb pb--motion${film.width <= film.height ? ' pb--motion-tall' : ''}`}
+      style={{ '--field': film.field }}
+      aria-label={block.label}
+    >
+      <LogoMotion film={film} className="pmotion" />
     </section>
   );
 }
@@ -53,14 +68,14 @@ export function Stage({ block, project }) {
   );
 }
 
-export function Detail({ block, index }) {
+export function Detail({ block }) {
   return (
     <section className="pb pb--detail">
       <div className="pdetail__main">
         <Frame media={block.media} sizes="(min-width: 1024px) 50vw, 100vw" style={nativeMax(block.media)} />
       </div>
       <div className="pdetail__side">
-        <BlockLabel label={block.label} labelAr={block.labelAr} index={index} />
+        <BlockLabel label={block.label} labelAr={block.labelAr} />
         {block.context && (
           <>
             <Frame media={block.context} sizes="(min-width: 1024px) 30vw, 70vw" parallax="0.08" />
@@ -130,7 +145,6 @@ export function Sequence({ block }) {
     <section className="pb pb--sequence" ref={rootRef} aria-label={block.label}>
       <div className="pseq__head">
         <BlockLabel label={block.label} labelAr={block.labelAr} />
-        <p className="label pseq__count">{pad(block.items.length)} images</p>
       </div>
       <div className="pseq__track" tabIndex={0} role="group" aria-label={`${block.label} — scrollable images`} data-allow-overflow>
         {block.items.map((m) => (

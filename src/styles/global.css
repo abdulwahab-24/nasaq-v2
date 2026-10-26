@@ -129,15 +129,10 @@ ol {
 }
 
 .is-light :focus-visible,
-.chapter--light :focus-visible,
-.statement :focus-visible,
 .project--light :focus-visible {
   --focus: var(--color-blue);
 }
 
-.services :focus-visible {
-  --focus: var(--color-white);
-}
 
 @media (prefers-reduced-motion: reduce) {
   *,

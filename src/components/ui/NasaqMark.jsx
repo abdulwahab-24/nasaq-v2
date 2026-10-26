@@ -24,15 +24,16 @@ function Quadrant({ quadrant }) {
   );
 }
 
-export default function NasaqMark({ className = '' }) {
+// `as`: the wrapping element ('span' where the symbol sits inside running text)
+export default function NasaqMark({ className = '', as: Tag = 'div' }) {
   return (
-    <div className={`mark ${className}`} aria-hidden="true">
+    <Tag className={`mark ${className}`} aria-hidden="true">
       {QUADRANTS.map((q) => (
         <span key={q} className="mark__piece" data-quadrant={q}>
           <Quadrant quadrant={q} />
         </span>
       ))}
-    </div>
+    </Tag>
   );
 }
 

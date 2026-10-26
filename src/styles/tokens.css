@@ -14,7 +14,7 @@
   --color-black: #000000;
 
   /* Roles (dark default) */
-  --bg: var(--color-navy);
+  --bg: var(--color-black); /* the canvas: black; navy stays an identity colour */
   --fg: var(--color-white);
   --fg-muted: rgb(201 212 255 / 0.7); /* Light Blue tint, per identity tint scale */
   --line: rgb(201 212 255 / 0.2);
@@ -88,8 +88,6 @@
 
 /* Light surfaces flip the roles */
 .is-light,
-.chapter--light,
-.statement,
 .project--light {
   --bg: var(--color-off-white);
   --fg: var(--color-navy);

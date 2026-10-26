@@ -5,12 +5,22 @@
   padding-top: env(safe-area-inset-top);
   transition:
     transform 0.6s var(--ease-out),
-    background-color 0.4s var(--ease-out);
+    background-color 0.4s var(--ease-out),
+    opacity 0.9s var(--ease-out);
 }
 
 .nav--solid,
 .nav--open {
-  background: rgb(0 6 40 / 0.94);
+  background: rgb(0 0 0 / 0.9);
+}
+
+/* over a light page: the official black (the lockup file is white; only its colour changes) */
+.nav--ink .nav__bar {
+  color: var(--color-black);
+}
+
+.nav--ink .nav__brand img {
+  filter: brightness(0);
 }
 
 .nav--hidden {
@@ -42,6 +52,7 @@
 
 .nav__links {
   display: none;
+  position: relative;
 }
 
 .nav__links ul {
@@ -60,12 +71,65 @@
   font-weight: var(--fw-regular);
   font-size: clamp(0.875rem, 0.82rem + 0.2vw, 1rem);
   letter-spacing: 0.005em;
+  transition: opacity var(--dur) var(--ease-out);
 }
 
-.nav__num {
-  font-size: 0.68em;
-  color: var(--fg-muted);
-  transition: color var(--dur) var(--ease-out);
+.nav__roll {
+  position: relative;
+  display: inline-block;
+  overflow: clip;
+  /* room for descenders inside the clip */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.nav__roll > span {
+  display: block;
+  transition: translate 0.55s var(--ease-out);
+}
+
+.nav__roll > span + span {
+  position: absolute;
+  inset: 0;
+  translate: 0 110%;
+}
+
+@media (hover: hover) {
+  .nav__link:hover .nav__roll > span {
+    translate: 0 -110%;
+  }
+
+  .nav__link:hover .nav__roll > span + span {
+    translate: 0 0;
+  }
+}
+
+/* reading progress: a hairline of NASAQ blue along the foot of the bar */
+.nav__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-blue-secondary);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .nav__progress {
+      animation: nav-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes nav-progress {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .nav__link::after {
@@ -87,9 +151,31 @@
     transform-origin: left;
   }
 
-  .nav__link:hover .nav__num {
-    color: var(--color-blue-light);
+  /* the other links step back while one is pointed at */
+  .nav__links ul:hover .nav__link:not(:hover) {
+    opacity: 0.45;
   }
+}
+
+/* the current homepage section, marked in NASAQ blue: one marker that travels from link to link */
+.nav__marker {
+  position: absolute;
+  left: 0;
+  bottom: 0.6rem;
+  width: 1px;
+  height: 2px;
+  background: var(--color-blue-secondary);
+  transform: translateX(var(--marker-x, 0)) scaleX(var(--marker-w, 0));
+  transform-origin: left;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.7s var(--ease-out),
+    opacity 0.4s var(--ease-out);
+}
+
+.nav__links.has-current .nav__marker {
+  opacity: 1;
 }
 
 .nav__cta {
@@ -187,7 +273,7 @@
   overflow-y: auto;
   padding: calc(var(--nav-h) + env(safe-area-inset-top) + var(--space-m)) var(--gutter)
     calc(var(--space-m) + env(safe-area-inset-bottom));
-  background: var(--color-navy);
+  background: var(--color-black);
 }
 
 .menu[hidden] {
@@ -223,12 +309,9 @@
   letter-spacing: -0.04em;
 }
 
-.menu__num {
-  font-size: 0.8rem;
-  font-weight: var(--fw-regular);
-  letter-spacing: 0;
-  color: var(--color-blue-light);
-  transform: translateY(-1.6em);
+/* the section the menu was opened from */
+.menu__link[aria-current='true'] {
+  color: var(--color-blue-secondary);
 }
 
 .menu__foot {
@@ -259,12 +342,6 @@
 
 .menu__services {
   grid-column: 1 / -1;
-}
-
-.menu__place {
-  grid-column: 1 / -1;
-  font-size: 0.95rem;
-  color: var(--fg-muted);
 }
 
 @media (min-width: 900px) {

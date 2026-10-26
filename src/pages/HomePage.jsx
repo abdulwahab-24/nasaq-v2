@@ -34,7 +34,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Opening count={allProjects.length} />
+      <Opening />
       <SelectedWork projects={featuredProjects} />
       <WorkIndex projects={allProjects} />
       <Statement />

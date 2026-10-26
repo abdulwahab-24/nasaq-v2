@@ -9,6 +9,12 @@
   color: var(--fg);
 }
 
+/* a lazy project page, while its code loads: one screen of its field */
+.project__loading {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
 /* =================== Hero =================== */
 .phero {
   position: relative;
@@ -94,8 +100,8 @@
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(to top, rgb(0 6 40 / 0.78) 0%, rgb(0 6 40 / 0.25) 38%, rgb(0 6 40 / 0) 60%),
-    linear-gradient(to bottom, rgb(0 6 40 / 0.45) 0%, rgb(0 6 40 / 0) 22%);
+    linear-gradient(to top, rgb(0 0 0 / 0.78) 0%, rgb(0 0 0 / 0.25) 38%, rgb(0 0 0 / 0) 60%),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.45) 0%, rgb(0 0 0 / 0) 22%);
 }
 
 /* — split: the project's own field beside a tall crop — */

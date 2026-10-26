@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import LoopVideo from '../../components/ui/LoopVideo';
 import { CornerMarks } from '../../components/ui/NasaqMark';
 import { reel, sectionTitles } from '../../data/siteConfig';
-import { pad } from '../../utils/format';
 import Hero from './Hero';
 import useOpeningMotion from './useOpeningMotion';
 
@@ -13,7 +12,7 @@ import useOpeningMotion from './useOpeningMotion';
  * Without that mode (mobile, reduced motion, no JS) they simply stack.
  * Motion: ./useOpeningMotion.js
  */
-export default function Opening({ count }) {
+export default function Opening() {
   const rootRef = useRef(null);
   useOpeningMotion(rootRef);
 
@@ -38,11 +37,6 @@ export default function Opening({ count }) {
           <p className="frame__ar" lang="ar" dir="rtl">
             <span className="line">
               <span>{sectionTitles.work.ar}</span>
-            </span>
-          </p>
-          <p className="frame__count label">
-            <span className="line">
-              <span>({pad(count)}) Projects</span>
             </span>
           </p>
         </div>

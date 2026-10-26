@@ -1,0 +1,27 @@
+/* ---------- Logo motion film (components/projects/LogoMotion.jsx) ---------- */
+.lmotion {
+  position: relative;
+  margin: 0;
+  aspect-ratio: var(--lm-ratio);
+  background: var(--lm-field);
+  overflow: hidden;
+}
+
+.lmotion__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* on the project's own field: no frame, the edges dissolve into the page */
+.lmotion--seamless {
+  background: transparent;
+  -webkit-mask:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+  mask:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  mask-composite: intersect;
+}

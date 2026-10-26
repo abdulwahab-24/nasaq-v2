@@ -1,4 +1,4 @@
-// Readable text on a project colour field: navy on light fields, white on dark ones.
+// Readable text on a project colour field: black on light fields, white on dark ones.
 export function inkOn(hex) {
   if (!hex) return null;
   const n = parseInt(hex.slice(1), 16);
@@ -6,5 +6,5 @@ export function inkOn(hex) {
     const c = v / 255;
     return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
   });
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.4 ? '#000628' : '#FFFFFF';
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.4 ? '#000000' : '#FFFFFF';
 }

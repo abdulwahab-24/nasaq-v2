@@ -1,64 +1,32 @@
 /*
- * Rumh — styles only Rumh uses (signature: spear).
- * The spearhead mark is the aperture the art-direction photograph opens through
- * (components/Aperture.jsx); the brand traits are set on the identity's flag
- * (sig.flag, via the shared `words` block). Colours come from the project.
+ * Rumh — styles only Rumh uses: its page (RumhPage.jsx, components/) and its
+ * next-project teaser (signature: spear, the teaser seen at the end of the previous
+ * project, glimpsed through the mark).
+ *
+ * Colour: the identity's three colours only. Type: Metropolis (the guidelines' Latin
+ * face, public/work/rumh/fonts); Arabic in the site's Arabic face.
+ * Geometry: every slant on the page is one of the mark's two angles, 17.2° and 72.8°
+ * (tan 17.2° = 0.31: a slanted edge moves 31 units across for every 100 down).
  */
-
-/* — project page: the mark as aperture; traits set on the flag — */
-.pb--aperture {
-  margin-block: 0;
-  background: var(--field);
-  color: var(--field-ink);
+@font-face {
+  font-family: 'Metropolis RM';
+  src: url('/work/rumh/fonts/Metropolis-300.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
 }
 
-.pb--aperture .plabel {
-  position: absolute;
-  top: var(--space-m);
-  left: var(--gutter);
-  z-index: 1;
+@font-face {
+  font-family: 'Metropolis RM';
+  src: url('/work/rumh/fonts/Metropolis-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
 }
 
-.paperture__frame {
-  width: min(100%, 1440px); /* never beyond the photograph's pixels */
-  height: min(100svh, 100vw);
-  margin-inline: auto;
-  overflow: hidden;
-}
-
-.paperture__frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.pwords.pwords--flags {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-m) var(--space-s);
-  font-size: clamp(1.5rem, 0.7rem + 3.2vw, 3.75rem);
-  line-height: 1.2;
-}
-
-.pwords.pwords--flags li {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  place-items: center;
-  aspect-ratio: var(--flag-ratio);
-  margin: 0;
-  padding: 0;
-  color: var(--color-white);
-}
-
-.pwords--flags li::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--accent-p);
-  -webkit-mask: var(--flag) center / 100% 100% no-repeat;
-  mask: var(--flag) center / 100% 100% no-repeat;
+@font-face {
+  font-family: 'Metropolis RM';
+  src: url('/work/rumh/fonts/Metropolis-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
 }
 
 .pnext--sig-spear .pnext__frame {
@@ -66,9 +34,699 @@
   clip-path: var(--next-shape);
 }
 
+/* =================== Rumh page =================== */
+.project--page-rumh,
+.rm {
+  --rm-navy: #111f35;
+  --rm-red: #ff3c55;
+  --rm-white: #ffffff;
+
+  --bg: var(--rm-navy);
+  --fg: var(--rm-white);
+  --fg-muted: rgb(255 255 255 / 0.62);
+  --line: rgb(255 255 255 / 0.16);
+  --accent: var(--rm-red);
+  --focus: var(--rm-red);
+}
+
+.project--page-rumh {
+  background: var(--rm-navy);
+}
+
+.rm {
+  overflow: clip;
+  color: var(--rm-white);
+  font-family: 'Metropolis RM', var(--font-display);
+  font-weight: 300;
+}
+
+.rm svg {
+  overflow: visible;
+}
+
+.rm-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em 1.1em;
+  font-family: 'Metropolis RM', var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.rm-label [lang='ar'] {
+  font-family: var(--font-arabic);
+  font-size: 1.15em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* the light sections: white field, navy type */
+.rm-mark,
+.rm-lockups,
+.rm-pattern {
+  --fg-muted: rgb(17 31 53 / 0.6);
+  --line: rgb(17 31 53 / 0.14);
+  background: var(--rm-white);
+  color: var(--rm-navy);
+}
+
+/* ---------- opening: eight lines, one point ---------- */
+.rm-open {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + var(--space-xs)) var(--gutter) var(--space-m);
+  overflow: clip;
+  background: var(--rm-navy);
+}
+
+.rm-open__rays {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.rm-open__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-s);
+}
+
+.rm-open__back {
+  font-size: var(--fs-small);
+}
+
+.rm-open__lockup {
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  width: min(86vw, 1180px);
+  margin: 0 0 6svh;
+}
+
 @media (min-width: 768px) {
-  .pwords.pwords--flags {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-l) var(--space-m);
+  .rm-open__lockup {
+    width: min(74vw, 1180px);
+    margin-left: 6vw;
   }
+}
+
+.rm-open__mark,
+.rm-open__word {
+  position: absolute;
+}
+
+.rm-open__mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rm-open__word {
+  background: var(--rm-white);
+  -webkit-mask: var(--src) center / 100% 100% no-repeat;
+  mask: var(--src) center / 100% 100% no-repeat;
+}
+
+.rm-open__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-s) var(--space-m);
+}
+
+.rm-open__line {
+  font-size: clamp(1.35rem, 0.9rem + 1.8vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.rm-open__ar {
+  font-family: var(--font-arabic);
+  font-size: clamp(1.2rem, 0.9rem + 1.2vw, 2rem);
+  color: var(--fg-muted);
+}
+
+/* ---------- concept: on red, divided by a navy spear ---------- */
+.rm-concept {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + var(--space-xs)) var(--gutter) var(--space-l);
+  overflow: clip;
+  --fg-muted: rgb(17 31 53 / 0.72);
+  background: var(--rm-red);
+  color: var(--rm-navy);
+}
+
+.rm-concept__planes {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+.rm-concept__head {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.rm-concept__title {
+  font-weight: 300;
+  font-size: clamp(1.6rem, 1rem + 2.4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.rm-concept__ideas {
+  align-self: end;
+  display: grid;
+  gap: var(--space-m);
+}
+
+.rm-concept__idea {
+  display: grid;
+  gap: 0.4rem;
+  max-width: 26rem;
+}
+
+.rm-concept__idea h3 {
+  font-family: var(--font-arabic);
+  font-weight: 500;
+  font-size: clamp(2rem, 1.2rem + 3vw, 4.25rem);
+  line-height: 1.1;
+}
+
+.rm-concept__en {
+  font-weight: 700;
+  font-size: var(--fs-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rm-concept__text {
+  font-weight: 500;
+  font-size: clamp(0.95rem, 0.85rem + 0.3vw, 1.15rem);
+  line-height: 1.45;
+}
+
+@media (min-width: 900px) {
+  .rm-concept__ideas {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .rm-concept__idea:last-child {
+    justify-self: end;
+    text-align: right;
+  }
+
+  .rm-concept__idea:last-child h3 {
+    text-align: right;
+  }
+}
+
+/* ---------- traits: six words on the flag ---------- */
+.rm-traits {
+  display: grid;
+  gap: var(--space-l);
+  padding: var(--space-l) var(--gutter) var(--space-xl);
+  background: var(--rm-navy);
+}
+
+.rm-traits__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-l) var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rm-traits__list li {
+  display: grid;
+  gap: var(--space-xs);
+  justify-items: center;
+}
+
+.rm-traits__flag {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: var(--flag-ratio);
+  font-family: var(--font-arabic);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 0.6rem + 3.2vw, 3.5rem);
+  line-height: 1.2;
+}
+
+.rm-traits__flag::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--rm-red);
+  -webkit-mask: var(--flag) center / 100% 100% no-repeat;
+  mask: var(--flag) center / 100% 100% no-repeat;
+}
+
+.rm-traits__en {
+  font-weight: 500;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+@media (min-width: 768px) {
+  .rm-traits__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-l);
+  }
+}
+
+/* ---------- mark: a square, one corner raised ---------- */
+.rm-mark__stage {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-m);
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + var(--space-xs)) var(--gutter) var(--space-l);
+}
+
+.rm-mark__art {
+  align-self: center;
+  justify-self: center;
+  width: min(100%, 62svh);
+  height: auto;
+}
+
+.rm-mark__guide,
+.rm-mark__outline {
+  stroke: var(--rm-navy);
+}
+
+.rm-mark__guide {
+  opacity: 0.55;
+}
+
+.rm-mark__steps {
+  display: grid;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(1.15rem, 0.9rem + 1vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.rm-mark__step {
+  max-width: 22ch;
+}
+
+.rm-mark--staged .rm-mark__step {
+  grid-area: 1 / 1;
+}
+
+@media (min-width: 900px) {
+  .rm-mark__stage {
+    grid-template-columns: 1.3fr 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: center;
+  }
+
+  .rm-mark__stage .rm-label {
+    grid-column: 1 / -1;
+  }
+
+  .rm-mark__art {
+    width: min(100%, 72svh);
+  }
+}
+
+.rm-mark__small {
+  display: grid;
+  gap: var(--space-m);
+  padding: var(--space-l) var(--gutter) var(--space-xl);
+  border-top: 1px solid var(--line);
+}
+
+.rm-mark__scale {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1rem, 3vw, 3.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rm-mark__scale li {
+  flex: none;
+  width: calc(var(--s) * clamp(110px, 18vw, 280px));
+  min-width: 6px;
+}
+
+.rm-mark__scale svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.rm-mark__note {
+  max-width: 34ch;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
+  line-height: 1.35;
+}
+
+/* ---------- lockups: the four supplied arrangements ---------- */
+.rm-lockups {
+  display: grid;
+  gap: var(--space-l);
+  padding: var(--space-l) var(--gutter) var(--space-xl);
+}
+
+.rm-lockups__grid {
+  display: grid;
+  gap: var(--space-xl) var(--space-l);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rm-lockups__item {
+  display: grid;
+  align-content: end;
+  gap: var(--space-s);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--line);
+}
+
+.rm-lockups__logo {
+  display: block;
+  background: var(--rm-navy);
+  -webkit-mask: var(--src) center / 100% 100% no-repeat;
+  mask: var(--src) center / 100% 100% no-repeat;
+}
+
+.rm-lockups__item--wide .rm-lockups__logo {
+  width: min(100%, 34rem);
+}
+
+.rm-lockups__item--tall .rm-lockups__logo {
+  width: min(62%, 17rem);
+}
+
+.rm-lockups__name {
+  font-weight: 500;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+@media (min-width: 768px) {
+  .rm-lockups__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- pattern: the lattice, live ---------- */
+.rm-pattern {
+  display: grid;
+}
+
+.rm-pattern__field {
+  --tile: clamp(96px, 13vw, 210px);
+  position: relative;
+  height: 78svh;
+  overflow: hidden;
+}
+
+.rm-pattern__field svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.rm-pattern__text {
+  display: grid;
+  align-content: start;
+  gap: var(--space-s);
+  padding: var(--space-l) var(--gutter) var(--space-xl);
+}
+
+.rm-pattern__title {
+  font-weight: 300;
+  font-size: clamp(1.8rem, 1rem + 3vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.rm-pattern__body {
+  max-width: 32ch;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem);
+  line-height: 1.4;
+}
+
+@media (min-width: 900px) {
+  .rm-pattern {
+    grid-template-columns: minmax(18rem, 34%) 1fr;
+  }
+
+  .rm-pattern__field {
+    order: 2;
+    height: 100svh;
+  }
+
+  .rm-pattern__text {
+    align-content: end;
+    padding: var(--space-xl) var(--space-l) var(--space-xl) var(--gutter);
+  }
+}
+
+/* ---------- colour: three straight panels, as on the colour page ---------- */
+.rm-colour {
+  position: relative;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  height: 100svh;
+  min-height: 34rem;
+  overflow: clip;
+  background: var(--rm-white);
+}
+
+.rm-colour__plane {
+  position: relative;
+}
+
+.rm-colour__plane--navy {
+  background: var(--rm-navy);
+}
+
+.rm-colour__plane--red {
+  background: var(--rm-red);
+}
+
+.rm-colour__plane--white {
+  background: var(--rm-white);
+  color: var(--rm-navy);
+  box-shadow: inset 0 0 0 1px rgb(17 31 53 / 0.08);
+}
+
+.rm-colour__values {
+  position: absolute;
+  left: var(--gutter);
+  bottom: var(--space-s);
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  font-size: var(--fs-small);
+}
+
+.rm-colour__values dt {
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1rem + 1.6vw, 2.5rem);
+  letter-spacing: -0.02em;
+}
+
+.rm-colour__values dd {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.rm-colour__label {
+  position: absolute;
+  top: calc(var(--nav-h) + var(--space-xs));
+  left: var(--gutter);
+  color: rgb(255 255 255 / 0.62);
+}
+
+@media (min-width: 768px) {
+  .rm-colour {
+    grid-template-rows: none;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .rm-colour__values {
+    left: var(--space-m);
+    bottom: var(--space-l);
+  }
+
+  .rm-colour__label {
+    left: var(--space-m);
+  }
+}
+
+/* ---------- applications: full-bleed scenes, one caption ---------- */
+.rm-scene {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--rm-navy);
+}
+
+.rm-scene__frame {
+  height: 100svh;
+  overflow: hidden;
+}
+
+.rm-scene img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* the photographs wider than the screen keep their subject in view on a phone */
+.rm-scene--way .rm-scene__frame {
+  height: auto;
+  aspect-ratio: 1366 / 607;
+}
+
+@media (max-width: 767.98px) {
+  .rm-scene--sign .rm-scene__frame,
+  .rm-scene--digital .rm-scene__frame {
+    height: min(100svh, 120vw);
+  }
+
+  .rm-scene--way .rm-scene__frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .rm-scene--way img {
+    object-position: 74% 50%;
+  }
+}
+
+.rm-scene--sign {
+  background: var(--rm-white);
+}
+
+/* the caption: a small navy plate in the lower left corner of every scene */
+.rm-cap {
+  position: absolute;
+  left: var(--gutter);
+  bottom: var(--space-m);
+  z-index: 1;
+  display: grid;
+  gap: 0.35rem;
+  max-width: min(24rem, calc(100% - 2 * var(--gutter)));
+  padding: 0.7rem 0.9rem 0.8rem;
+  background: var(--rm-navy);
+  color: var(--rm-white);
+}
+
+.rm-cap__label {
+  font-weight: 500;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rm-cap__text {
+  font-size: var(--fs-small);
+  line-height: 1.4;
+  color: rgb(255 255 255 / 0.72);
+}
+
+/* objects: two fields side by side, white and red, split straight down the middle */
+.rm-objects {
+  display: grid;
+  background: var(--rm-white);
+}
+
+.rm-objects__white,
+.rm-objects__red {
+  overflow: hidden;
+}
+
+.rm-objects__white {
+  display: grid;
+  place-items: center;
+  padding: var(--space-xl) var(--gutter);
+}
+
+.rm-objects__white img {
+  width: min(100%, 30rem);
+  height: auto;
+  object-fit: contain;
+}
+
+.rm-objects__red {
+  height: min(100svh, 110vw);
+  background: var(--rm-red);
+}
+
+@media (min-width: 768px) {
+  .rm-objects {
+    grid-template-columns: 1fr 1fr;
+    height: 100svh;
+  }
+
+  .rm-objects__red {
+    height: 100%;
+  }
+}
+
+/* ---------- finale: the logo film on its navy ---------- */
+.rm-finale {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-m);
+  padding: var(--space-xl) var(--gutter) var(--space-xl);
+  background: var(--rm-navy);
+}
+
+.rm-finale__film {
+  width: min(100%, 1100px);
+}
+
+.rm-finale__line {
+  font-size: clamp(1.6rem, 1rem + 2.6vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-align: center;
 }

@@ -6,7 +6,8 @@ import { FINE_POINTER, gsap, prefersReducedMotion } from '../../motion/gsap';
  * Project cursor — desktop fine pointers only. Over anything carrying
  * data-cursor="Label" it becomes a blue disc with that label, so a project
  * reads as "View" and the next project as "Next". Elsewhere it is hidden and
- * the system cursor is untouched.
+ * the system cursor is untouched. data-cursor-tone="navy" sets the disc in Deep
+ * Navy, for targets that sit on NASAQ blue.
  */
 export default function Cursor() {
   const ref = useRef(null);
@@ -14,6 +15,7 @@ export default function Cursor() {
     () => typeof window !== 'undefined' && window.matchMedia(FINE_POINTER).matches,
   );
   const [label, setLabel] = useState('');
+  const [tone, setTone] = useState('');
   const { pathname } = useLocation();
 
   // A new page starts with the plain cursor until the pointer moves again.
@@ -35,6 +37,7 @@ export default function Cursor() {
       y(e.clientY);
       const target = e.target.closest?.('[data-cursor]');
       setLabel(target ? target.dataset.cursor : '');
+      setTone(target?.dataset.cursorTone ?? '');
     };
     const onLeave = () => setLabel('');
 
@@ -49,7 +52,7 @@ export default function Cursor() {
   if (!enabled) return null;
 
   return (
-    <div ref={ref} className={`cursor${label ? ' cursor--on' : ''}`} aria-hidden="true">
+    <div ref={ref} className={`cursor${label ? ' cursor--on' : ''}${tone ? ` cursor--${tone}` : ''}`} aria-hidden="true">
       <span className="cursor__disc">
         <span className="cursor__label">{label}</span>
       </span>

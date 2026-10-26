@@ -1,12 +1,13 @@
-/* Services — a typographic index on Primary Blue */
+/* Services — a typographic index on Deep Navy */
 .services {
   position: relative;
-  background: var(--color-blue);
+  background: var(--color-navy);
   color: var(--color-white);
   padding: var(--space-xl) var(--gutter) 0;
   overflow: clip;
-  --fg-muted: rgb(255 255 255 / 0.72);
-  --line: rgb(255 255 255 / 0.32);
+  --fg-muted: rgb(201 212 255 / 0.62);
+  --line: rgb(255 255 255 / 0.2);
+  --hover-ease: cubic-bezier(0.215, 0.61, 0.355, 1); /* power3.out, as the entrances */
 }
 
 .services__head {
@@ -31,10 +32,34 @@
 }
 
 .services__list {
+  position: relative;
   max-width: var(--max-w);
   margin-inline: auto;
-  border-top: var(--hairline) solid var(--line);
-  counter-reset: s;
+}
+
+/*
+ * The hairlines are drawn by pseudo-elements so the entrance can draw them in
+ * (--rule, 0 → 1, set by Services.jsx); they take no space, as the borders did.
+ */
+.services__list::before,
+.service::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--hairline);
+  background: var(--line);
+  transform: scaleX(var(--rule, 1));
+  transform-origin: left center;
+}
+
+.services__list::before {
+  top: 0;
+}
+
+.service::after {
+  bottom: 0;
+  transition: background-color 0.6s var(--hover-ease);
 }
 
 .service {
@@ -47,28 +72,6 @@
   align-items: baseline;
   column-gap: var(--space-s);
   padding-block: clamp(0.9rem, 1.6vw, 1.6rem);
-  border-bottom: var(--hairline) solid var(--line);
-  isolation: isolate;
-}
-
-.service::before {
-  content: '';
-  position: absolute;
-  inset: 0 calc(var(--gutter) * -1);
-  z-index: -1;
-  background: var(--color-navy);
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 0.6s var(--ease-out);
-}
-
-@media (hover: hover) {
-  .service:hover::before {
-    clip-path: inset(0 0 0 0);
-  }
-
-  .service:hover .service__en > span {
-    translate: 0.18em 0;
-  }
 }
 
 .service__num {
@@ -76,6 +79,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-small);
   color: var(--fg-muted);
+  transition: color 0.6s var(--hover-ease);
 }
 
 .service__en {
@@ -87,8 +91,36 @@
   letter-spacing: -0.05em;
 }
 
-.service__en > span {
-  transition: translate 0.6s var(--ease-out);
+.service__en > span,
+.service__ar > span {
+  transition:
+    color 0.6s var(--hover-ease),
+    translate 0.8s var(--hover-ease);
+}
+
+/*
+ * Pointing at a row: the name turns blue and steps along, the Arabic answers
+ * from the other side, and the row's number and hairline take the blue too.
+ * (`translate` is separate from the transform the entrance animates.)
+ */
+@media (hover: hover) and (pointer: fine) {
+  .service:hover .service__en > span {
+    color: var(--color-blue);
+    translate: 0.16em 0;
+  }
+
+  .service:hover .service__ar > span {
+    color: var(--color-white);
+    translate: -0.3em 0;
+  }
+
+  .service:hover .service__num {
+    color: var(--color-blue);
+  }
+
+  .service:hover::after {
+    background: var(--color-blue);
+  }
 }
 
 .service__ar {
@@ -115,5 +147,14 @@
 
   .service__ar {
     text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service__en > span,
+  .service__ar > span,
+  .service__num,
+  .service::after {
+    transition: none;
   }
 }

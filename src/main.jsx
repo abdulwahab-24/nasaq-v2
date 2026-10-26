@@ -29,6 +29,8 @@ import './components/projects/project-story.css';
 import './components/projects/project-next.css';
 import './components/projects/project-variants.css';
 import './components/projects/project-logo.css';
+import './components/projects/logo-motion.css';
+import './components/projects/logo-parts.css';
 import './components/layout/intro.css';
 import './transition/page-transition.css';
 import './components/layout/cursor.css';
@@ -39,6 +41,8 @@ import './projects/rumh/rumh.css';
 import './projects/louiza/louiza.css';
 import './projects/rukaz/rukaz.css';
 import './projects/snack-quest/snack-quest.css';
+import './projects/datoura/datoura.css';
+import './projects/nurba/nurba.css';
 
 import App from './App.jsx';
 

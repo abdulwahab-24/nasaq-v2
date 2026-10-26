@@ -1,23 +1,7 @@
 /*
  * Rukaz — styles only Rukaz uses: the travelling pattern band (signature: strata;
- * components/PatternBand.jsx) on the homepage and, below it, the Rukaz page
- * (RukazPage.jsx).
+ * components/PatternBand.jsx) and, below it, the Rukaz page (RukazPage.jsx).
  */
-
-/* — homepage chapter: the pattern band runs behind the mug — */
-.type__band {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12%;
-  --band-ink: var(--chapter-accent);
-}
-
-@media (min-width: 1024px) {
-  .type__band {
-    bottom: 16%;
-  }
-}
 
 /* — the pattern band (components/PatternBand.jsx) — */
 .band {
@@ -78,6 +62,19 @@
   background: currentColor;
   -webkit-mask: var(--slice-img) var(--slice-pos) / var(--slice-size) no-repeat;
   mask: var(--slice-img) var(--slice-pos) / var(--slice-size) no-repeat;
+}
+
+/* the logo rebuilt from its parts (RukazPage.jsx: LogoParts) */
+.rk-parts {
+  position: relative;
+  display: block;
+}
+
+.rk-parts__part {
+  position: absolute;
+  background: currentColor;
+  -webkit-mask: var(--src) center / 100% 100% no-repeat;
+  mask: var(--src) center / 100% 100% no-repeat;
 }
 
 /* the diagonal cut of the letterforms, as a picture frame */
@@ -345,9 +342,15 @@
   color: var(--rk-stone);
 }
 
-.rk-logo__keys span {
-  margin-right: 0.6em;
-  opacity: 0.6;
+/* =================== Film =================== */
+/* the film is rendered on the page's own forest green, so it needs no frame */
+.rk-film {
+  padding: var(--space-m) var(--gutter) var(--space-l);
+}
+
+.rk-film__motion {
+  width: min(100%, 44rem, 72svh);
+  margin-inline: auto;
 }
 
 /* =================== Pattern =================== */
@@ -625,18 +628,12 @@
 
 .rk-kit__row {
   display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   column-gap: var(--space-s);
   min-height: 6.75rem;
   padding-block: 0.6rem;
   border-top: var(--hairline) solid var(--line);
-}
-
-.rk-kit__num {
-  font-family: var(--font-display);
-  font-size: var(--fs-small);
-  color: var(--fg-muted);
 }
 
 .rk-kit__name {

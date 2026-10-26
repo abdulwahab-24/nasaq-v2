@@ -1,0 +1,666 @@
+/*
+ * DATOURA — styles only this project uses: the wave lines of its Selected Work
+ * scene (datoura.sequence.js) and, below, its page (DatouraPage.jsx, components/).
+ */
+.dat-aura {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.dat-aura__line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  opacity: 0;
+  transform-origin: 50% 50%;
+}
+
+/* =================== DATOURA page =================== */
+
+/*
+ * Colour: only the identity's six colours (artboard 6). Sections move inward
+ * through them, from near-black and the deep violet ground to Electric Violet.
+ * Type: DM Sans, supplied with the identity (SIL Open Font License).
+ */
+@font-face {
+  font-family: 'DM Sans DT';
+  src: url('/work/datoura/fonts/DMSans-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans DT';
+  src: url('/work/datoura/fonts/DMSans-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans DT';
+  src: url('/work/datoura/fonts/DMSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans DT';
+  src: url('/work/datoura/fonts/DMSans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans DT';
+  src: url('/work/datoura/fonts/DMSans-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
+.project--page-datoura,
+.dt {
+  --dt-black: #0c0c0c;
+  --dt-ground: #1f162f;
+  --dt-violet: #844be0;
+  --dt-lilac: #a17eff;
+  --dt-grey: #d1d5db;
+  --dt-white: #f4f4f4;
+
+  --bg: var(--dt-black);
+  --fg: var(--dt-white);
+  --fg-muted: rgb(244 244 244 / 0.62);
+  --line: rgb(244 244 244 / 0.18);
+  --accent: var(--dt-lilac);
+  --focus: var(--dt-lilac);
+}
+
+.project--page-datoura {
+  background: var(--dt-black);
+}
+
+.dt {
+  overflow: clip;
+  color: var(--dt-white);
+  font-family: 'DM Sans DT', var(--font-display);
+  font-weight: 200;
+}
+
+.dt-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em 1.1em;
+  font-family: 'DM Sans DT', var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.dt-label [lang='ar'] {
+  font-family: var(--font-arabic);
+  font-size: 1.15em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.dt-lede {
+  max-width: 24ch;
+  font-weight: 200;
+  font-size: clamp(1.35rem, 0.95rem + 1.7vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+:where(.dt) svg {
+  overflow: visible;
+}
+
+/* ---------- opening: the contour film on the field, the wordmark built ---------- */
+.dt-open {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + var(--space-xs)) var(--gutter) var(--space-m);
+  overflow: clip;
+  /* the identity's own field: deep violet, lit from one corner (as on its artboards) */
+  background:
+    radial-gradient(80% 70% at 0% 0%, rgb(132 75 224 / 0.3), transparent 62%),
+    radial-gradient(60% 50% at 100% 100%, rgb(132 75 224 / 0.14), transparent 70%),
+    var(--dt-ground);
+}
+
+.dt-open__frame {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  /* the frame is its own stacking context (z-index), so it is the frame that blends
+     onto the field: the film is pure black around the line, only the light remains */
+  mix-blend-mode: screen;
+}
+
+.dt-open__film {
+  width: min(96svh, 140vw);
+  aspect-ratio: 1;
+  margin-top: -10svh;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.dt-open__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-s);
+}
+
+.dt-open__back {
+  font-size: var(--fs-small);
+}
+
+.dt-open__foot {
+  align-self: end;
+  display: grid;
+  gap: var(--space-s);
+}
+
+.dt-open__line {
+  font-size: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+  color: var(--fg-muted);
+}
+
+.dt-open__word {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden; /* the letters rise out of their own baseline */
+}
+
+/* ---------- idea: shield + waves + chart → symbol → lockup ---------- */
+.dt-idea {
+  background: var(--dt-ground);
+}
+
+.dt-idea__stage {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-m);
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + var(--space-xs)) var(--gutter) var(--space-l);
+}
+
+.dt-idea__art {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-xl);
+}
+
+.dt-idea__panel {
+  position: relative;
+  width: 100%;
+  max-width: 72rem;
+}
+
+.dt-idea__concept,
+.dt-idea__lockup {
+  display: block;
+  width: 100%;
+  max-width: 72rem;
+  height: auto;
+}
+
+.dt-idea__caps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dt-idea__cap {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: max-content;
+  max-width: 31%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: clamp(0.62rem, 0.55rem + 0.35vw, 0.9rem);
+  line-height: 1.35;
+  color: var(--fg-muted);
+}
+
+.dt-idea__cap span {
+  display: block;
+  font-weight: 500;
+  color: var(--dt-white);
+}
+
+/* staged (motion): both drawings share one frame, one becomes the other */
+.dt-idea--staged .dt-idea__art {
+  grid-template-areas: 'art';
+}
+
+.dt-idea--staged .dt-idea__panel,
+.dt-idea--staged .dt-idea__lockup {
+  grid-area: art;
+  /* the shared frame (860 × 590) held inside the pinned screen, beside label and title */
+  width: min(100%, 72rem, (100svh - 19rem) * 1.4576);
+}
+
+.dt-idea__after {
+  display: grid;
+  gap: 0.35em;
+}
+
+.dt-idea__title {
+  font-weight: 100;
+  font-size: clamp(2.4rem, 1.2rem + 4vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.dt-idea__after p {
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.4rem);
+  color: var(--fg-muted);
+}
+
+/* ---------- wordmark: the outline, wider than the screen ---------- */
+.dt-word {
+  display: grid;
+  gap: var(--space-l);
+  padding: var(--space-l) 0 var(--space-xl);
+  overflow: clip;
+  background: var(--dt-ground);
+}
+
+.dt-word__art {
+  display: block;
+  height: clamp(13rem, 56svh, 42rem);
+  width: auto;
+  aspect-ratio: var(--ratio);
+}
+
+.dt-word__art path {
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1.5px;
+}
+
+.dt-word__art [data-role='guide'] {
+  stroke-width: 1px;
+  opacity: 0.45;
+}
+
+.dt-word__copy {
+  display: grid;
+  gap: var(--space-s);
+  padding: 0 var(--gutter);
+}
+
+/* ---------- colour: six fields ---------- */
+.dt-colour__stage {
+  position: relative;
+}
+
+.dt-colour__field {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 80svh;
+  padding: calc(var(--nav-h) + var(--space-xs)) var(--gutter) var(--space-m);
+  background: var(--field);
+  color: var(--ink);
+}
+
+.dt-colour__field .dt-label {
+  color: var(--ink);
+  opacity: 0.72;
+}
+
+.dt-colour__symbol {
+  place-self: center;
+  width: min(38svh, 56vw);
+  height: auto;
+}
+
+.dt-colour__hex {
+  font-weight: 100;
+  font-size: clamp(3.5rem, 1rem + 11vw, 13rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+@media (min-width: 1024px) {
+  .dt-colour__field {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .dt-colour__field .dt-label {
+    grid-column: 1 / -1;
+  }
+
+  .dt-colour__hex {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+  }
+
+  .dt-colour__symbol {
+    grid-column: 2;
+    grid-row: 2;
+    width: min(58svh, 34vw);
+  }
+}
+
+/* staged (motion): one screen, the fields stacked, each opening over the last */
+.dt-colour--staged .dt-colour__stage {
+  height: 100svh;
+}
+
+.dt-colour--staged .dt-colour__field {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+}
+
+/* ---------- typography ---------- */
+.dt-type {
+  display: grid;
+}
+
+.dt-type__half {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-m);
+  min-height: 72svh;
+  padding: calc(var(--nav-h) + var(--space-xs)) var(--gutter) var(--space-m);
+}
+
+.dt-type__half--arabic {
+  background: var(--dt-ground);
+}
+
+.dt-type__half--arabic .dt-label {
+  color: var(--dt-lilac);
+}
+
+.dt-type__half--latin {
+  background: var(--dt-violet);
+}
+
+.dt-type__half--latin .dt-label {
+  color: var(--dt-grey);
+}
+
+.dt-type__glyph {
+  place-self: center;
+  margin: 0;
+  font-size: clamp(8rem, 30vw, 24rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--dt-white);
+}
+
+.dt-type__glyph--ar {
+  width: clamp(8rem, 30vw, 24rem);
+  height: auto;
+}
+
+/* one weight at a time (Type.jsx sets data-w, a step at a time) */
+.dt-type__glyph--ar [data-role] {
+  display: none;
+}
+
+.dt-type[data-w='0'] [data-role='weight-0'],
+.dt-type[data-w='1'] [data-role='weight-1'],
+.dt-type[data-w='2'] [data-role='weight-2'],
+.dt-type[data-w='3'] [data-role='weight-3'],
+.dt-type[data-w='4'] [data-role='weight-4'] {
+  display: inline;
+}
+
+.dt-type[data-w='0'] .dt-type__half--latin .dt-type__glyph { font-weight: 100; }
+.dt-type[data-w='1'] .dt-type__half--latin .dt-type__glyph { font-weight: 200; }
+.dt-type[data-w='2'] .dt-type__half--latin .dt-type__glyph { font-weight: 500; }
+.dt-type[data-w='3'] .dt-type__half--latin .dt-type__glyph { font-weight: 600; }
+.dt-type[data-w='4'] .dt-type__half--latin .dt-type__glyph { font-weight: 900; }
+
+.dt-type__weights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.25em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 500;
+  font-size: var(--fs-small);
+  color: rgb(244 244 244 / 0.42);
+}
+
+.dt-type[data-w='0'] [data-step='0'],
+.dt-type[data-w='1'] [data-step='1'],
+.dt-type[data-w='2'] [data-step='2'],
+.dt-type[data-w='3'] [data-step='3'],
+.dt-type[data-w='4'] [data-step='4'] {
+  color: var(--dt-white);
+}
+
+@media (min-width: 768px) {
+  .dt-type {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dt-type__half {
+    min-height: 100svh;
+  }
+
+  .dt-type__glyph {
+    font-size: clamp(8rem, 19vw, 22rem);
+  }
+
+  .dt-type__glyph--ar {
+    width: clamp(8rem, 19vw, 22rem);
+  }
+}
+
+/* ---------- graduated waves ---------- */
+.dt-waves {
+  display: grid;
+  align-content: center;
+  gap: var(--space-l);
+  min-height: 110svh;
+  padding: var(--space-xl) var(--gutter);
+  background: var(--dt-black);
+}
+
+.dt-waves__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 84svh;
+}
+
+.dt-waves__copy {
+  display: grid;
+  gap: var(--space-s);
+}
+
+@media (min-width: 1024px) {
+  .dt-waves__copy {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* ---------- card: the front at the scale of the screen ---------- */
+.dt-card {
+  position: relative;
+  min-height: 110svh;
+  overflow: clip;
+  background: var(--dt-ground);
+}
+
+.dt-card__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dt-card__label {
+  position: absolute;
+  top: calc(var(--nav-h) + var(--space-xs));
+  left: var(--gutter);
+}
+
+.dt-card__print {
+  position: absolute;
+  right: var(--gutter);
+  bottom: var(--space-m);
+  width: min(66vw, 34rem);
+  margin: 0;
+  box-shadow: 0 2.5rem 5rem rgb(0 0 0 / 0.45);
+}
+
+.dt-card__print img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* portrait: the card is set wider than the screen around its wordmark, which stays whole */
+@media (max-width: 767px) {
+  .dt-card__art {
+    inset: 34% auto auto 50%;
+    width: 175vw;
+    height: auto;
+    translate: -50% -50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .dt-card__print {
+    width: min(34vw, 34rem);
+    bottom: var(--space-l);
+  }
+}
+
+/* ---------- stadium: opened through the contour ---------- */
+.dt-stadium {
+  position: relative;
+  height: 190svh;
+  background: var(--dt-black);
+}
+
+.dt-stadium__sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.dt-stadium__frame {
+  position: absolute;
+  inset: 0;
+}
+
+.dt-stadium__frame picture,
+.dt-stadium__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dt-stadium__label {
+  position: absolute;
+  left: var(--gutter);
+  bottom: var(--space-m);
+  color: var(--dt-white);
+}
+
+/* ---------- screen: the phone in its own gradient ---------- */
+.dt-screen {
+  display: grid;
+  align-items: center;
+  gap: var(--space-m);
+  min-height: 100svh;
+  padding: var(--space-xl) var(--gutter) var(--space-l);
+  overflow: clip;
+  /* the gradient the phone was photographed in, continued around it */
+  background:
+    radial-gradient(70% 55% at 0% 0%, rgb(81 61 114 / 0.9), transparent 62%),
+    radial-gradient(60% 50% at 100% 100%, rgb(107 70 157 / 0.85), transparent 64%),
+    var(--dt-ground);
+}
+
+.dt-screen__copy {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.dt-screen__phone {
+  justify-self: center;
+  width: min(120vw, 44rem);
+  margin: 0;
+}
+
+.dt-screen__phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* its edges dissolve into the same gradient */
+  -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
+}
+
+@media (min-width: 1024px) {
+  .dt-screen {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .dt-screen__phone {
+    width: min(100%, 52rem);
+  }
+}
+
+/* ---------- finale ---------- */
+.dt-end {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-l);
+  min-height: 100svh;
+  padding: var(--space-xl) var(--gutter);
+  background: var(--dt-violet);
+}
+
+.dt-end__symbol {
+  width: clamp(6rem, 16vw, 13rem);
+  height: auto;
+}
+
+.dt-end__words {
+  width: clamp(15rem, 40vw, 34rem);
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dt-stadium {
+    height: auto;
+  }
+
+  .dt-stadium__sticky {
+    position: relative;
+  }
+}

@@ -35,3 +35,21 @@ export const defaultSrc = ({ src, widths }) =>
   `${src}-${widths.find((w) => w >= 1200) ?? widths.at(-1)}.webp`;
 
 export const largestSrc = ({ src, widths }) => `${src}-${widths.at(-1)}.webp`;
+
+/*
+ * A project's logo motion film: built from the official logo by
+ * scripts/logo-motion/render.mjs into public/work/<slug>/video/.
+ *   field  — the colour it is filmed on (its first and last frame are that field)
+ *   alt    — what the film shows; the poster is the assembled logo
+ */
+export const logoMotion = (slug, { width, height, field, alt }) => ({
+  sources: [
+    { src: `/work/${slug}/video/logo-motion.webm`, type: 'video/webm' },
+    { src: `/work/${slug}/video/logo-motion.mp4`, type: 'video/mp4' },
+  ],
+  poster: `/work/${slug}/video/logo-motion-poster.webp`,
+  width,
+  height,
+  field,
+  alt,
+});

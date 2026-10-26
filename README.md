@@ -1,6 +1,6 @@
 # NASAQ — نسق
 
-Website for NASAQ, a Saudi brand identity studio. React + Vite + GSAP, plain CSS.
+Website for NASAQ, an independent brand identity studio for brands in Saudi Arabia and beyond. React + Vite + GSAP, plain CSS.
 
 ## Run
 
@@ -29,5 +29,3 @@ Build with `SITE_URL=https://your-domain npm run build` for absolute share URLs 
   but link previews may show no image.
 - Project pages set their title/description in the browser. Crawlers that do not run
   JavaScript see the homepage's; pre-render the routes if per-project link previews matter.
-- The footer lockup is shown wider than the supplied logo file (892 px). Supply a vector or
-  larger export of the NASAQ lockup to keep it sharp on large screens.

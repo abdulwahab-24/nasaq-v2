@@ -1,5 +1,7 @@
 /*
- * Site-wide NASAQ content and settings. Copy is the approved copy from CLAUDE.md.
+ * Site-wide NASAQ content and settings. Copy is the approved copy from CLAUDE.md,
+ * except the positioning: NASAQ is described by the market it serves (Saudi Arabia
+ * and beyond), never by a location or nationality it does not have.
  * Components read from here; nothing below should be repeated in a component.
  *
  * Exceptions that cannot import this module (keep them in step by hand):
@@ -10,14 +12,12 @@ import { img } from '../utils/media';
 export const site = {
   name: 'NASAQ',
   nameAr: 'نسق',
-  title: 'NASAQ — نسق · Saudi brand identity studio',
+  title: 'NASAQ — نسق · Independent brand identity studio',
   // appended to page titles: "<Project> — NASAQ نسق"
   titleSuffix: 'NASAQ نسق',
   description:
-    'NASAQ is a Saudi brand identity studio creating distinctive identities, systems and experiences for brands ready for what’s next.',
+    'NASAQ is an independent brand identity studio creating distinctive identities, systems and experiences for ambitious brands in Saudi Arabia and beyond.',
   ogImage: '/og.jpg',
-  location: 'Saudi Arabia',
-  locationAr: 'المملكة العربية السعودية',
 };
 
 export const contact = {
@@ -43,12 +43,8 @@ export const hero = {
   headlineAr: 'نصنع علامات لها نسق.',
   headlineArAccent: 'نسق',
   headlineEn: 'We build brands that belong together.',
-  // art-directed line breaks of the two headlines above
-  headlineArLines: ['نصنع', 'علامات', 'لها نسق.'],
-  headlineEnLines: ['We build', 'brands that', 'belong', 'together.'],
   intro: site.description,
   primaryCta: 'View our work',
-  secondaryCta: 'Start a project',
 };
 
 // The reel that opens Selected Work (files in public/video)
@@ -80,7 +76,7 @@ export const statement = [
 ];
 
 export const about = [
-  'NASAQ is a Saudi branding studio focused on building identities that are clear, relevant and distinctive.',
+  'NASAQ is an independent branding studio focused on building identities that are clear, relevant and distinctive.',
   'We combine strategic thinking with visual craft to create brand systems that work across physical and digital experiences.',
 ];
 
@@ -102,12 +98,34 @@ export const brandColours = [
   { name: 'White', hex: '#FFFFFF' },
 ];
 
+// `body`: DRAFT copy awaiting approval (CLAUDE.md names the services but gives no
+// descriptions). One short line each.
 export const services = [
-  { en: 'Brand Strategy', ar: 'استراتيجية العلامة' },
-  { en: 'Brand Identity', ar: 'هوية العلامة' },
-  { en: 'Art Direction', ar: 'التوجيه الفني' },
-  { en: 'Brand Systems', ar: 'أنظمة العلامة' },
-  { en: 'Digital Experience', ar: 'التجربة الرقمية' },
+  {
+    en: 'Brand Strategy',
+    ar: 'استراتيجية العلامة',
+    body: 'Finding the position a brand can own, and the idea everything else is built on.',
+  },
+  {
+    en: 'Brand Identity',
+    ar: 'هوية العلامة',
+    body: 'The mark, type, colour and voice that make a brand recognisable at a glance.',
+  },
+  {
+    en: 'Art Direction',
+    ar: 'التوجيه الفني',
+    body: 'How a brand looks in images: what is framed, what is left out, and why.',
+  },
+  {
+    en: 'Brand Systems',
+    ar: 'أنظمة العلامة',
+    body: 'The rules and assets that keep a brand consistent as it grows.',
+  },
+  {
+    en: 'Digital Experience',
+    ar: 'التجربة الرقمية',
+    body: 'Websites and digital products that carry the identity into everyday use.',
+  },
 ];
 
 export const contactCopy = {
@@ -119,10 +137,10 @@ export const contactCopy = {
   cta: 'Start a project',
 };
 
+// The site ends on Contact; after it only this line.
 export const footer = {
-  line: 'A Saudi brand identity studio.',
-  whatsappCta: 'Start a project on WhatsApp',
-  copyright: (year) => `© ${year} NASAQ. All rights reserved.`,
+  copyright: (year) => `© ${year} NASAQ`,
+  rights: 'All rights reserved.',
 };
 
 // Official NASAQ brand files used by the interface (public/brand)

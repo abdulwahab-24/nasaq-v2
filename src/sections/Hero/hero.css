@@ -1,7 +1,8 @@
 /*
- * Hero — the bilingual axis.
- * Mobile/tablet: Arabic, the axis (horizontal, symbol on it), English.
- * Desktop: Arabic | axis + symbol | English — both languages start at the axis.
+ * Hero: one axis, two languages.
+ * The English headline as large as the screen allows; beneath it the axis runs
+ * across to the symbol; the Arabic headline hangs from the symbol's end of it.
+ * Words wrap naturally (each is its own mask), so no line breaks are hard-coded.
  */
 
 .hero {
@@ -18,17 +19,63 @@
     calc(var(--space-m) + env(safe-area-inset-bottom));
 }
 
+/* the structure the words align to: twelve columns, barely there */
+.hero__grid {
+  position: absolute;
+  inset: 0 var(--gutter);
+  z-index: -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  pointer-events: none;
+}
+
+.hero__grid span {
+  border-left: var(--hairline) solid rgb(201 212 255 / 0.07);
+  transform-origin: top;
+}
+
+.hero__grid span:last-child {
+  border-right: var(--hairline) solid rgb(201 212 255 / 0.07);
+}
+
 .hero__stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: center;
-  gap: clamp(0.75rem, 3svh, 2rem);
+  gap: clamp(0.75rem, 2.4svh, 1.75rem);
+}
+
+/* words arrive from scattered places: a word starting past the edge must not widen the page */
+.hero__en,
+.hero__ar {
+  overflow-x: clip;
+  overflow-clip-margin: 0.2em;
+}
+
+.hero .word {
+  display: inline-block;
+  vertical-align: top;
+  /* clipped above and below only, with room for descenders and Arabic marks */
+  clip-path: inset(-0.1em -0.4em -0.2em -0.4em);
+}
+
+.hero .word > span {
+  display: inline-block;
+}
+
+.hero__en {
+  font-family: var(--font-display);
+  font-weight: var(--fw-medium);
+  font-size: clamp(2.75rem, min(14vw, 8.6svh), 13rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
 }
 
 .hero__ar {
   font-weight: var(--fw-medium);
-  font-size: clamp(3.4rem, min(19vw, 13svh), 7rem);
-  line-height: 1.12;
+  font-size: clamp(2rem, min(9.4vw, 7svh), 9rem);
+  line-height: 1.2;
   text-align: start; /* right, in RTL */
 }
 
@@ -36,41 +83,26 @@
   color: var(--accent);
 }
 
-.hero__en {
-  font-family: var(--font-display);
-  font-weight: var(--fw-medium);
-  font-size: clamp(2.5rem, min(13.4vw, 9.5svh), 5.5rem);
-  line-height: 0.96;
-  letter-spacing: -0.045em;
-}
-
-.hero__en .line,
-.hero__ar .line {
-  white-space: nowrap;
-}
-
+/* the axis: a rule from the edge to the symbol */
 .hero__axis {
-  --mark-w: clamp(3.5rem, min(16vw, 11svh), 6rem);
+  --mark-w: clamp(3.25rem, min(15vw, 9svh), 10rem);
   --rule: 1;
-  position: relative;
   display: flex;
   align-items: center;
+  gap: clamp(0.75rem, 1.4vw, 1.5rem);
 }
 
 .hero__rule {
-  position: absolute;
-  inset: 50% 0 auto 0;
+  flex: 1;
   height: 1px;
   background: var(--line);
   opacity: var(--rule);
-  transform-origin: left center;
-  /* the rule stops short of the symbol instead of running behind it */
-  -webkit-mask: linear-gradient(to right, transparent calc(var(--mark-w) + 1rem), #000 0);
-  mask: linear-gradient(to right, transparent calc(var(--mark-w) + 1rem), #000 0);
+  transform-origin: right center; /* it grows out of the symbol */
 }
 
 .hero__mark {
   position: relative;
+  flex: none;
   width: var(--mark-w);
 }
 
@@ -80,7 +112,7 @@
 }
 
 .hero__intro {
-  max-width: 34ch;
+  max-width: 36ch;
   color: var(--fg-muted);
   font-size: var(--fs-small);
   line-height: 1.6;
@@ -128,7 +160,7 @@
   clip-path: inset(50% 0 0 50%);
 }
 
-/* Tablet portrait: more room, same stack */
+/* Tablet: more room, the foot on one row */
 @media (min-width: 640px) {
   .hero__foot {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -144,55 +176,19 @@
   }
 }
 
-/* Desktop and landscape: the axis stands up */
+/* Desktop and landscape: the headline at full scale */
 @media (min-width: 1024px), (min-width: 640px) and (orientation: landscape) and (max-height: 560px) {
-  .hero__stage {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: center;
-    gap: 0 clamp(1rem, 2.2vw, 2.75rem);
+  .hero__en {
+    font-size: clamp(3rem, min(8.6vw, 15svh), 15rem);
+    max-width: 16ch;
   }
 
   .hero__ar {
-    grid-column: 1;
-    grid-row: 1;
-    font-size: clamp(3rem, min(8.6vw, 17svh), 14rem);
-    line-height: 1.16;
-  }
-
-  .hero__en {
-    grid-column: 3;
-    grid-row: 1;
-    font-size: clamp(2.4rem, min(6.1vw, 12.5svh), 11rem);
+    font-size: clamp(2.5rem, min(5.6vw, 10svh), 10rem);
   }
 
   .hero__axis {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: stretch;
-    justify-content: center;
-  }
-
-  .hero__axis {
-    --mark-w: clamp(4rem, min(7.5vw, 15svh), 11.5rem);
-  }
-
-  .hero__rule {
-    inset: 0 auto 0 50%;
-    width: 1px;
-    height: auto;
-    transform-origin: center top;
-    -webkit-mask: linear-gradient(
-      to bottom,
-      #000 calc(50% - var(--mark-w) / 2 - 1.25rem),
-      transparent 0 calc(50% + var(--mark-w) / 2 + 1.25rem),
-      #000 0
-    );
-    mask: linear-gradient(
-      to bottom,
-      #000 calc(50% - var(--mark-w) / 2 - 1.25rem),
-      transparent 0 calc(50% + var(--mark-w) / 2 + 1.25rem),
-      #000 0
-    );
+    --mark-w: clamp(3.5rem, min(6.4vw, 12svh), 10rem);
   }
 }
 
@@ -202,12 +198,16 @@
     padding-top: calc(var(--nav-h) + var(--space-xs));
   }
 
-  .hero__ar {
-    font-size: clamp(2rem, 15svh, 4rem);
+  .hero__en {
+    font-size: clamp(1.75rem, 11svh, 4rem);
   }
 
-  .hero__en {
-    font-size: clamp(1.6rem, 10svh, 3.25rem);
+  .hero__ar {
+    font-size: clamp(1.5rem, 8svh, 3rem);
+  }
+
+  .hero__axis {
+    --mark-w: clamp(2.5rem, 10svh, 4rem);
   }
 
   .hero__intro {

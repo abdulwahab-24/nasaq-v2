@@ -1,5 +1,8 @@
-/* Studio statement — soft white, words settle into one column */
+/* Studio statement — Deep Navy, three sentences stepping in from the left */
 .statement {
+  --bg: var(--color-navy);
+  --fg: var(--color-white);
+  --fg-muted: rgb(201 212 255 / 0.62); /* Light Blue tint, readable on navy */
   background: var(--bg);
   color: var(--fg);
   overflow: clip;
@@ -17,6 +20,7 @@
   display: flex;
   justify-content: space-between;
   gap: var(--space-m);
+  color: var(--fg-muted);
 }
 
 .statement__label [lang='ar'] {
@@ -27,7 +31,7 @@
 .statement__rule {
   display: block;
   height: 1px;
-  background: var(--fg);
+  background: rgb(255 255 255 / 0.32);
   transform-origin: left;
 }
 
@@ -45,13 +49,18 @@
   color: var(--fg-muted);
 }
 
-.statement__p--3 em {
-  color: var(--color-blue);
+/*
+ * Line masks while a sentence is split for its entrance (Statement.jsx). The
+ * clip reaches past the line box, giving ascenders and descenders room without
+ * changing a single line position (SplitText sets overflow: clip inline).
+ */
+.statement__p .tline-mask {
+  overflow: visible !important;
+  clip-path: inset(-0.15em -0.5em -0.24em -0.5em);
 }
 
-.word {
-  display: inline-block;
-  white-space: pre;
+.statement__p--3 em {
+  color: var(--color-blue);
 }
 
 @media (min-width: 1024px) {

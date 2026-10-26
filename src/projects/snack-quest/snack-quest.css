@@ -1,41 +1,34 @@
 /*
- * Snack Quest — styles only Snack Quest uses (signature: arcade).
- * Pixel-stepped frames on the homepage chapter and the project page, and the
- * slogan ticker (components/Ticker.jsx). Stepped JS motion: `motion: 'steps'`
- * in snack-quest.data.js. Order: homepage chapter, project page, ticker.
+ * Snack Quest — styles only Snack Quest uses: its page (SnackQuestPage.jsx,
+ * components/), the slogan ticker and its next-project teaser (signature: arcade,
+ * a frame with stepped pixel corners).
+ *
+ * Colour: the identity's five colours and black. Type: Pixelify Sans
+ * (public/work/snack-quest/fonts, OFL) for everything the identity would set; the
+ * site's face for running text. Shape: frames have stepped pixel corners (--notch);
+ * pixel art is scaled without smoothing. Loops move in steps.
  */
-
-/* — homepage chapter: pixel-stepped corners, slogan strip as the floor — */
-.chapter--sig-arcade .chapter__frame {
-  clip-path: var(--notch);
+@font-face {
+  font-family: 'Pixelify SQ';
+  src: url('/work/snack-quest/fonts/PixelifySans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
 }
 
-.chapter--sig-arcade .chapter__inner {
-  padding-bottom: var(--space-l);
+@font-face {
+  font-family: 'Pixelify SQ';
+  src: url('/work/snack-quest/fonts/PixelifySans-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
 }
 
-/* — project page: pixel-stepped frames, the slogan strip as the last word — */
-.project--sig-arcade .phero__frame,
-.project--sig-arcade .pb:not(.pb--bleed) .pfig__frame,
-.project--sig-arcade .pseq__item,
-.project--sig-arcade .swatch__chip,
-.pnext--sig-arcade .pnext__frame {
-  clip-path: var(--notch);
+@font-face {
+  font-family: 'Pixelify SQ';
+  src: url('/work/snack-quest/fonts/PixelifySans-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
 }
 
-.project--sig-arcade .swatch__chip {
-  box-shadow: none;
-}
-
-.pb--ticker {
-  margin-block: 0;
-}
-
-.project--sig-arcade .pstory {
-  padding-bottom: 0;
-}
-
-/* — the ticker (components/Ticker.jsx) and the stepped-corner shape used above — */
 :root {
   /* one "pixel" of the stepped corners */
   --px: clamp(5px, 0.75vw, 12px);
@@ -63,6 +56,454 @@
   );
 }
 
+.pnext--sig-arcade .pnext__frame {
+  clip-path: var(--notch);
+}
+
+/* =================== Snack Quest page =================== */
+.project--page-snack-quest,
+.sq {
+  --sq-purple: #4d3468;
+  --sq-red: #ba2f2f;
+  --sq-green: #8acc66;
+  --sq-orange: #ff9c00;
+  --sq-cream: #f4e8c6;
+  --sq-black: #000000;
+
+  --bg: var(--sq-purple);
+  --fg: var(--sq-cream);
+  --fg-muted: rgb(244 232 198 / 0.7);
+  --line: rgb(244 232 198 / 0.2);
+  --accent: var(--sq-orange);
+  --focus: var(--sq-orange);
+}
+
+.project--page-snack-quest {
+  background: var(--sq-purple);
+}
+
+.sq {
+  overflow: clip;
+  color: var(--sq-cream);
+}
+
+.sq figure {
+  position: relative;
+  margin: 0;
+}
+
+.sq figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sq-frame {
+  overflow: hidden;
+  clip-path: var(--notch);
+}
+
+/* the pixel cover over a picture (components/Pixels.jsx): shown only with motion */
+.sq-pixels {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sq-pixels {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    pointer-events: none;
+  }
+}
+
+.sq-level,
+.sq-tag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em 1em;
+  font-family: 'Pixelify SQ', var(--font-display);
+  font-size: var(--fs-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sq-level__n {
+  color: var(--sq-orange);
+}
+
+.sq-head {
+  display: grid;
+  gap: var(--space-s);
+  padding: var(--space-xl) var(--gutter) var(--space-m);
+}
+
+.sq-head__title {
+  max-width: 16ch;
+  font-family: 'Pixelify SQ', var(--font-display);
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+/* the pixel flames, flickering: the strip jumps a few pixels at a time */
+.sq-flames {
+  height: clamp(2.5rem, 5vw, 4.5rem);
+  background: url('/work/snack-quest/flames.png') 0 100% / auto 100% repeat-x;
+  image-rendering: pixelated;
+}
+
+.sq-flames--flip {
+  transform: scaleY(-1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sq-flames {
+    animation: sq-flicker 0.9s steps(3) infinite;
+  }
+}
+
+@keyframes sq-flicker {
+  to {
+    background-position-x: calc(clamp(2.5rem, 5vw, 4.5rem) * -0.9);
+  }
+}
+
+/* ---------- opening: the start screen ---------- */
+.sq-open {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  justify-items: center;
+  min-height: 100svh;
+  padding-top: calc(var(--nav-h) + var(--space-xs));
+  overflow: clip;
+  background: var(--sq-purple);
+}
+
+.sq-open__meta {
+  justify-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-s);
+  padding-inline: var(--gutter);
+}
+
+.sq-open__back {
+  font-size: var(--fs-small);
+}
+
+.sq-open__logo {
+  position: relative;
+  align-self: center;
+  width: min(88vw, 56rem);
+  margin: 0;
+}
+
+.sq-open__plate,
+.sq-open__letter,
+.sq-open__cursor {
+  position: absolute;
+}
+
+.sq-open__plate {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sq-open__cursor {
+  visibility: hidden;
+  background: var(--sq-orange);
+}
+
+.sq-open__slogan {
+  margin-bottom: var(--space-m);
+  padding-inline: var(--gutter);
+  font-family: 'Pixelify SQ', var(--font-display);
+  font-size: clamp(1rem, 0.7rem + 1.4vw, 1.9rem);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.sq-open .sq-flames {
+  justify-self: stretch;
+}
+
+/* ---------- monogram: on its own purple ---------- */
+.sq-mono {
+  padding-bottom: var(--space-xl);
+  background: var(--sq-purple);
+}
+
+.sq-mono__strip {
+  aspect-ratio: 770 / 125;
+}
+
+@media (max-width: 767.98px) {
+  /* on a phone the five marks are cropped to three, larger */
+  .sq-mono__strip {
+    aspect-ratio: 462 / 125;
+  }
+}
+
+/* ---------- type: the ring, live, on red ---------- */
+.sq-type {
+  display: grid;
+  background: var(--sq-red);
+}
+
+.sq-type__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100% - 2 * var(--gutter), 46rem);
+  aspect-ratio: 1;
+  margin: 0 auto var(--space-l);
+}
+
+.sq-type__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--sq-cream);
+  font-family: 'Pixelify SQ', var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sq-type__ring {
+    animation: sq-turn 32s steps(64) infinite;
+  }
+}
+
+@keyframes sq-turn {
+  to {
+    rotate: 1turn;
+  }
+}
+
+.sq-type__specimen {
+  display: grid;
+  gap: var(--space-s);
+  width: 62%;
+  font-family: 'Pixelify SQ', var(--font-display);
+  text-align: center;
+}
+
+.sq-type__name {
+  font-weight: 500;
+  font-size: clamp(1.4rem, 0.8rem + 3vw, 3.25rem);
+  line-height: 1;
+}
+
+.sq-type__set {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.15em 0.7em;
+  font-size: clamp(0.85rem, 0.6rem + 1vw, 1.4rem);
+}
+
+/* ---------- colour: five stepped bars on black ---------- */
+.sq-colour {
+  padding-bottom: var(--space-xl);
+  background: var(--sq-black);
+}
+
+.sq-colour__bars {
+  --px: clamp(8px, 1.6vw, 22px);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.4rem, 1.2vw, 1.25rem);
+  height: min(78svh, 46rem);
+  margin: 0;
+  padding: 0 var(--gutter);
+  list-style: none;
+}
+
+.sq-colour__bar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: calc(var(--px) * 3);
+  clip-path: var(--notch);
+}
+
+.sq-colour__hex {
+  font-family: 'Pixelify SQ', var(--font-display);
+  font-size: clamp(0.7rem, 0.45rem + 0.9vw, 1.25rem);
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  letter-spacing: 0.06em;
+}
+
+@media (min-width: 768px) {
+  .sq-colour__hex {
+    writing-mode: horizontal-tb;
+    rotate: none;
+  }
+}
+
+.sq-colour__sprite {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  width: 62%;
+  height: auto;
+  translate: -50% 0;
+  image-rendering: pixelated;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sq-colour__sprite {
+    animation: sq-bob 1.2s steps(2, jump-none) infinite alternate;
+  }
+}
+
+@keyframes sq-bob {
+  to {
+    translate: -50% calc(var(--px) * -1);
+  }
+}
+
+/* ---------- packaging: from cream into purple ---------- */
+.sq-pack {
+  background: linear-gradient(var(--sq-cream) 50%, var(--sq-purple) 50%);
+  padding-bottom: var(--space-xl);
+}
+
+.sq-pack .sq-head {
+  background: var(--sq-cream);
+  color: var(--sq-purple);
+}
+
+.sq-pack .sq-level__n {
+  color: var(--sq-red);
+}
+
+.sq-pack__wide {
+  aspect-ratio: 800 / 305;
+}
+
+@media (max-width: 767.98px) {
+  .sq-pack__wide {
+    aspect-ratio: 480 / 360;
+  }
+}
+
+.sq-pack__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-l) var(--col-gap);
+  padding: var(--space-l) var(--gutter) 0;
+  background: var(--sq-purple);
+}
+
+.sq-pack__fries {
+  grid-column: 1 / 9;
+  aspect-ratio: 693 / 899;
+}
+
+.sq-pack__poster {
+  grid-column: 4 / -1;
+  aspect-ratio: 706 / 888;
+}
+
+.sq-pack__set {
+  grid-column: 2 / 10;
+  aspect-ratio: 460 / 767;
+}
+
+@media (min-width: 768px) {
+  .sq-pack__grid {
+    align-items: start;
+  }
+
+  .sq-pack__fries {
+    grid-column: 1 / 5;
+    margin-top: 10vw;
+  }
+
+  .sq-pack__poster {
+    grid-column: 5 / 9;
+  }
+
+  .sq-pack__set {
+    grid-column: 9 / 12;
+    margin-top: 18vw;
+  }
+}
+
+/* ---------- spaces: on red ---------- */
+.sq-space {
+  padding-bottom: var(--space-xl);
+  background: var(--sq-red);
+}
+
+.sq-space > .sq-flames {
+  background-color: var(--sq-purple);
+}
+
+.sq-space__wide {
+  aspect-ratio: 800 / 674;
+}
+
+@media (min-width: 768px) {
+  .sq-space__wide {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.sq-space__pair {
+  display: grid;
+  gap: var(--space-m);
+  padding: var(--space-l) var(--gutter) 0;
+}
+
+.sq-space__pair .sq-frame {
+  aspect-ratio: 703 / 520;
+}
+
+@media (min-width: 768px) {
+  .sq-space__pair {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .sq-space__pair .sq-frame:last-child {
+    margin-top: 12vw;
+  }
+}
+
+/* ---------- finale: the film and the strip ---------- */
+.sq-finale {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-l);
+  padding-top: var(--space-xl);
+  background: var(--sq-purple);
+}
+
+.sq-finale__film {
+  width: min(100% - 2 * var(--gutter), 60rem);
+}
+
+.sq-finale .ticker {
+  justify-self: stretch;
+}
+
+/* — the ticker (components/Ticker.jsx) — */
 .ticker {
   --ticker-h: clamp(3.25rem, 7vw, 6.5rem);
   --ticker-w: calc(var(--ticker-h) * var(--ticker-ratio));

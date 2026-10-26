@@ -7,12 +7,12 @@ import { sectionTitles } from '../../data/siteConfig';
 import { FINE_POINTER, gsap, prefersReducedMotion } from '../../motion/gsap';
 import useReveals from '../../hooks/useReveals';
 import TransitionLink from '../../transition/TransitionLink';
-import { pad } from '../../utils/format';
 
 
 /*
  * Index of every project — the part of the homepage that grows with the
- * portfolio. Rows are plain links; on fine pointers the active project's
+ * portfolio. Rows are plain links; the active row rises into the project's own
+ * colour. On fine pointers the active project's
  * logo follows the cursor on that project's own field, on touch each row
  * carries the same plate, small. Projects without a logo file show their cover.
  */
@@ -64,18 +64,16 @@ export default function WorkIndex({ projects }) {
             <span>{sectionTitles.index.ar}</span>
           </span>
         </p>
-        <p className="index__count label">({pad(projects.length)}) Projects</p>
       </header>
 
       <div className="index__table" role="list" onPointerLeave={() => setActive(null)}>
         <div className="index__row index__row--head" aria-hidden="true">
-          <span>No.</span>
           <span>Project</span>
           <span>Arabic</span>
           <span>Discipline</span>
           <span>Year</span>
         </div>
-        {projects.map((p, i) => (
+        {projects.map((p) => (
           <div role="listitem" key={p.slug}>
             <TransitionLink
               to={projectPath(p)}
@@ -83,9 +81,9 @@ export default function WorkIndex({ projects }) {
               onPointerEnter={() => setActive(p.slug)}
               onFocus={() => setActive(p.slug)}
               onBlur={() => setActive(null)}
+              style={{ '--row-bg': p.theme.surface, '--row-ink': p.theme.ink, '--row-accent': p.theme.accent }}
               data-reveal="up"
             >
-              <span className="index__num">{pad(i + 1)}</span>
               <span className="index__name">{p.name}</span>
               <span className="index__name-ar" lang="ar" dir="rtl">
                 {p.nameAr ?? ''}

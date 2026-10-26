@@ -11,9 +11,9 @@
   position: absolute;
   display: grid;
   place-items: center;
-  width: 6.25rem;
-  height: 6.25rem;
-  margin: -3.125rem 0 0 -3.125rem;
+  width: 7.25rem;
+  height: 7.25rem;
+  margin: -3.625rem 0 0 -3.625rem;
   border-radius: 50%;
   background: var(--color-blue);
   color: var(--color-white);
@@ -25,10 +25,16 @@
   transform: scale(1);
 }
 
+.cursor--navy .cursor__disc {
+  background: var(--color-navy);
+}
+
 .cursor__label {
   font-family: var(--font-display);
   font-weight: var(--fw-medium);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 [data-cursor] {

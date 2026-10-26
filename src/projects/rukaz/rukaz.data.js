@@ -7,8 +7,9 @@
  * lossless application tiles cut from the collage).
  * Web images: public/work/rukaz, built by scripts/build-media.mjs.
  */
-import { asset, img, withMobile } from '../../utils/media';
-import { ChapterBand } from './components/PatternBand';
+import { asset, img, logoMotion, withMobile } from '../../utils/media';
+import logoParts from './logo-parts.json';
+import sequence from './rukaz.sequence';
 import RukazPage from './RukazPage';
 
 const media = (key, alt, extra) => img(`work/rukaz/${key}`, alt, extra);
@@ -57,10 +58,17 @@ export default {
   overview: null,
   services: [],
   featured: true,
-  order: 3,
+  order: 5,
   page: RukazPage,
   // lifted from the logo page as a flat shape, painted in the project's stone
   logo: { ...asset('work/rukaz/logo-mask', 'The Rukaz logo: symbol with Arabic and Latin wordmark'), mask: true },
+  // the logo in motion: the pattern laid in strata, then the logo built (scripts/logo-motion/scenes/rukaz.js)
+  motionLogo: logoMotion('rukaz', {
+    width: 1000,
+    height: 1000,
+    field: '#1F3D3B',
+    alt: 'The Rukaz logo in motion: the pattern is laid down in bands, then the symbol locks together and the wordmarks rise',
+  }),
   signature: 'strata',
   theme: {
     mode: 'dark',
@@ -106,6 +114,13 @@ export default {
     closing: 'Every adventure begins with steadiness and readiness.',
   },
   media: { tote: M.tote, mountain: M.mountain, lighters: M.lighters, apps },
-  home: { layout: 'type', cover: M.coverPortrait, details: [M.lighters], slots: { type: ChapterBand } },
+  // Selected Work: stone on the identity's deep teal; cover: the next-project teaser's image
+  home: {
+    cover: M.coverPortrait,
+    field: '#1F3D3B',
+    ink: '#CFCBBA',
+    logo: { dir: '/work/rukaz/parts/', manifest: logoParts, paint: { default: '#CFCBBA' } },
+    sequence,
+  },
   caseStudy: null,
 };

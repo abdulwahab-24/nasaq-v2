@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- Render stage for the logo motion scenes (see render.mjs). Not part of the site. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      html, body { margin: 0; overflow: hidden; }
+      #stage { position: relative; overflow: hidden; }
+      .logo { position: absolute; }
+      .part { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .tinted { -webkit-mask: var(--src) center / 100% 100% no-repeat; mask: var(--src) center / 100% 100% no-repeat; }
+    </style>
+  </head>
+  <body>
+    <div id="stage"></div>
+    <script>
+      const load = (img) => (img.complete ? Promise.resolve() : new Promise((r) => (img.onload = r)));
+
+      // urls: part name → file URL; size: the parts' canvas; boxes: part name → [x, y, w, h] on it
+      window.mount = async (urls, size, boxes, extras) => {
+        const S = window.SCENE;
+        const stage = document.getElementById('stage');
+        Object.assign(stage.style, { width: `${S.width}px`, height: `${S.height}px`, background: S.background });
+        const k = S.logoWidth / size.width;
+        const lw = S.logoWidth;
+        const lh = size.height * k;
+        const [cx, cy] = S.logoCentre ?? [S.width / 2, S.height / 2];
+        const logo = document.createElement('div');
+        logo.className = 'logo';
+        Object.assign(logo.style, { width: `${lw}px`, height: `${lh}px`, left: `${cx - lw / 2}px`, top: `${cy - lh / 2}px` });
+        stage.append(logo);
+
+        const parts = {};
+        const waits = [];
+        for (const [name, url] of Object.entries(urls)) {
+          let el;
+          if (S.tint) {
+            // a flat logo painted in the identity's own colour
+            el = document.createElement('div');
+            el.className = 'part tinted';
+            el.style.setProperty('--src', `url("${url}")`);
+            el.style.background = S.tint;
+            const probe = new Image();
+            probe.src = url;
+            waits.push(load(probe));
+          } else {
+            el = new Image();
+            el.src = url;
+            el.className = 'part';
+            waits.push(load(el));
+          }
+          el.dataset.part = name;
+          logo.append(el);
+          parts[name] = el;
+        }
+        await Promise.all(waits);
+        const box = Object.fromEntries(Object.entries(boxes).map(([n, b]) => [n, b.map((v) => v * k)]));
+        const origin = { x: cx - lw / 2, y: cy - lh / 2, w: lw, h: lh };
+        window.tl = S.build({ stage, logo, parts, box, origin, extras, gsap });
+        window.tl.pause(0);
+        return { width: S.width, height: S.height, fps: S.fps, duration: S.duration, poster: S.poster };
+      };
+
+      window.seek = (t) => {
+        window.tl.seek(t, false);
+      };
+    </script>
+  </body>
+</html>

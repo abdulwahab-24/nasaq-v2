@@ -1,10 +1,10 @@
-import { useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import NextProject from '../components/projects/NextProject';
 import ProjectHero from '../components/projects/ProjectHero';
 import ProjectIntro from '../components/projects/ProjectIntro';
 import ProjectStory from '../components/projects/story/ProjectStory';
-import { allProjects, getNextProject, getProject } from '../projects';
+import { getNextProject, getProject } from '../projects';
 import { site } from '../data/siteConfig';
 import useMeta from '../hooks/useMeta';
 import useReveals from '../hooks/useReveals';
@@ -14,13 +14,12 @@ import NotFoundPage from './NotFoundPage';
 /*
  * /work/:slug — every registered project, resolved by slug from the registry (src/projects).
  * The shared page is hero → facts → story; a project whose record carries its
- * own `page` component (projects/<slug>/<Name>Page.jsx) renders that instead.
+ * own `page` component (projects/<slug>/<Name>Page.jsx) renders that instead; such a
+ * page may be lazy (its own chunk), and holds a screen of its field while it loads.
  * Both end on the next project.
  */
 function ProjectPage({ project }) {
   const rootRef = useRef(null);
-  const index = allProjects.indexOf(project);
-  const total = allProjects.length;
   const next = getNextProject(project.slug);
 
   // A supplied `description` wins; otherwise one is composed from the project's known facts.
@@ -28,7 +27,7 @@ function ProjectPage({ project }) {
     title: project.name,
     description:
       project.description ??
-      `${project.name}${project.nameAr ? ` (${project.nameAr})` : ''} — ${project.category} by ${site.name}, a Saudi brand identity studio.`,
+      `${project.name}${project.nameAr ? ` (${project.nameAr})` : ''} — ${project.category} by ${site.name}, an independent brand identity studio.`,
     image: largestSrc(project.cover),
   });
   useReveals(rootRef, [project.slug]);
@@ -43,10 +42,12 @@ function ProjectPage({ project }) {
       style={{ '--accent-p': project.theme.accent, '--surface': project.theme.surface }}
     >
       {Custom ? (
-        <Custom project={project} index={index} total={total} />
+        <Suspense fallback={<div className="project__loading" />}>
+          <Custom project={project} />
+        </Suspense>
       ) : (
         <>
-          <ProjectHero project={project} index={index} total={total} />
+          <ProjectHero project={project} />
           <ProjectIntro project={project} />
           <ProjectStory project={project} />
         </>
